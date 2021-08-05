@@ -1,0 +1,688 @@
+﻿@model SimkaDosenPenelitian
+@using  Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Theme style -->
+
+
+
+
+
+<head>
+    <title>Profil @HttpContextAccessor.HttpContext.Session.GetString("Nama") - SIMKA UAJY</title>
+
+
+</head>
+<body>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <input type="button" value="Kembali" class="btn btn-danger" onclick="history.back(-1)" />
+                    </div>
+                  
+                </div>
+            </div><!-- /.container-fluid -->
+
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <input type="hidden" id="nppa" asp-for="Karyawan.Npp " />
+
+                        <!-- Profile Image -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Biodata</h3>
+                            </div>
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    @if (Model.Karyawan.FileFoto != null)
+                                    {
+                                        <img class="profile-user-img img-fluid img-circle"
+                                             src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.Karyawan.FileFoto)"
+                                             alt="User profile picture">
+
+                                    }
+                                </div>
+                                <br>
+                                <h4 class=" text-center"><b>@Model.Karyawan.Npp </b></h4>
+                                <h3 class="profile-username text-center"> @Model.Karyawan.NamaLengkapGelar</h3>
+
+                                <p class=" text-center">
+                                    <b>
+
+                                        @if (Model.Karyawan.IdUnitNavigation != null)
+                                        {
+                                            @Model.Karyawan.IdUnitNavigation.NamaUnit
+                                            <br>
+                                            @if (@Model.Karyawan.MstIdUnitNavigation != null)
+                                            {
+                                                @if (@Model.Karyawan.IdUnitNavigation.NamaUnit != @Model.Karyawan.MstIdUnitNavigation.NamaUnit)
+                                                {
+                                                    @Model.Karyawan.MstIdUnitNavigation.NamaUnit
+                                                }
+                                            }
+
+
+
+                                        }
+
+
+                                    </b>
+                                </p>
+
+
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        @if (Model.Akademik != null)
+                                        {
+                                            <b>Program Sudi</b> <a class="float-right">@Model.Akademik.NamaUnitAkademik </a>
+                                        }
+
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Tempat Tanggal LAhir</b> <a class="float-right">
+                                            @Model.Karyawan.TempatLahir -
+                                            @Model.Karyawan.TglLahir
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Email</b> <a class="float-right">@Model.Karyawan.Email</a>
+                                    </li>
+                                </ul>
+
+                                <a><b>Alamat: </b> @Model.Karyawan.Alamat</a>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                        <!-- About Me Box -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Riwayat Pendidikan</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div style="overflow-x:auto;">
+                                    <table id="tabelpendidikan" class="table-responsive table-body">
+
+                                        <thead>
+                                            <tr>
+                                                <th> No</th>
+                                                <th> Nama Sekolah</th>
+                                                <th> Jenjang</th>
+                                                <th> Program Studi</th>
+                                                <th> Status</th>
+                                                <th> Tahun Lulus</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+
+                                    </table>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header p">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item"><a class="nav-link active" href="#biografi" data-toggle="tab">Biografi</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#pengajaran" data-toggle="tab">Pengajaran</a></li>
+
+                                    <li class="nav-item"><a class="nav-link" href="#penelitian" data-toggle="tab">Penelitian</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#publikasi" data-toggle="tab">Publikasi</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#pengabdian" data-toggle="tab">pengabdian</a></li>
+                                </ul>
+                            </div><!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="biografi">
+                                        <div class="card-body pad">
+                                            <div class="mb-3">
+
+                                                @Html.Raw(@Model.Karyawan.BiografiSingkat)
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="tab-pane" id="pengajaran">
+
+                                        <p> tabel pengajaran dari sister </p>
+
+                                        <div style="overflow-x:auto;">
+                                            <table id="tabelpengajaran" class="table table-sm table-striped table-bordered m-2">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th> No</th>
+                                                        <th> Nama mata Kuliah</th>
+                                                        <th>Nama jenis Evaluasi</th>
+                                                        <th> nama kelas Kuliah</th>
+                                                        <th> Jumlah mahasiswa</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <!---  Penelitian-->
+
+
+                                    <div class="tab-pane" id="penelitian">
+
+                                        <b> Penelitan LPPM</b>
+                                        <div style="overflow-x:auto;">
+                                            <table id="penelitian" class="table table-sm table-striped table-bordered m-2">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th> Judul Penelitian</th>
+                                                        <th> Keluaran</th>
+                                                        <th> Tanggal Mulai</th>
+                                                        <th> Tanggal Selesai</th>
+                                                        <th> Lokasi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Penelitian != null)
+                                                    {
+                                                        int no = 0;
+                                                        @foreach (var r in Model.Penelitian)
+                                                        {
+                                                            no++;
+                                                            <tr>
+                                                                <td>
+                                                                    @no;
+                                                                    @r.Judul
+                                                                </td>
+                                                                <td>
+                                                                    @r.Outcome
+                                                                </td>
+                                                                <td>
+                                                                    @r.Awal
+                                                                </td>
+                                                                <td>
+                                                                    @r.Akhir
+                                                                </td>
+                                                                <td>
+                                                                    @r.Lokasi
+                                                                </td>
+                                                            </tr>
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+
+                                                            <td> Tidak ada data pada LPPM</td>
+
+                                                        </tr>
+                                                    }
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <b>Penelitian dari Pengembangan </b>
+                                        <div style="overflow-x:auto;">
+                                            <table id="tabelpengembangansimka" class="table table-sm table-striped table-bordered m-2">
+                                            </table>
+                                        </div>
+                                        <b>Penelitian dari Sister</b>
+                                        <table id="penelitiansister" class="table table-sm table-striped table-bordered m-2">
+                                            <thead>
+                                                <tr>
+                                                    <th> NO </th>
+                                                    <th> Jenis Penelitian</th>
+                                                    <th> Judul Penelitian</th>
+                                                    <th> Skim Penelitan</th>
+                                                    <th> Tahun Ajaran</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <!--- / Penelitian-->
+                                    <!-- /.card-header -->
+                                    <!---  Publikasi-->
+                                    <div class="tab-pane" id="publikasi">
+
+                                        <table id="tabelpublikasi" class="table table-sm table-striped table-bordered m-2">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>NO</th>
+                                                    <th> Judul Penelitian</th>
+                                                    <th> Jenis Publikasi</th>
+                                                    <th> Tanggal Terbit</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+
+                                        <!--- / Publikasi-->
+                                    </div>
+                                    <div class="tab-pane" id="pengabdian">
+                                        <table class="table table-sm table-striped table-bordered m-2">
+                                            <thead>
+                                                <tr>
+
+                                                    <th> Judul Penelitian</th>
+                                                    <th> Keluaran</th>
+                                                    <th> Tanggal Mulai</th>
+                                                    <th> Tanggal Selesai</th>
+                                                    <th> Lokasi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @if (Model.Pengabdian.Count != 0)
+                                                {
+                                                    @foreach (var r in Model.Pengabdian)
+                                                    {
+                                                        <tr>
+                                                            <td>
+
+                                                                @r.JudulKegiatan
+                                                            </td>
+                                                            <td>
+                                                                @r.Outcome
+                                                            </td>
+                                                            <td>
+                                                                @r.Awal
+                                                            </td>
+                                                            <td>
+                                                                @r.Akhir
+                                                            </td>
+                                                            <td>
+                                                                @r.Lokasi
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+
+                                                {
+                                                    <tr>
+
+                                                        <td> Tidak ada data pada SIMKA</td>
+
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                        <table id="tabelpengabdian" class="table table-sm table-striped table-bordered m-2">
+                                            <thead>
+                                                <tr>
+                                                    <th>NO</th>
+                                                    <th> Judul Penelitian</th>
+                                                    <th>Jenis </th>
+                                                    <th> Durasi</th>
+                                                    <th> SKIM</th>
+                                                    <th> Tahun Ajaran</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+
+
+
+
+                                    </div>
+
+
+
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /.tab-content -->
+
+                    </div><!-- /.card-body -->
+                </div>
+            </div>
+                <!-- /.nav-tabs-custom -->
+                <!-- /.col -->
+                <!-- /.row -->
+        </section>
+        <!-- /.container-fluid -->
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 3.0.2
+        </div>
+        <small>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</small> All rights
+        reserved.
+    </footer>
+
+
+    <!-- /.control-sidebar -->
+
+
+
+</body>
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.js"></script>
+    
+    <script>
+
+
+        $(document).ready(function () {
+            var npp = ($('#nppa').val());
+
+            $("#tabelpengajaran").DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "processing": true, // for show progress bar
+
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/SimkaAdmin/LoadDataPengajaranAsync?npp=" + npp + "",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "language": {
+                    "emptyTable": "Tidak Ada Data Pada Sister"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": true,
+                        "searchable": true
+                    }],
+
+
+                "columns": [
+                    {
+                        "data": null, "sortable": false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { "data": "nama_mata_kuliah", "name": "nama_mata_kuliah", "autoWidth": true },
+                    { "data": "nama_jenis_evaluasi", "name": "nama_jenis_evaluasi", "autoWidth": true },
+                    { "data": "nama_kelas_kuliah", "name": "nama_kelas_kuliah", "autoWidth": true },
+
+
+                    //
+                ]
+
+            });
+
+
+            $("#tabelpublikasi").DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "processing": true, // for show progress bar
+
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/SimkaAdmin/LoadDataPublikasi?npp=" + npp + "",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "language": {
+                    "emptyTable": "Tidak Ada Data Pada Sister"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": true,
+                        "searchable": true
+                    }],
+
+
+                "columns": [
+                    {
+                        "data": null, "sortable": false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { "data": "judul_publikasi_paten", "name": "nama_mata_kuliah", "autoWidth": true },
+                    { "data": "nama_jenis_publikasi", "name": "nama_jenis_evaluasi", "autoWidth": true },
+                    { "data": "tanggal_terbit", "name": "nama_kelas_kuliah", "autoWidth": true },
+
+
+                    //
+                ]
+
+            });
+
+
+            $("#tabelpengabdian").DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "processing": true, // for show progress bar
+
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/SimkaAdmin/LoadDataPengabdian?npp=" + npp + "",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "language": {
+                    "emptyTable": "Tidak Ada Data Pada Sister"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": true,
+                        "searchable": true
+                    }],
+
+
+                "columns": [
+                    {
+                        "data": null, "sortable": false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { "data": "judul_penelitian_pengabdian", "name": "nama_mata_kuliah", "autoWidth": true },
+                    { "data": "jenis_penelitian_pengabdian", "name": "nama_jenis_evaluasi", "autoWidth": true },
+                    { "data": "durasi_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "nama_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "nama_tahun_ajaran", "name": "nama_kelas_kuliah", "autoWidth": true },
+
+                ]
+
+            });
+
+        $("#penelitiansister").DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "processing": true, // for show progress bar
+
+            "filter": false, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/SimkaAdmin/LoadDataPenelitian?npp=" + npp + "",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "language": {
+                "emptyTable": "Tidak Ada Data Pada Sister"
+            },
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": true,
+                    "searchable": true
+                }],
+
+
+            "columns": [
+                {
+                    "data": null, "sortable": false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { "data": "judul_penelitian_pengabdian", "name": "nama_mata_kuliah", "autoWidth": true },
+            
+                { "data": "durasi_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
+                { "data": "nama_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
+                { "data": "nama_tahun_ajaran", "name": "nama_kelas_kuliah", "autoWidth": true },
+
+            ]
+
+        });
+
+        $("#tabelpendidikan").DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "processing": true, // for show progress bar
+            "destroy": true,
+            "filter": false, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/SimkaAdmin/LoadDataRiwayatPendidikans?npp=" + npp + "",
+                "type": "POST",
+                "datatype": "json"
+            },
+           
+
+            "columns": [
+                {
+                    "data": null, "sortable": false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { "data": "namaSekolah", "name": "namaSekolah", "autoWidth": true },
+                { "data": "deskripsi", "name": "deskripsi", "autoWidth": true },
+                { "data": "programStudi", "name": "programStudi", "autoWidth": true },
+                { "data": "status", "name": "status", "autoWidth": true },
+                { "data": "tahunLulus", "name": "tahunLulus", "autoWidth": true },
+
+            ]
+
+        });
+
+           
+                dataTable = $('#tabelpengembangansimka').DataTable({
+                    "responsive": true,
+                    "paging": false,
+                    "ordering": false,
+                    "info": false,
+                    "ajax": {
+                        "url": "/SimkaAdmin/LoadDataTrPengembanganDosen?npp=" + npp + "",
+                        "type": "GET",
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        {
+                            data: "idTrPengembangan",
+                            title: "ID",
+
+                            type: "readonly",
+                            "visible": true,
+
+                        },
+                        {
+                            data: "refPe",
+                            title: "Jenis Pengembangan",
+
+                        }, {
+                            data: "apr",
+                            title: "Butir TriDharma",
+
+                        },
+                        {
+                            data: "judul",
+                            title: "Judul",
+
+                        },
+
+                      
+                    ],
+                    "language": {
+                        "emptyTable": "no data found."
+                    }
+                });
+            
+        });
+    </script>
+}

@@ -1,0 +1,95 @@
+﻿@model FungsionalLogin
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <title>
+        Sistem Informasi Kepegawaian Universitas Atma Jaya Yogyakarta
+    </title>
+</head>
+<body class="hold-transition login-page">
+    <noscript>
+        <div id="noscript">
+            <h1>
+                <b>
+                    Enable JavaScript to get the most out of this site!
+                    hubungi KSI untuk info lebih lanjut
+                </b>
+            </h1>
+        </div>
+    </noscript>
+    <div class="login-box">
+        <h1></h1>
+        <div class="login-logo">
+            <b>SIMKA</b><br>
+            <i>Sistem Informasi Manajemen Kepegawaian </i>
+
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+
+            <img class="img-responsive" src="https://sikmadev.uajy.ac.id/Assets/dist/img/loginlogo.jpg" alt="Logo Universitas Atma Jaya Yogyakarta">
+            <form method="post" asp-action="index">
+
+                <div class="form-group has-feedback">
+                    <label>Peran</label>
+                    <select  name="fungsional" 
+                            asp-items="@(new SelectList(Model.fungsional,"IdRefFungsional","Deskripsi"))">
+                        
+                    </select>
+                    </div>
+                    <div class="form-group has-feedback">
+
+                        <input type="text" id="username" name="username" class="form-control" placeholder="NPP">
+
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+
+
+                        <input type="password" id="paswword" name="password" class="form-control" placeholder="Password">
+
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                        <p class="text-danger">@TempData["Message"]</p>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-4">
+
+                            <button type="submit" asp-action="index" class="btn btn-primary btn-block btn-flat">Masuk</button>
+
+                        </div>
+                        <div class="form-group">
+                            <p class="mb-1">
+                                <a href="http://ksi.uajy.ac.id/helpdesk/open.php">Lupa Password</a>
+
+                            </p>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+            </form>
+
+
+        </div>
+
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+
+
+
+</body>
+
+</html>
+
+
+

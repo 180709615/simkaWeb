@@ -1,0 +1,34 @@
+﻿@model RefPotonganP
+@{
+    Layout = null;
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit (this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdRefPotongan" />
+            <div class="form-group">
+                <label asp-for="NamaPotongan" class="control-label"></label>
+                <input asp-for="NamaPotongan" class="form-control" />
+                <span asp-validation-for="NamaPotongan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nominal" class="control-label"></label>
+                <input asp-for="Nominal" class="form-control" />
+                <span asp-validation-for="Nominal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="IsTetap">
+                         <option value=true>Tetap</option>
+                        <option value=false>Tidak Tetap</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

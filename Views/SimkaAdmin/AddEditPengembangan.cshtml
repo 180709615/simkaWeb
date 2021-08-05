@@ -1,0 +1,230 @@
+﻿@model TrPengembanganForm
+
+@{
+    Layout = null;
+}
+<html>
+<body>
+
+    <form onsubmit="return SubmitAddEdit (this) " id="formsimka">
+        <div class="tab-pane" id="keluarga">
+            <div class="card-body card card-primary card-outline ">
+                <div class="form-group row">
+
+                    <div class="col-sm-5">
+                        <input readonly="readonly" type="hidden" asp-for="IdTrPengembangan" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="col-sm-2 col-form-label">Pilih Karyawan / Dosen</label>
+                    <select asp-for="Npp"
+                            asp-items="@(new SelectList(Model.karyawan,"Npp","Nama"))">
+                        <option value="0">-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Butir Tridharma</label>
+                    <select class="form-control" asp-for="IdRefAppraisal">
+
+
+                        <option selected="selected" value="0">-</option>
+                        <option value="1">A - Pendidikan</option>
+                        <option value="2">B - Penelitian / Karya Ilmiah</option>
+                        <option value="3">C - Pengabdian pada Masyarakat</option>
+                        <option value="4">D - Penunjang</option>
+                        <option value="7">Belum ditentukan</option>
+                    </select>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 col-form-label">Sub Unit/Prodi</label>
+
+                        <select asp-for="@Model.IdRefPengembangan" id="pengembangan"></select>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tempat" class="col-sm-2 col-form-label">Besar Dana</label>
+
+                    <input type="text" class="form-control" asp-for="Tempat" placeholder="Contoh 5000000">
+                </div>
+            </div>
+                <div class="form-group col-md-5">
+                    <input type="text" asp-for="Judul" class="form-control" placeholder="Judul">
+                    <span asp-validation-for="Judul" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-5">
+                    <input type="date" asp-for="TglMulai" class="form-control" placeholder="dd/mm/yyyy">
+                    <span asp-validation-for="TglMulai" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-5">
+                    <input type="date" asp-for="TglSelesai" class="form-control" placeholder="dd/mm/yyyy">
+                    <span asp-validation-for="TglSelesai" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-5">
+                    <input type="text" asp-for="Penerbit" class="form-control" placeholder="Penerbit">
+                    <span asp-validation-for="Penerbit" c lass="text-danger"></span>
+                </div>
+                <div class="form-group col-md-5">
+                    <input type="text" asp-for="IssnIsbn" class="form-control" placeholder="Issn/Isbn">
+                    <span asp-validation-for="IssnIsbn" c lass="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Sumber Dana</label>
+                    <select class="form-control" asp-for="SumberDana">
+                        <option value="0">-</option>
+                        <option value="1">Pembiayaan sendiri oleh peneliti</option>
+                        <option selected="selected" value="2">PT/yayasan yang bersangkutan</option>
+                        <option value="3">Kemdiknas/Kementerian lain terkait</option>
+                        <option value="4">Institusi DN di luar Kemdiknas/Kementerian lain </option>
+                        <option value="5">Institusi luar negeri</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DanaLokal" class="col-sm-2 col-form-label">Besar Dana</label>
+
+                    <input type="number" class="form-control" asp-for="DanaLokal" placeholder="Contoh 5000000">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Peran</label>
+                <select class="form-control" asp-for="Peran">
+                    <option selected="selected" value="-">-</option>
+                    <option value="Penulis Tunggal">Penulis Tunggal</option>
+                    <option value="Penulis Pertama">Penulis Pertama</option>
+                    <option value="Penulis Kedua">Penulis Kedua</option>
+                    <option value="Penulis Ketiga">Penulis Ketiga</option>
+                    <option value="Peserta">Peserta</option>
+                    <option value="Instruktur">Instruktur</option>
+                    <option value="Lainnya">Lainnya</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Tingkat</label>
+                <select class="form-control" asp-for="TingkatPeran">
+                    <option selected="selected" value="Lokal">Lokal</option>
+                    <option value="Nasional">Nasional</option>
+                    <option value="Internasional">Internasional</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">
+                    Nilai
+                </label>
+                <input type="number" class="form-control" asp-for="Nilai" placeholder="Contoh 100">
+            </div>
+
+
+
+            <div class="form-group row">
+                <label for="" class="col-sm-2 col-form-label">File Foto</label>
+                <input asp-for="FilePengembanganform" type="file">
+                <div id="previewFoto">
+                    @if (Model.FilePengembangan != null)
+                    {
+                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.FilePengembangan) "  width="600";
+                             height=auto>
+                    }
+                </div>
+            </div>
+
+
+            <input type="submit" class="btn btn-primary" value="Simpan Data Keluarga" />
+
+
+        </div>
+
+    </form>
+
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        //Mengisikan NPP
+
+
+        function previewFoto() {
+
+            var preview = document.querySelector('#previewFoto');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g)$/i.test(file.name)) {
+                    document.getElementById("FilePengembanganform").value = "";
+                    $("#previewFoto").empty();
+                    return alert(file.name + " is not an image");
+                }
+                if (file.size > 51200) {
+                    document.getElementById("FilePengembanganform").value = "";
+                    $("#previewFoto").empty();
+                    return alert(file.name + " Lebih dari 500Kb");
+                } // else...
+
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewFoto").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FilePengembanganform').addEventListener("change", previewFoto);
+
+
+    });
+
+
+</script>
+
+<script>
+    //Insert default item "Select" in dropdownlist on load
+    $(document).ready(function () {
+        var items = "<option value='0'>Select</option>";
+        $("#colorselect").html(items);
+    });
+
+    //Bind dropdownlist
+    $("#IdRefAppraisal").change(function () {
+        var Tridharma = $("#IdRefAppraisal").val();
+        $.ajax({
+            datatype: "text",
+            type: 'get',
+            url: 'FindKegiatan',//your url of handler
+            data: {
+                tridharma_id: Tridharma
+            },
+            success: function (data) {
+                $('#IdRefAppraisal').val(Tridharma);
+                var item = "";
+                $("#pengembangan").empty();
+                $.each(data, function (i, color) {
+                    item += '<option value="' + color.idRefPengembangan + '">' + color.deskripsi + '</option>'
+                });
+                $("#pengembangan").html(item);
+            },
+            error: function (jqxhr, textStatus, errorThrown) {
+                console.log("jqXHR: ", jqxhr);
+                console.log("textStatus: ", textStatus);
+                console.log("errorThrown: ", errorThrown);
+            }
+
+
+
+        });
+    });
+</script>

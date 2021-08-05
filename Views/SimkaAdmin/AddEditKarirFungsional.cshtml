@@ -1,0 +1,93 @@
+﻿@model TrKarirFungsionalForm
+@{
+    Layout = null;
+}
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit(this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdKarir" />
+            <input type="hidden" asp-for="IdRefJbtnAkademikSblm" />
+            <div class="form-group">
+                <label asp-for="NoSk" class="control-label"></label>
+                <input type="text" asp-for="NoSk" />
+                <span asp-validation-for="NoSk" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 col-form-label">Pilih Karyawan / Dosen</label>
+                <select asp-for="Npp"
+                        asp-items="@(new SelectList(Model.karyawan,"Npp","Nama"))">
+                    <option value="0">-</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 col-form-label">Jabatan Akademik Baru</label>
+                <select asp-for="IdRefJbtnAkademik"
+                        asp-items="@(new SelectList(Model.akademik,"IdRefJbtnAkademik","Deskripsi"))">
+                    <option value="0">-</option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="TglBerikut" class="control-label"></label>
+                <input type="date" asp-for="TglBerikut" />
+                <span asp-validation-for="TglBerikut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tmt" class="control-label"></label>
+                <input type="date" asp-for="Tmt" />
+                <span asp-validation-for="Tmt" class="text-danger"></span>
+            </div>
+
+            <div class="form-group ">
+                <label asp-for="NilaiTotal" class="control-label"></label>
+                <input type="number" asp-for="NilaiTotal" />
+                <span asp-validation-for="NilaiTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group ">
+                <label asp-for="NilaiA" class="control-label"></label>
+                <input type="number" asp-for="NilaiA" />
+                <span asp-validation-for="NilaiA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NilaiB" class="control-label"></label>
+                <input type="number" asp-for="NilaiB" />
+                <span asp-validation-for="NilaiB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NilaiC" class="control-label"></label>
+                <input type="number" asp-for="NilaiC" />
+                <span asp-validation-for="NilaiC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NilaiD" class="control-label"></label>
+                <input type="number" asp-for="NilaiD" />
+                <span asp-validation-for="NilaiD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BidangIlmu" class="control-label"></label>
+                <input type="text" asp-for="BidangIlmu" />
+            </div>
+            <span asp-validation-for="BidangIlmu" class="text-danger"></span>
+
+            <div class="form-group">
+                <label asp-for="IdRefJbtnAkademik" class="col-sm-2 col-form-label"> Jenis</label>
+
+                <select asp-for="JenisLokalNas">
+                    <option value="0">- Select -</option>
+                    <option value="Lokal">Lokal</option>
+                    <option value="Nasional">Nasional</option>
+
+                </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+        </form>
+    </div>
+</div>

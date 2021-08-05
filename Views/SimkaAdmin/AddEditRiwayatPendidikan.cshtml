@@ -1,0 +1,197 @@
+﻿@model TrRiwayatPendidikanForm
+@{
+    Layout = null;
+}
+<h4>Todo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit (this)" id="formsimka">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdTrRp" />
+
+            <div class="form-group">
+                <label class="control-label">NPP</label>
+                <select asp-for="Npp"
+                        asp-items="@(new SelectList(Model.karyawan,"Npp","Nama"))">
+                    <option>Please select one</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Jenjang</label>
+                <select asp-for="IdRefJenjang"
+                        asp-items="@(new SelectList(Model.jenjang,"IdRefJenjang","Deskripsi"))">
+                    <option>Please select one</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Status Studi</label>
+                <select asp-for="IdRefSs"
+                        asp-items="@(new SelectList(Model.StatusStudi,"IdRefSs","Deskripsi"))">
+                    <option>Please select one</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NamaSekolah" class="control-label"></label>
+                <input asp-for="NamaSekolah" class="form-control" />
+                <span asp-validation-for="NamaSekolah" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoIjazah" class="control-label"></label>
+                <input asp-for="NoIjazah" class="form-control" />
+                <span asp-validation-for="NoIjazah" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TglIjazah" class="control-label"></label>
+                <input asp-for="TglIjazah" type="date" class="form-control" />
+                <span asp-validation-for="TglIjazah" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Ipk" class="control-label"></label>
+                <input asp-for="Ipk" class="form-control" />
+                <span asp-validation-for="Ipk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gelar" class="control-label"></label>
+                <input asp-for="Gelar" class="form-control" />
+                <span asp-validation-for="Gelar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Keterangan" class="control-label"></label>
+                <input asp-for="Keterangan" class="form-control" />
+                <span asp-validation-for="Keterangan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TahunMasuk" class="control-label"></label>
+                <input asp-for="TahunMasuk" type="number" class="form-control" />
+                <span asp-validation-for="Ipk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TahunLulus" class="control-label"></label>
+                <input asp-for="TahunLulus" type="number" class="form-control" />
+                <span asp-validation-for="Ipk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AsalBeasiswa" class="control-label"></label>
+                <input asp-for="AsalBeasiswa" class="form-control" />
+                <span asp-validation-for="AsalBeasiswa" class="text-danger"></span>
+            </div>     <div class="form-group">
+                <label asp-for="Fakultas" class="control-label"></label>
+                <input asp-for="Fakultas" class="form-control" />
+                <span asp-validation-for="Fakultas" class="text-danger"></span>
+            </div>     <div class="form-group">
+                <label asp-for="ProgramStudi" class="control-label"></label>
+                <input asp-for="ProgramStudi" class="form-control" />
+                <span asp-validation-for="ProgramStudi" class="text-danger"></span>
+            </div> 
+            <div class="form-group row">
+                <label for="" class="col-sm-2 col-form-label">File Ijazah</label>
+                <input asp-for="ScanIjazahForm" type="file">
+                <div id="previewFoto">
+                    @if (Model.ScanIjazah != null)
+                    {
+                        <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.ScanIjazah) " width="300" height="300">
+                    }
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-sm-2 col-form-label">File Transkrip</label>
+                <input asp-for="ScanTranskripForm" type="file">
+                <div id="previewAsuransi">
+                    @if (Model.ScanTranskrip != null)
+                    {
+                        <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.ScanTranskrip) " width="300" height="300">
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+
+
+        </form>
+</div>
+</div>
+<script>
+    function previewFoto() {
+
+        var preview = document.querySelector('#previewFoto');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPreview);
+        }
+
+        function readAndPreview(file) {
+
+
+            // Make sure `file.name` matches our extensions criteria
+            if (!/\.(jpe?g|)$/i.test(file.name)) {
+                document.getElementById("ScanIjazahForm").value = "";
+                $("#previewAsuransi").empty();
+                return alert(file.name + " bukan JPG");
+            } // else...
+            if (file.size > 1024000) {
+                document.getElementById("ScanIjazahForm").value = "";
+                $("#previewAsuransi").empty();
+                return alert(file.name + " Lebih dari 1MB");
+            } // else...
+
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+                image.height = 200;
+                image.title = file.name;
+                image.src = this.result;
+                $("#previewAsuransi").empty();
+                preview.append(image);
+
+            });
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.querySelector('#ScanIjazahForm').addEventListener("change", previewFoto);
+    function previewAsuransi() {
+
+        var preview = document.querySelector('#previewAsuransi');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPrevieww);
+        }
+
+        function readAndPrevieww(file) {
+
+
+            // Make sure `file.name` matches our extensions criteria
+            if (!/\.(jpe?g|)$/i.test(file.name)) {
+                document.getElementById("ScanTranskripForm").value = "";
+                $("#ScanTranskripForm").empty();
+                return alert(file.name + " bukan JPG");
+            } // else...
+            if (file.size > 1024000) {
+                document.getElementById("ScanTranskripForm").value = "";
+                $("#ScanTranskripForm").empty();
+                return alert(file.name + " Lebih dari 1MB");
+            } // else...
+
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+                image.height = 200;
+                image.title = file.name;
+                image.src = this.result;
+                $("#previewAsuransi").empty();
+                preview.append(image);
+
+            });
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.querySelector('#ScanTranskripForm').addEventListener("change", previewAsuransi);
+</script>

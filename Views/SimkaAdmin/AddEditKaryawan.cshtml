@@ -1,0 +1,1833 @@
+﻿@model KaryawanForm
+@{
+    Layout = null;
+
+} 
+<html>
+
+<body>
+    <!-- Content Wrapper. Contains page content -->
+    <div>
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <!-- /.col -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header p">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item"><a class="nav-link active" href="#pribadi" data-toggle="tab">Data Pribadi</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#kontak" data-toggle="tab">Data Kontak</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#foto" data-toggle="tab">File Gambar</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#karir" data-toggle="tab">Jenjang Karir</a></li>
+
+                                </ul>
+
+                            </div><!-- /.card-header -->
+
+                            <form onsubmit="return SubmitAddEdit (this)" enctype="multipart/form-data" id="formsimka">
+                                <div class="card-body">
+
+                                    <div class="tab-content  card card-outline">
+
+                                        <div class="card-body ">
+                                            <div class="form-group row">
+                                                <label asp-for="Npp" class="col-sm-2 col-form-label">Npp</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" asp-for="Npp" class="form-control" placeholder="Npp">
+                                                    <span asp-validation-for="Npp" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label asp-for="Nama" class="col-sm-2 col-form-label">Nama</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" asp-for="Nama" class="form-control" placeholder="Nama">
+                                                    <span asp-validation-for="Nama" class="text-danger"></span>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label">ID dosen sister ( bila ada)</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" asp-for="ID_DOSEN_SISTER" class="form-control" placeholder="Nama">
+                                                    <span asp-validation-for="ID_DOSEN_SISTER" class="text-danger"></span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="active tab-pane" id="pribadi">
+                                            <div class="card-body card card-primary card-outline ">
+
+                                                <div class="form-group row">
+                                                    <label asp-for="NamaLengkapGelar" class="col-sm-2 col-form-label">Nama Lengkap</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="NamaLengkapGelar" class="form-control" placeholder="Nama Lengkap">
+                                                        <span asp-validation-for="NamaLengkapGelar" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="Nickname" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <input type="text" asp-for="Nickname" class="form-control" placeholder="NickName">
+                                                        <span asp-validation-for="Nickname" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="Inisial" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <input type="text" asp-for="Inisial" class="form-control" placeholder=" Nomor NPWP">
+                                                        <span asp-validation-for="Inisial" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+
+
+
+                                                    <label asp-for="TempatLahir" class="col-sm-2 col-form-label"> Tempat Tanggal Lahir</label>
+                                                    <div class="form-group col-md-5">
+
+                                                        <input type="text" asp-for="TempatLahir" class="form-control" placeholder="Tempat Lahir">
+                                                        <span asp-validation-for="TempatLahir" c lass="text-danger"></span>
+
+                                                    </div>
+                                                    <div class="form-group col-md-5">
+                                                        <input type="datesp-for="TglLahir" class="form-control" placeholder="dd/mm/yyyy">
+                                                        <span asp-validation-for="TglLahir" class="text-danger"></span>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div class="form-group row">
+                                                    <label asp-for="TglMasuk" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" asp-for="TglMasuk" class="form-control" placeholder="">
+                                                        <span asp-validation-for="TglMasuk" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="Alamat" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="Alamat" class="form-control" placeholder="Alamat,contoh: Jalan Babarsari No 44">
+                                                        <span asp-validation-for="Alamat" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="AlamatKota" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="AlamatKota">
+
+                                                            <option selected="selected" value="">-</option>
+                                                            <option value="ACEH BARAT">ACEH BARAT</option>
+                                                            <option value="ACEH BARAT DAYA">ACEH BARAT DAYA</option>
+                                                            <option value="ACEH BESAR">ACEH BESAR</option>
+                                                            <option value="ACEH JAYA">ACEH JAYA</option>
+                                                            <option value="ACEH SELATAN">ACEH SELATAN</option>
+                                                            <option value="ACEH SINGKIL">ACEH SINGKIL</option>
+                                                            <option value="ACEH TAMIANG">ACEH TAMIANG</option>
+                                                            <option value="ACEH TENGAH">ACEH TENGAH</option>
+                                                            <option value="ACEH TENGGARA">ACEH TENGGARA</option>
+                                                            <option value="ACEH TIMUR">ACEH TIMUR</option>
+                                                            <option value="ACEH UTARA">ACEH UTARA</option>
+                                                            <option value="AGAM">AGAM</option>
+                                                            <option value="ALOR">ALOR</option>
+                                                            <option value="AMBON">AMBON</option>
+                                                            <option value="ASAHAN">ASAHAN</option>
+                                                            <option value="ASMAT">ASMAT</option>
+                                                            <option value="BADUNG">BADUNG</option>
+                                                            <option value="BALANGAN">BALANGAN</option>
+                                                            <option value="BALIKPAPAN">BALIKPAPAN</option>
+                                                            <option value="BANDA ACEH">BANDA ACEH</option>
+                                                            <option value="BANDAR LAMPUNG">BANDAR LAMPUNG</option>
+                                                            <option value="BANDUNG BARAT">BANDUNG BARAT</option>
+                                                            <option value="BANGGAI">BANGGAI</option>
+                                                            <option value="BANGGAI KEPULAUAN">BANGGAI KEPULAUAN</option>
+                                                            <option value="BANGKA">BANGKA</option>
+                                                            <option value="BANGKA BARAT">BANGKA BARAT</option>
+                                                            <option value="BANGKA SELATAN">BANGKA SELATAN</option>
+                                                            <option value="BANGKA TENGAH">BANGKA TENGAH</option>
+                                                            <option value="BANGKALAN">BANGKALAN</option>
+                                                            <option value="BANGLI">BANGLI</option>
+                                                            <option value="BANJARBARU">BANJARBARU</option>
+                                                            <option value="BANJARMASIN">BANJARMASIN</option>
+                                                            <option value="BANJARNEGARA">BANJARNEGARA</option>
+                                                            <option value="BANTAENG">BANTAENG</option>
+                                                            <option value="BANTUL">BANTUL</option>
+                                                            <option value="BANYUASIN">BANYUASIN</option>
+                                                            <option value="BANYUMAS">BANYUMAS</option>
+                                                            <option value="BANYUWANGI">BANYUWANGI</option>
+                                                            <option value="BARITO KUALA">BARITO KUALA</option>
+                                                            <option value="BARITO SELATAN">BARITO SELATAN</option>
+                                                            <option value="BARITO TIMUR">BARITO TIMUR</option>
+                                                            <option value="BARITO UTARA">BARITO UTARA</option>
+                                                            <option value="BARRU">BARRU</option>
+                                                            <option value="BATAM">BATAM</option>
+                                                            <option value="BATANG">BATANG</option>
+                                                            <option value="BATU">BATU</option>
+                                                            <option value="BATU BARA">BATU BARA</option>
+                                                            <option value="BAU-BAU">BAU-BAU</option>
+                                                            <option value="BEKASI">BEKASI</option>
+                                                            <option value="BEKASI BARAT">BEKASI BARAT</option>
+                                                            <option value="BELITUNG">BELITUNG</option>
+                                                            <option value="BELITUNG TIMUR">BELITUNG TIMUR</option>
+                                                            <option value="BELU">BELU</option>
+                                                            <option value="BENER MERIAH">BENER MERIAH</option>
+                                                            <option value="BENGKALIS">BENGKALIS</option>
+                                                            <option value="BENGKAYANG">BENGKAYANG</option>
+                                                            <option value="BENGKULU">BENGKULU</option>
+                                                            <option value="BENGKULU SELATAN">BENGKULU SELATAN</option>
+                                                            <option value="BENGKULU TENGAH">BENGKULU TENGAH</option>
+                                                            <option value="BENGKULU UTARA">BENGKULU UTARA</option>
+                                                            <option value="BERAU">BERAU</option>
+                                                            <option value="BIAK NUMFOR">BIAK NUMFOR</option>
+                                                            <option value="BIMA">BIMA</option>
+                                                            <option value="BINJAI">BINJAI</option>
+                                                            <option value="BINTAN">BINTAN</option>
+                                                            <option value="BIREUEN">BIREUEN</option>
+                                                            <option value="BITUNG">BITUNG</option>
+                                                            <option value="BLITAR">BLITAR</option>
+                                                            <option value="BLORA">BLORA</option>
+                                                            <option value="BOALEMO">BOALEMO</option>
+                                                            <option value="BOJONEGORO">BOJONEGORO</option>
+                                                            <option value="BOLAANG MONGONDOW">BOLAANG MONGONDOW</option>
+                                                            <option value="BOLAANG MONGONDOW SELATAN">BOLAANG MONGONDOW SELATAN</option>
+                                                            <option value="BOLAANG MONGONDOW TIMUR">BOLAANG MONGONDOW TIMUR</option>
+                                                            <option value="BOLAANG MONGONDOW UTARA">BOLAANG MONGONDOW UTARA</option>
+                                                            <option value="BOMBANA">BOMBANA</option>
+                                                            <option value="BONDOWOSO">BONDOWOSO</option>
+                                                            <option value="BONE">BONE</option>
+                                                            <option value="BONE BOLANGO">BONE BOLANGO</option>
+                                                            <option value="BONTANG">BONTANG</option>
+                                                            <option value="BOVEN DIGOEL">BOVEN DIGOEL</option>
+                                                            <option value="BOYOLALI">BOYOLALI</option>
+                                                            <option value="BREBES">BREBES</option>
+                                                            <option value="BUKITTINGGI">BUKITTINGGI</option>
+                                                            <option value="BULELENG">BULELENG</option>
+                                                            <option value="BULUKUMBA">BULUKUMBA</option>
+                                                            <option value="BULUNGAN">BULUNGAN</option>
+                                                            <option value="BUNGO">BUNGO</option>
+                                                            <option value="BUOL">BUOL</option>
+                                                            <option value="BURU">BURU</option>
+                                                            <option value="BURU SELATAN">BURU SELATAN</option>
+                                                            <option value="BUTON">BUTON</option>
+                                                            <option value="BUTON UTARA">BUTON UTARA</option>
+                                                            <option value="CIAMIS">CIAMIS</option>
+                                                            <option value="CIANJUR">CIANJUR</option>
+                                                            <option value="CILACAP">CILACAP</option>
+                                                            <option value="CILEGON">CILEGON</option>
+                                                            <option value="CIMAHI">CIMAHI</option>
+                                                            <option value="CIREBON">CIREBON</option>
+                                                            <option value="DAIRI">DAIRI</option>
+                                                            <option value="DARWIN">DARWIN</option>
+                                                            <option value="DEIYAI">DEIYAI</option>
+                                                            <option value="DELI SERDANG">DELI SERDANG</option>
+                                                            <option value="DEMAK">DEMAK</option>
+                                                            <option value="DENPASAR">DENPASAR</option>
+                                                            <option value="DEPOK">DEPOK</option>
+                                                            <option value="DHARMASRAYA">DHARMASRAYA</option>
+                                                            <option value="DILI">DILI</option>
+                                                            <option value="DOGIYAI">DOGIYAI</option>
+                                                            <option value="DOMPU">DOMPU</option>
+                                                            <option value="DONGGALA">DONGGALA</option>
+                                                            <option value="DUMAI">DUMAI</option>
+                                                            <option value="EMPAT LAWANG">EMPAT LAWANG</option>
+                                                            <option value="ENDE">ENDE</option>
+                                                            <option value="ENREKANG">ENREKANG</option>
+                                                            <option value="FAKFAK">FAKFAK</option>
+                                                            <option value="FLORES TIMUR">FLORES TIMUR</option>
+                                                            <option value="GARUT">GARUT</option>
+                                                            <option value="GAYO LUES">GAYO LUES</option>
+                                                            <option value="GIANYAR">GIANYAR</option>
+                                                            <option value="GORONTALO">GORONTALO</option>
+                                                            <option value="GORONTALO UTARA">GORONTALO UTARA</option>
+                                                            <option value="GOWA">GOWA</option>
+                                                            <option value="GRESIK">GRESIK</option>
+                                                            <option value="GROBOGAN">GROBOGAN</option>
+                                                            <option value="GUNUNG KIDUL">GUNUNG KIDUL</option>
+                                                            <option value="GUNUNG MAS">GUNUNG MAS</option>
+                                                            <option value="GUNUNG SITOLI">GUNUNG SITOLI</option>
+                                                            <option value="HALMAHERA BARAT">HALMAHERA BARAT</option>
+                                                            <option value="HALMAHERA SELATAN">HALMAHERA SELATAN</option>
+                                                            <option value="HALMAHERA TENGAH">HALMAHERA TENGAH</option>
+                                                            <option value="HALMAHERA TIMUR">HALMAHERA TIMUR</option>
+                                                            <option value="HALMAHERA UTARA">HALMAHERA UTARA</option>
+                                                            <option value="HULU SUNGAI SELATAN">HULU SUNGAI SELATAN</option>
+                                                            <option value="HULU SUNGAI TENGAH">HULU SUNGAI TENGAH</option>
+                                                            <option value="HULU SUNGAI UTARA">HULU SUNGAI UTARA</option>
+                                                            <option value="HUMBANG HASUNDUTAN">HUMBANG HASUNDUTAN</option>
+                                                            <option value="INDRAGIRI HILIR">INDRAGIRI HILIR</option>
+                                                            <option value="INDRAGIRI HULU">INDRAGIRI HULU</option>
+                                                            <option value="INDRAMAYU">INDRAMAYU</option>
+                                                            <option value="INTAN JAYA">INTAN JAYA</option>
+                                                            <option value="JAKARTA BARAT">JAKARTA BARAT</option>
+                                                            <option value="JAKARTA PUSAT">JAKARTA PUSAT</option>
+                                                            <option value="JAKARTA SELATAN">JAKARTA SELATAN</option>
+                                                            <option value="JAKARTA TIMUR">JAKARTA TIMUR</option>
+                                                            <option value="JAKARTA UTARA">JAKARTA UTARA</option>
+                                                            <option value="JAMBI">JAMBI</option>
+                                                            <option value="JAYAPURA">JAYAPURA</option>
+                                                            <option value="JAYAWIJAYA">JAYAWIJAYA</option>
+                                                            <option value="JEMBER">JEMBER</option>
+                                                            <option value="JEMBRANA">JEMBRANA</option>
+                                                            <option value="JENEPONTO">JENEPONTO</option>
+                                                            <option value="JEPARA">JEPARA</option>
+                                                            <option value="JOMBANG">JOMBANG</option>
+                                                            <option value="KAIMANA">KAIMANA</option>
+                                                            <option value="KAMPAR">KAMPAR</option>
+                                                            <option value="KAPUAS">KAPUAS</option>
+                                                            <option value="KAPUAS HULU">KAPUAS HULU</option>
+                                                            <option value="KARANGANYAR">KARANGANYAR</option>
+                                                            <option value="KARANGASEM">KARANGASEM</option>
+                                                            <option value="KARAWANG">KARAWANG</option>
+                                                            <option value="KARIMUN">KARIMUN</option>
+                                                            <option value="KARO">KARO</option>
+                                                            <option value="KATINGAN">KATINGAN</option>
+                                                            <option value="KAUR">KAUR</option>
+                                                            <option value="KAYONG UTARA">KAYONG UTARA</option>
+                                                            <option value="KEBUMEN">KEBUMEN</option>
+                                                            <option value="KEDIRI">KEDIRI</option>
+                                                            <option value="KEEROM">KEEROM</option>
+                                                            <option value="KENDAL">KENDAL</option>
+                                                            <option value="KENDARI">KENDARI</option>
+                                                            <option value="KEPAHIANG">KEPAHIANG</option>
+                                                            <option value="KEPULAUAN ANAMBAS">KEPULAUAN ANAMBAS</option>
+                                                            <option value="KEPULAUAN ARU">KEPULAUAN ARU</option>
+                                                            <option value="KEPULAUAN MENTAWAI">KEPULAUAN MENTAWAI</option>
+                                                            <option value="KEPULAUAN YAPEN">KEPULAUAN YAPEN</option>
+                                                            <option value="KERINCI">KERINCI</option>
+                                                            <option value="KETAPANG">KETAPANG</option>
+                                                            <option value="KLATEN">KLATEN</option>
+                                                            <option value="KLUNGKUNG">KLUNGKUNG</option>
+                                                            <option value="KOLAKA">KOLAKA</option>
+                                                            <option value="KOLAKA UTARA">KOLAKA UTARA</option>
+                                                            <option value="KONAWE">KONAWE</option>
+                                                            <option value="KONAWE SELATAN">KONAWE SELATAN</option>
+                                                            <option value="KONAWE UTARA">KONAWE UTARA</option>
+                                                            <option value="KOTABARU">KOTABARU</option>
+                                                            <option value="KOTAWARINGIN BARAT">KOTAWARINGIN BARAT</option>
+                                                            <option value="KOTAWARINGIN TIMUR">KOTAWARINGIN TIMUR</option>
+                                                            <option value="KUANTAN SINGINGI">KUANTAN SINGINGI</option>
+                                                            <option value="KUBU RAYA">KUBU RAYA</option>
+                                                            <option value="KUDUS">KUDUS</option>
+                                                            <option value="KULON PROGO">KULON PROGO</option>
+                                                            <option value="KUNINGAN">KUNINGAN</option>
+                                                            <option value="KUPANG">KUPANG</option>
+                                                            <option value="KUTAI BARAT">KUTAI BARAT</option>
+                                                            <option value="KUTAI KARTANEGARA">KUTAI KARTANEGARA</option>
+                                                            <option value="KUTAI TIMUR">KUTAI TIMUR</option>
+                                                            <option value="LABUHANBATU">LABUHANBATU</option>
+                                                            <option value="LABUHANBATU SELATAN">LABUHANBATU SELATAN</option>
+                                                            <option value="LABUHANBATU UTARA">LABUHANBATU UTARA</option>
+                                                            <option value="LAHAT">LAHAT</option>
+                                                            <option value="LAMANDAU">LAMANDAU</option>
+                                                            <option value="LAMONGAN">LAMONGAN</option>
+                                                            <option value="LAMPUNG BARAT">LAMPUNG BARAT</option>
+                                                            <option value="LAMPUNG SELATAN">LAMPUNG SELATAN</option>
+                                                            <option value="LAMPUNG TENGAH">LAMPUNG TENGAH</option>
+                                                            <option value="LAMPUNG TIMUR">LAMPUNG TIMUR</option>
+                                                            <option value="LAMPUNG UTARA">LAMPUNG UTARA</option>
+                                                            <option value="LANDAK">LANDAK</option>
+                                                            <option value="LANGKAT">LANGKAT</option>
+                                                            <option value="LANGSA">LANGSA</option>
+                                                            <option value="LANNY JAYA">LANNY JAYA</option>
+                                                            <option value="LEBAK">LEBAK</option>
+                                                            <option value="LEBONG">LEBONG</option>
+                                                            <option value="LEMBATA">LEMBATA</option>
+                                                            <option value="LHOKSEUMAWE">LHOKSEUMAWE</option>
+                                                            <option value="LIMA PULUH KOTA">LIMA PULUH KOTA</option>
+                                                            <option value="LINGGA">LINGGA</option>
+                                                            <option value="LIQUICA">LIQUICA</option>
+                                                            <option value="LOMBOK BARAT">LOMBOK BARAT</option>
+                                                            <option value="LOMBOK TENGAH">LOMBOK TENGAH</option>
+                                                            <option value="LOMBOK TIMUR">LOMBOK TIMUR</option>
+                                                            <option value="LOMBOK UTARA">LOMBOK UTARA</option>
+                                                            <option value="LOSPALOS">LOSPALOS</option>
+                                                            <option value="LUBUKLINGGAU">LUBUKLINGGAU</option>
+                                                            <option value="LUMAJANG">LUMAJANG</option>
+                                                            <option value="LUWU">LUWU</option>
+                                                            <option value="LUWU TIMUR">LUWU TIMUR</option>
+                                                            <option value="LUWU UTARA">LUWU UTARA</option>
+                                                            <option value="MADIUN">MADIUN</option>
+                                                            <option value="MAGELANG">MAGELANG</option>
+                                                            <option value="MAGETAN">MAGETAN</option>
+                                                            <option value="MAJALENGKA">MAJALENGKA</option>
+                                                            <option value="MAJENE">MAJENE</option>
+                                                            <option value="MAKASSAR">MAKASSAR</option>
+                                                            <option value="MALANG">MALANG</option>
+                                                            <option value="MALINAU">MALINAU</option>
+                                                            <option value="MALUKU BARAT DAYA">MALUKU BARAT DAYA</option>
+                                                            <option value="MALUKU TENGAH">MALUKU TENGAH</option>
+                                                            <option value="MALUKU TENGGARA">MALUKU TENGGARA</option>
+                                                            <option value="MALUKU TENGGARA BARAT">MALUKU TENGGARA BARAT</option>
+                                                            <option value="MAMASA">MAMASA</option>
+                                                            <option value="MAMBERAMO RAYA">MAMBERAMO RAYA</option>
+                                                            <option value="MAMBERAMO TENGAH">MAMBERAMO TENGAH</option>
+                                                            <option value="MAMUJU">MAMUJU</option>
+                                                            <option value="MAMUJU UTARA">MAMUJU UTARA</option>
+                                                            <option value="MANADO">MANADO</option>
+                                                            <option value="MANDAILING NATAL">MANDAILING NATAL</option>
+                                                            <option value="MANGGARAI">MANGGARAI</option>
+                                                            <option value="MANGGARAI BARAT">MANGGARAI BARAT</option>
+                                                            <option value="MANGGARAI TIMUR">MANGGARAI TIMUR</option>
+                                                            <option value="MANOKWARI">MANOKWARI</option>
+                                                            <option value="MAPPI">MAPPI</option>
+                                                            <option value="MAROS">MAROS</option>
+                                                            <option value="MATARAM">MATARAM</option>
+                                                            <option value="MAYBRAT">MAYBRAT</option>
+                                                            <option value="MEDAN">MEDAN</option>
+                                                            <option value="MELAWI">MELAWI</option>
+                                                            <option value="MERANGIN">MERANGIN</option>
+                                                            <option value="MERAUKE">MERAUKE</option>
+                                                            <option value="MESUJI">MESUJI</option>
+                                                            <option value="METRO">METRO</option>
+                                                            <option value="MIMIKA">MIMIKA</option>
+                                                            <option value="MINAHASA">MINAHASA</option>
+                                                            <option value="MINAHASA SELATAN">MINAHASA SELATAN</option>
+                                                            <option value="MINAHASA TENGGARA">MINAHASA TENGGARA</option>
+                                                            <option value="MINAHASA UTARA">MINAHASA UTARA</option>
+                                                            <option value="MOJOKERTO">MOJOKERTO</option>
+                                                            <option value="MOROWALI">MOROWALI</option>
+                                                            <option value="MUARA ENIM">MUARA ENIM</option>
+                                                            <option value="MUARO JAMBI">MUARO JAMBI</option>
+                                                            <option value="MUKOMUKO">MUKOMUKO</option>
+                                                            <option value="MUNA">MUNA</option>
+                                                            <option value="MURUNG RAYA">MURUNG RAYA</option>
+                                                            <option value="MUSI BANYUASIN">MUSI BANYUASIN</option>
+                                                            <option value="MUSI RAWAS">MUSI RAWAS</option>
+                                                            <option value="NABIRE">NABIRE</option>
+                                                            <option value="NAGAN RAYA">NAGAN RAYA</option>
+                                                            <option value="NAGEKEO">NAGEKEO</option>
+                                                            <option value="NATUNA">NATUNA</option>
+                                                            <option value="NDUGA">NDUGA</option>
+                                                            <option value="NGADA">NGADA</option>
+                                                            <option value="NGANJUK">NGANJUK</option>
+                                                            <option value="NGAWI">NGAWI</option>
+                                                            <option value="NIAS">NIAS</option>
+                                                            <option value="NIAS BARAT">NIAS BARAT</option>
+                                                            <option value="NIAS SELATAN">NIAS SELATAN</option>
+                                                            <option value="NIAS UTARA">NIAS UTARA</option>
+                                                            <option value="NUNUKAN">NUNUKAN</option>
+                                                            <option value="OGAN ILIR">OGAN ILIR</option>
+                                                            <option value="OGAN KOMERING ILIR">OGAN KOMERING ILIR</option>
+                                                            <option value="OGAN KOMERING ULU">OGAN KOMERING ULU</option>
+                                                            <option value="OGAN KOMERING ULU SELATAN">OGAN KOMERING ULU SELATAN</option>
+                                                            <option value="OGAN KOMERING ULU TIMUR">OGAN KOMERING ULU TIMUR</option>
+                                                            <option value="PACITAN">PACITAN</option>
+                                                            <option value="PADANG">PADANG</option>
+                                                            <option value="PADANG LAWAS">PADANG LAWAS</option>
+                                                            <option value="PADANG LAWAS UTARA">PADANG LAWAS UTARA</option>
+                                                            <option value="PADANG PARIAMAN">PADANG PARIAMAN</option>
+                                                            <option value="PADANG SIDEMPUAN">PADANG SIDEMPUAN</option>
+                                                            <option value="PADANGPANJANG">PADANGPANJANG</option>
+                                                            <option value="PAGAR ALAM">PAGAR ALAM</option>
+                                                            <option value="PAKPAK BHARAT">PAKPAK BHARAT</option>
+                                                            <option value="PALANGKA RAYA">PALANGKA RAYA</option>
+                                                            <option value="PALEMBANG">PALEMBANG</option>
+                                                            <option value="PALOPO">PALOPO</option>
+                                                            <option value="PALU">PALU</option>
+                                                            <option value="PAMEKASAN">PAMEKASAN</option>
+                                                            <option value="PANDEGLANG">PANDEGLANG</option>
+                                                            <option value="PANGKAJENE DAN KEPULAUAN">PANGKAJENE DAN KEPULAUAN</option>
+                                                            <option value="PANGKAL PINANG">PANGKAL PINANG</option>
+                                                            <option value="PANIAI">PANIAI</option>
+                                                            <option value="PARIAMAN">PARIAMAN</option>
+                                                            <option value="PARIGI MOUTONG">PARIGI MOUTONG</option>
+                                                            <option value="PASAMAN">PASAMAN</option>
+                                                            <option value="PASAMAN BARAT">PASAMAN BARAT</option>
+                                                            <option value="PASER">PASER</option>
+                                                            <option value="PASURUAN">PASURUAN</option>
+                                                            <option value="PATI">PATI</option>
+                                                            <option value="PAYAKUMBUH">PAYAKUMBUH</option>
+                                                            <option value="PEGUNUNGAN BINTANG">PEGUNUNGAN BINTANG</option>
+                                                            <option value="PEKALONGAN">PEKALONGAN</option>
+                                                            <option value="PEKANBARU">PEKANBARU</option>
+                                                            <option value="PELALAWAN">PELALAWAN</option>
+                                                            <option value="PEMALANG">PEMALANG</option>
+                                                            <option value="PEMATANGSIANTAR">PEMATANGSIANTAR</option>
+                                                            <option value="PENAJAM PASER UTARA">PENAJAM PASER UTARA</option>
+                                                            <option value="PESAWARAN">PESAWARAN</option>
+                                                            <option value="PESISIR SELATAN">PESISIR SELATAN</option>
+                                                            <option value="PIDIE">PIDIE</option>
+                                                            <option value="PIDIE JAYA">PIDIE JAYA</option>
+                                                            <option value="PINRANG">PINRANG</option>
+                                                            <option value="POHUWATO">POHUWATO</option>
+                                                            <option value="POLEWALI MANDAR">POLEWALI MANDAR</option>
+                                                            <option value="PONOROGO">PONOROGO</option>
+                                                            <option value="PONTIANAK">PONTIANAK</option>
+                                                            <option value="POSO">POSO</option>
+                                                            <option value="PRABUMULIH">PRABUMULIH</option>
+                                                            <option value="PRINGSEWU">PRINGSEWU</option>
+                                                            <option value="PROBOLINGGO">PROBOLINGGO</option>
+                                                            <option value="PULANG PISAU">PULANG PISAU</option>
+                                                            <option value="PULAU MOROTAI">PULAU MOROTAI</option>
+                                                            <option value="PUNCAK">PUNCAK</option>
+                                                            <option value="PUNCAK JAYA">PUNCAK JAYA</option>
+                                                            <option value="PURBALINGGA">PURBALINGGA</option>
+                                                            <option value="PURWAKARTA">PURWAKARTA</option>
+                                                            <option value="PURWOREJO">PURWOREJO</option>
+                                                            <option value="RAJA AMPAT">RAJA AMPAT</option>
+                                                            <option value="REJANG LEBONG">REJANG LEBONG</option>
+                                                            <option value="REMBANG">REMBANG</option>
+                                                            <option value="ROKAN HILIR">ROKAN HILIR</option>
+                                                            <option value="ROKAN HULU">ROKAN HULU</option>
+                                                            <option value="ROTE NDAO">ROTE NDAO</option>
+                                                            <option value="SABAH">SABAH</option>
+                                                            <option value="SABANG">SABANG</option>
+                                                            <option value="SABU RAIJUA">SABU RAIJUA</option>
+                                                            <option value="SALATIGA">SALATIGA</option>
+                                                            <option value="SAMARINDA">SAMARINDA</option>
+                                                            <option value="SAMBAS">SAMBAS</option>
+                                                            <option value="SAMOSIR">SAMOSIR</option>
+                                                            <option value="SAMPANG">SAMPANG</option>
+                                                            <option value="SANGGAU">SANGGAU</option>
+                                                            <option value="SARMI">SARMI</option>
+                                                            <option value="SAROLANGUN">SAROLANGUN</option>
+                                                            <option value="SAWAHLUNTO">SAWAHLUNTO</option>
+                                                            <option value="SEKADAU">SEKADAU</option>
+                                                            <option value="SELAYAR">SELAYAR</option>
+                                                            <option value="SELUMA">SELUMA</option>
+                                                            <option value="SEMARANG">SEMARANG</option>
+                                                            <option value="SERAM BAGIAN BARAT">SERAM BAGIAN BARAT</option>
+                                                            <option value="SERAM BAGIAN TIMUR">SERAM BAGIAN TIMUR</option>
+                                                            <option value="SERANG">SERANG</option>
+                                                            <option value="SERDANG BEDAGAI">SERDANG BEDAGAI</option>
+                                                            <option value="SERUYAN">SERUYAN</option>
+                                                            <option value="SIAK">SIAK</option>
+                                                            <option value="SIBOLGA">SIBOLGA</option>
+                                                            <option value="SIDENRENG RAPPANG">SIDENRENG RAPPANG</option>
+                                                            <option value="SIDOARJO">SIDOARJO</option>
+                                                            <option value="SIGI">SIGI</option>
+                                                            <option value="SIJUNJUNG">SIJUNJUNG</option>
+                                                            <option value="SIKKA">SIKKA</option>
+                                                            <option value="SIMALUNGUN">SIMALUNGUN</option>
+                                                            <option value="SIMEULUE">SIMEULUE</option>
+                                                            <option value="SINGKAWANG">SINGKAWANG</option>
+                                                            <option value="SINJAI">SINJAI</option>
+                                                            <option value="SINTANG">SINTANG</option>
+                                                            <option value="SITUBONDO">SITUBONDO</option>
+                                                            <option value="SLEMAN">SLEMAN</option>
+                                                            <option value="SOLOK">SOLOK</option>
+                                                            <option value="SOLOK SELATAN">SOLOK SELATAN</option>
+                                                            <option value="SOPPENG">SOPPENG</option>
+                                                            <option value="SORONG">SORONG</option>
+                                                            <option value="SORONG SELATAN">SORONG SELATAN</option>
+                                                            <option value="SRAGEN">SRAGEN</option>
+                                                            <option value="SUBANG">SUBANG</option>
+                                                            <option value="SUBULUSSALAM">SUBULUSSALAM</option>
+                                                            <option value="SUKABUMI">SUKABUMI</option>
+                                                            <option value="SUKAMARA">SUKAMARA</option>
+                                                            <option value="SUKOHARJO">SUKOHARJO</option>
+                                                            <option value="SUMBA BARAT">SUMBA BARAT</option>
+                                                            <option value="SUMBA BARAT DAYA">SUMBA BARAT DAYA</option>
+                                                            <option value="SUMBA TENGAH">SUMBA TENGAH</option>
+                                                            <option value="SUMBA TIMUR">SUMBA TIMUR</option>
+                                                            <option value="SUMBAWA">SUMBAWA</option>
+                                                            <option value="SUMBAWA BARAT">SUMBAWA BARAT</option>
+                                                            <option value="SUMEDANG">SUMEDANG</option>
+                                                            <option value="SUMENEP">SUMENEP</option>
+                                                            <option value="SUNGAI PENUH">SUNGAI PENUH</option>
+                                                            <option value="SUPIORI">SUPIORI</option>
+                                                            <option value="SURABAYA">SURABAYA</option>
+                                                            <option value="SURAKARTA">SURAKARTA</option>
+                                                            <option value="TABALONG">TABALONG</option>
+                                                            <option value="TABANAN">TABANAN</option>
+                                                            <option value="TAKALAR">TAKALAR</option>
+                                                            <option value="TALAUD">TALAUD</option>
+                                                            <option value="TAMBRAUW">TAMBRAUW</option>
+                                                            <option value="TANA TIDUNG">TANA TIDUNG</option>
+                                                            <option value="TANA TORAJA">TANA TORAJA</option>
+                                                            <option value="TANAH BUMBU">TANAH BUMBU</option>
+                                                            <option value="TANAH DATAR">TANAH DATAR</option>
+                                                            <option value="TANAH LAUT">TANAH LAUT</option>
+                                                            <option value="TANGERANG">TANGERANG</option>
+                                                            <option value="TANGERANG SELATAN">TANGERANG SELATAN</option>
+                                                            <option value="TANGGAMUS">TANGGAMUS</option>
+                                                            <option value="TANJUNG BALAI">TANJUNG BALAI</option>
+                                                            <option value="TANJUNG JABUNG BARAT">TANJUNG JABUNG BARAT</option>
+                                                            <option value="TANJUNG JABUNG TIMUR">TANJUNG JABUNG TIMUR</option>
+                                                            <option value="TANJUNG PINANG">TANJUNG PINANG</option>
+                                                            <option value="TAPANULI SELATAN">TAPANULI SELATAN</option>
+                                                            <option value="TAPANULI TENGAH">TAPANULI TENGAH</option>
+                                                            <option value="TAPANULI UTARA">TAPANULI UTARA</option>
+                                                            <option value="TAPIN">TAPIN</option>
+                                                            <option value="TARAKAN">TARAKAN</option>
+                                                            <option value="TASIKMALAYA">TASIKMALAYA</option>
+                                                            <option value="TEBING TINGGI">TEBING TINGGI</option>
+                                                            <option value="TEBO">TEBO</option>
+                                                            <option value="TEGAL">TEGAL</option>
+                                                            <option value="TELUK BINTUNI">TELUK BINTUNI</option>
+                                                            <option value="TELUK WONDAMA">TELUK WONDAMA</option>
+                                                            <option value="TEMANGGUNG">TEMANGGUNG</option>
+                                                            <option value="TERNATE">TERNATE</option>
+                                                            <option value="TIDORE KEPULAUAN">TIDORE KEPULAUAN</option>
+                                                            <option value="TIMIKA">TIMIKA</option>
+                                                            <option value="TIMOR TENGAH SELATAN">TIMOR TENGAH SELATAN</option>
+                                                            <option value="TIMOR TENGAH UTARA">TIMOR TENGAH UTARA</option>
+                                                            <option value="TOBA SAMOSIR">TOBA SAMOSIR</option>
+                                                            <option value="TOJO UNA-UNA">TOJO UNA-UNA</option>
+                                                            <option value="TOLI-TOLI">TOLI-TOLI</option>
+                                                            <option value="TOLIKARA">TOLIKARA</option>
+                                                            <option value="TOMOHON">TOMOHON</option>
+                                                            <option value="TORAJA UTARA">TORAJA UTARA</option>
+                                                            <option value="TRENGGALEK">TRENGGALEK</option>
+                                                            <option value="TUAL">TUAL</option>
+                                                            <option value="TUBAN">TUBAN</option>
+                                                            <option value="TULANG BAWANG">TULANG BAWANG</option>
+                                                            <option value="TULANG BAWANG BARAT">TULANG BAWANG BARAT</option>
+                                                            <option value="TULUNGAGUNG">TULUNGAGUNG</option>
+                                                            <option value="VIQUEQUE">VIQUEQUE</option>
+                                                            <option value="WAJO">WAJO</option>
+                                                            <option value="WAKATOBI">WAKATOBI</option>
+                                                            <option value="WAROPEN">WAROPEN</option>
+                                                            <option value="WAY KANAN">WAY KANAN</option>
+                                                            <option value="WONOGIRI">WONOGIRI</option>
+                                                            <option value="WONOSOBO">WONOSOBO</option>
+                                                            <option value="YAHUKIMO">YAHUKIMO</option>
+                                                            <option value="YALIMO">YALIMO</option>
+                                                            <option value="YOGYAKARTA">YOGYAKARTA</option>
+                                                            <option value=" BANTUL KOTAGEDE"> BANTUL KOTAGEDE</option>
+                                                            <option value=" PEMATANGSIANTAR"> PEMATANGSIANTAR</option>
+                                                            <option value="ABEPURA">ABEPURA</option>
+                                                            <option value="ABON">ABON</option>
+                                                            <option value="AFRIKA">AFRIKA</option>
+                                                            <option value="AILEU KOTA">AILEU KOTA</option>
+                                                            <option value="ALOP">ALOP</option>
+                                                            <option value="ALOR/KALABAHI">ALOR/KALABAHI</option>
+                                                            <option value="AMBARAWA">AMBARAWA</option>
+                                                            <option value="ANAMBAS">ANAMBAS</option>
+                                                            <option value="ARU">ARU</option>
+                                                            <option value="AUSTRALIA">AUSTRALIA</option>
+                                                            <option value="BADUNG DENPASAR">BADUNG DENPASAR</option>
+                                                            <option value="BADUNG MANGUPURA">BADUNG MANGUPURA</option>
+                                                            <option value="BALI">BALI</option>
+                                                            <option value="BALIK PAPAN">BALIK PAPAN</option>
+                                                            <option value="BALIMPAPAN">BALIMPAPAN</option>
+                                                            <option value="BANAGN BARU">BANAGN BARU</option>
+                                                            <option value="BANAJARMASIN ">BANAJARMASIN </option>
+                                                            <option value="BANDAR LA,PUNG">BANDAR LA,PUNG</option>
+                                                            <option value="BANDARLAMPUNG">BANDARLAMPUNG</option>
+                                                            <option value="BANGKA INDUK">BANGKA INDUK</option>
+                                                            <option value="BANJAI">BANJAI</option>
+                                                            <option value="BANJAR BARU">BANJAR BARU</option>
+                                                            <option value="BANJAR KOTA">BANJAR KOTA</option>
+                                                            <option value="BANJAR NEGARA">BANJAR NEGARA</option>
+                                                            <option value="BANTEN">BANTEN</option>
+                                                            <option value="BANTUL KOTAGEDE">BANTUL KOTAGEDE</option>
+                                                            <option value="BARITO">BARITO</option>
+                                                            <option value="BATAM KOTA">BATAM KOTA</option>
+                                                            <option value="BATAM TIMUR">BATAM TIMUR</option>
+                                                            <option value="BATANGHARI">BATANGHARI</option>
+                                                            <option value="BATURAJA">BATURAJA</option>
+                                                            <option value="BAUCAO">BAUCAO</option>
+                                                            <option value="BAUCAU">BAUCAU</option>
+                                                            <option value="BEJANG LEBONG">BEJANG LEBONG</option>
+                                                            <option value="BEKASI SELATAN">BEKASI SELATAN</option>
+                                                            <option value="BEKASI TIMUR">BEKASI TIMUR</option>
+                                                            <option value="BEKASI UTARA">BEKASI UTARA</option>
+                                                            <option value="BELIKPAPAN">BELIKPAPAN</option>
+                                                            <option value="BELITANG">BELITANG</option>
+                                                            <option value="BENTENG">BENTENG</option>
+                                                            <option value="BIAK">BIAK</option>
+                                                            <option value="BOTOLALI">BOTOLALI</option>
+                                                            <option value="BRUNEI">BRUNEI</option>
+                                                            <option value="BUKIT TIMUR">BUKIT TIMUR</option>
+                                                            <option value="BUKIT TINGGI">BUKIT TINGGI</option>
+                                                            <option value="BULELENG">BULELENG</option>
+                                                            <option value="BUNUT">BUNUT</option>
+                                                            <option value="BUNYO">BUNYO</option>
+                                                            <option value="CALIFORNIA">CALIFORNIA</option>
+                                                            <option value="CANGGU">CANGGU</option>
+                                                            <option value="CHINA">CHINA</option>
+                                                            <option value="CILACAP TENGAH">CILACAP TENGAH</option>
+                                                            <option value="CIPUTAT">CIPUTAT</option>
+                                                            <option value="CIREBON UTARA">CIREBON UTARA</option>
+                                                            <option value="COLOMADU KARANG ANYAR">COLOMADU KARANG ANYAR</option>
+                                                            <option value="COLOMASU KARANGANYAR">COLOMASU KARANGANYAR</option>
+                                                            <option value="COMORO">COMORO</option>
+                                                            <option value="CONDONG CATUR">CONDONG CATUR</option>
+                                                            <option value="DELI TUA">DELI TUA</option>
+                                                            <option value="DELISERDANG  ">DELISERDANG  </option>
+                                                            <option value="DENPASAR BALI">DENPASAR BALI</option>
+                                                            <option value="DENPASAR BARAT">DENPASAR BARAT</option>
+                                                            <option value="DENPASAR SELATAN">DENPASAR SELATAN</option>
+                                                            <option value="DENPASAR UTARA">DENPASAR UTARA</option>
+                                                            <option value="DILI NAIN FETO">DILI NAIN FETO</option>
+                                                            <option value="DILI-TIMOR LESTE">DILI-TIMOR LESTE</option>
+                                                            <option value="DILI">DILI</option>
+                                                            <option value="DIY">DIY</option>
+                                                            <option value="EROPA">EROPA</option>
+                                                            <option value="FLORES">FLORES</option>
+                                                            <option value="FLORES TIMUR">FLORES TIMUR</option>
+                                                            <option value="GOMBONG">GOMBONG</option>
+                                                            <option value="GUNUGNKIDUL">GUNUGNKIDUL</option>
+                                                            <option value="GUNUNGKIDUL">GUNUNGKIDUL</option>
+                                                            <option value="GUNUNGSITOLI">GUNUNGSITOLI</option>
+                                                            <option value="HUMBANG HASADUTAN">HUMBANG HASADUTAN</option>
+                                                            <option value="HUMBANG HASUNDAN">HUMBANG HASUNDAN</option>
+                                                            <option value="HUMBANG HASUNDATAN">HUMBANG HASUNDATAN</option>
+                                                            <option value="IRIAN JAYA">IRIAN JAYA</option>
+                                                            <option value="JATI">JATI</option>
+                                                            <option value="JATILAWANG">JATILAWANG</option>
+                                                            <option value="JAWA BARAT ">JAWA BARAT </option>
+                                                            <option value="JAWA TENGAH">JAWA TENGAH</option>
+                                                            <option value="JAWA TIMUR">JAWA TIMUR</option>
+                                                            <option value="JAYAPURA KOTA">JAYAPURA KOTA</option>
+                                                            <option value="JAYAPURA UTARA">JAYAPURA UTARA</option>
+                                                            <option value="JEPANG">JEPANG</option>
+                                                            <option value="JOGJA">JOGJA</option>
+                                                            <option value="KAB.BINTAN">KAB.BINTAN</option>
+                                                            <option value="KABUPATEN BATUBARA">KABUPATEN BATUBARA</option>
+                                                            <option value="KABUPATEN TALAUD">KABUPATEN TALAUD</option>
+                                                            <option value="KALASAN">KALASAN</option>
+                                                            <option value="KALIREJO">KALIREJO</option>
+                                                            <option value="KALTIM">KALTIM</option>
+                                                            <option value="KAPUAS HULLU">KAPUAS HULLU</option>
+                                                            <option value="KARANG ANYAR">KARANG ANYAR</option>
+                                                            <option value="KARANG ASEM">KARANG ASEM</option>
+                                                            <option value="KARANGAYAR SOLO">KARANGAYAR SOLO</option>
+                                                            <option value="KARTASURA">KARTASURA</option>
+                                                            <option value="KATAWARINGIN BARAT">KATAWARINGIN BARAT</option>
+                                                            <option value="KATINGAN I">KATINGAN I</option>
+                                                            <option value="KELAWI">KELAWI</option>
+                                                            <option value="KEPUALAUAN RIAU">KEPUALAUAN RIAU</option>
+                                                            <option value="KEPULAUAN SERIBU">KEPULAUAN SERIBU</option>
+                                                            <option value="KERANGANYAR">KERANGANYAR</option>
+                                                            <option value="KODYA">KODYA</option>
+                                                            <option value="KODYA BANDUNG">KODYA BANDUNG</option>
+                                                            <option value="KODYA BATAM">KODYA BATAM</option>
+                                                            <option value="KODYA BOGOR">KODYA BOGOR</option>
+                                                            <option value="KODYA JAYAPURA">KODYA JAYAPURA</option>
+                                                            <option value="KODYA MADIUN">KODYA MADIUN</option>
+                                                            <option value="KODYA MAGELANG">KODYA MAGELANG</option>
+                                                            <option value="KODYA PADANG">KODYA PADANG</option>
+                                                            <option value="KODYA SALATIGA">KODYA SALATIGA</option>
+                                                            <option value="KODYA SAMARINDA">KODYA SAMARINDA</option>
+                                                            <option value="KOREA">KOREA</option>
+                                                            <option value="KOTA">KOTA</option>
+                                                            <option value="KOTA AMBON">KOTA AMBON</option>
+                                                            <option value="KOTA BANDARLAMPUNG">KOTA BANDARLAMPUNG</option>
+                                                            <option value="KOTA BANDUNG">KOTA BANDUNG</option>
+                                                            <option value="KOTA BANJAR">KOTA BANJAR</option>
+                                                            <option value="KOTA BARU">KOTA BARU</option>
+                                                            <option value="KOTA BATAM">KOTA BATAM</option>
+                                                            <option value="KOTA BEKASI">KOTA BEKASI</option>
+                                                            <option value="KOTA BLITAR">KOTA BLITAR</option>
+                                                            <option value="KOTA BONTANG ">KOTA BONTANG </option>
+                                                            <option value="KOTA CIREBON">KOTA CIREBON</option>
+                                                            <option value="KOTA DUMAI">KOTA DUMAI</option>
+                                                            <option value="KOTA GUNUNG SITOLI ">KOTA GUNUNG SITOLI </option>
+                                                            <option value="KOTA GUNUNGSITOLI">KOTA GUNUNGSITOLI</option>
+                                                            <option value="KOTA JAMBI">KOTA JAMBI</option>
+                                                            <option value="KOTA JAYAPURA">KOTA JAYAPURA</option>
+                                                            <option value="KOTA KENDARI">KOTA KENDARI</option>
+                                                            <option value="KOTA KODYA CIMAHI">KOTA KODYA CIMAHI</option>
+                                                            <option value="KOTA KUPANG">KOTA KUPANG</option>
+                                                            <option value="KOTA LAMPUNG">KOTA LAMPUNG</option>
+                                                            <option value="KOTA MADIUN">KOTA MADIUN</option>
+                                                            <option value="KOTA MADYA">KOTA MADYA</option>
+                                                            <option value="KOTA MADYA CIREBON">KOTA MADYA CIREBON</option>
+                                                            <option value="KOTA MADYA MEDAN">KOTA MADYA MEDAN</option>
+                                                            <option value="KOTA MAGELANG">KOTA MAGELANG</option>
+                                                            <option value="KOTA MAKASSAR">KOTA MAKASSAR</option>
+                                                            <option value="KOTA MEDAN">KOTA MEDAN</option>
+                                                            <option value="KOTA METRO">KOTA METRO</option>
+                                                            <option value="KOTA PADANG">KOTA PADANG</option>
+                                                            <option value="KOTA PALEMBANG">KOTA PALEMBANG</option>
+                                                            <option value="KOTA PALOPO">KOTA PALOPO</option>
+                                                            <option value="KOTA PALU">KOTA PALU</option>
+                                                            <option value="KOTA PEKALONGAN">KOTA PEKALONGAN</option>
+                                                            <option value="KOTA PEKANBARU">KOTA PEKANBARU</option>
+                                                            <option value="KOTA PEMATANG SIANTAR">KOTA PEMATANG SIANTAR</option>
+                                                            <option value="KOTA PONTIANAK">KOTA PONTIANAK</option>
+                                                            <option value="KOTA SALATIGA">KOTA SALATIGA</option>
+                                                            <option value="KOTA SAMARINDA">KOTA SAMARINDA</option>
+                                                            <option value="KOTA SANGGAU">KOTA SANGGAU</option>
+                                                            <option value="KOTA SEMARANG">KOTA SEMARANG</option>
+                                                            <option value="KOTA SERANG">KOTA SERANG</option>
+                                                            <option value="KOTA SINGKAWANG">KOTA SINGKAWANG</option>
+                                                            <option value="KOTA SORONG">KOTA SORONG</option>
+                                                            <option value="KOTA SUKABUMI">KOTA SUKABUMI</option>
+                                                            <option value="KOTA TANJUNG PINANG">KOTA TANJUNG PINANG</option>
+                                                            <option value="KOTA TANJUNGPINANG">KOTA TANJUNGPINANG</option>
+                                                            <option value="KOTA TARAKAN">KOTA TARAKAN</option>
+                                                            <option value="KOTA TEGAL">KOTA TEGAL</option>
+                                                            <option value="KOTA TUAL">KOTA TUAL</option>
+                                                            <option value="KOTA WARING BARAT">KOTA WARING BARAT</option>
+                                                            <option value="KOTA WARING TIMUR">KOTA WARING TIMUR</option>
+                                                            <option value="KOTA WARINGIN BARAT">KOTA WARINGIN BARAT</option>
+                                                            <option value="KOTA WARINGIN TIMUR">KOTA WARINGIN TIMUR</option>
+                                                            <option value="KOTA YOGYAKARTA">KOTA YOGYAKARTA</option>
+                                                            <option value="KOTAMADYA">KOTAMADYA</option>
+                                                            <option value="KOTAMADYA BOGOR">KOTAMADYA BOGOR</option>
+                                                            <option value="KOTAMOBAGU">KOTAMOBAGU</option>
+                                                            <option value="KOTAWARINGIN">KOTAWARINGIN</option>
+                                                            <option value="KOTIM">KOTIM</option>
+                                                            <option value="KUALA KAPUAS">KUALA KAPUAS</option>
+                                                            <option value="KUANTAN SINGING">KUANTAN SINGING</option>
+                                                            <option value="KUBU KAYA">KUBU KAYA</option>
+                                                            <option value="KUBURAYA">KUBURAYA</option>
+                                                            <option value="KUL;ONPROGO">KUL;ONPROGO</option>
+                                                            <option value="KULONPROGO">KULONPROGO</option>
+                                                            <option value="KUTA">KUTA</option>
+                                                            <option value="KUTA MADYA">KUTA MADYA</option>
+                                                            <option value="KUTAI">KUTAI</option>
+                                                            <option value="KUTAI KERTANEGARA">KUTAI KERTANEGARA</option>
+                                                            <option value="LABUHAN BARU">LABUHAN BARU</option>
+                                                            <option value="LABUHAN BATU">LABUHAN BATU</option>
+                                                            <option value="LABUHAN BATU SELATAN">LABUHAN BATU SELATAN</option>
+                                                            <option value="LABUHAN BATU UTARA">LABUHAN BATU UTARA</option>
+                                                            <option value="LABUHAN RATU ">LABUHAN RATU </option>
+                                                            <option value="LABURA">LABURA</option>
+                                                            <option value="LAMPUNG">LAMPUNG</option>
+                                                            <option value="LANGGUR MALUKU TENGGARA">LANGGUR MALUKU TENGGARA</option>
+                                                            <option value="LANGKAI">LANGKAI</option>
+                                                            <option value="LAOS">LAOS</option>
+                                                            <option value="LAPUNG SELATAN">LAPUNG SELATAN</option>
+                                                            <option value="LARANTUKA">LARANTUKA</option>
+                                                            <option value="LAUTEM">LAUTEM</option>
+                                                            <option value="LENDAH ">LENDAH </option>
+                                                            <option value="LESTE">LESTE</option>
+                                                            <option value="LIMAPULUH KOTA">LIMAPULUH KOTA</option>
+                                                            <option value="LIQUITA">LIQUITA</option>
+                                                            <option value="LIUQUICA SELATAN">LIUQUICA SELATAN</option>
+                                                            <option value="LIUQUICQ SELATAN">LIUQUICQ SELATAN</option>
+                                                            <option value="LOA BAKUNG">LOA BAKUNG</option>
+                                                            <option value="LOTIM">LOTIM</option>
+                                                            <option value="LUBUK LINGAU">LUBUK LINGAU</option>
+                                                            <option value="LUBUK LINGGAU">LUBUK LINGGAU</option>
+                                                            <option value="LUBUK PAKAM">LUBUK PAKAM</option>
+                                                            <option value="LUBUKLINNGAU">LUBUKLINNGAU</option>
+                                                            <option value="LUWUK UTARA">LUWUK UTARA</option>
+                                                            <option value="LUWUTIMUR">LUWUTIMUR</option>
+                                                            <option value="MADAGASKAR">MADAGASKAR</option>
+                                                            <option value="MADYA CIREBON">MADYA CIREBON</option>
+                                                            <option value="MAIBRAT">MAIBRAT</option>
+                                                            <option value="MAIRABAT">MAIRABAT</option>
+                                                            <option value="MAKASAR">MAKASAR</option>
+                                                            <option value="MALAKA ">MALAKA </option>
+                                                            <option value="MALAKA TENGAH">MALAKA TENGAH</option>
+                                                            <option value="MALAN">MALAN</option>
+                                                            <option value="MALARA">MALARA</option>
+                                                            <option value="MALAWI">MALAWI</option>
+                                                            <option value="MALAYSIA">MALAYSIA</option>
+                                                            <option value="MALUKU TENG BARAT">MALUKU TENG BARAT</option>
+                                                            <option value="MAMERE">MAMERE</option>
+                                                            <option value="MANAJAM PASER UTARA">MANAJAM PASER UTARA</option>
+                                                            <option value="MANOKWARI BARAT">MANOKWARI BARAT</option>
+                                                            <option value="MANUKWARI">MANUKWARI</option>
+                                                            <option value="MANUTUHI">MANUTUHI</option>
+                                                            <option value="MAUMERE">MAUMERE</option>
+                                                            <option value="MEDAN KOTA">MEDAN KOTA</option>
+                                                            <option value="MELAVI">MELAVI</option>
+                                                            <option value="MELAWAI">MELAWAI</option>
+                                                            <option value="MENADO">MENADO</option>
+                                                            <option value="MERANG">MERANG</option>
+                                                            <option value="MERANTI">MERANTI</option>
+                                                            <option value="MIROMBO">MIROMBO</option>
+                                                            <option value="MUARA JAMBI">MUARA JAMBI</option>
+                                                            <option value="MUARA TEWEH">MUARA TEWEH</option>
+                                                            <option value="MUKO-MUKO">MUKO-MUKO</option>
+                                                            <option value="MUKOMUKOUTARA">MUKOMUKOUTARA</option>
+                                                            <option value="MUNTILAN">MUNTILAN</option>
+                                                            <option value="MYANMAR">MYANMAR</option>
+                                                            <option value="NATARAN">NATARAN</option>
+                                                            <option value="NGABANG">NGABANG</option>
+                                                            <option value="NGAGLIK">NGAGLIK</option>
+                                                            <option value="OE-CUSSE">OE-CUSSE</option>
+                                                            <option value="OGALIR">OGALIR</option>
+                                                            <option value="OGAN KEMERING ULU">OGAN KEMERING ULU</option>
+                                                            <option value="OKI">OKI</option>
+                                                            <option value="OKSIBIL">OKSIBIL</option>
+                                                            <option value="OKU">OKU</option>
+                                                            <option value="OKU INDUK">OKU INDUK</option>
+                                                            <option value="OKU SELATAN">OKU SELATAN</option>
+                                                            <option value="OKU TIMUR">OKU TIMUR</option>
+                                                            <option value="PADANG PANJANG">PADANG PANJANG</option>
+                                                            <option value="PADANG SIDAPUAN">PADANG SIDAPUAN</option>
+                                                            <option value="PADANG SIDIMPUAN">PADANG SIDIMPUAN</option>
+                                                            <option value="PADANG TIMUR">PADANG TIMUR</option>
+                                                            <option value="PADANGSIDIMPUAN">PADANGSIDIMPUAN</option>
+                                                            <option value="PAHANDUT">PAHANDUT</option>
+                                                            <option value="PAKPAK BARAT ">PAKPAK BARAT </option>
+                                                            <option value="PALALAWAN">PALALAWAN</option>
+                                                            <option value="PALANG KARAYA">PALANG KARAYA</option>
+                                                            <option value="PALANGKARAYA">PALANGKARAYA</option>
+                                                            <option value="PALANGKARAYA.">PALANGKARAYA.</option>
+                                                            <option value="PALANGRAYA">PALANGRAYA</option>
+                                                            <option value="PALEMBANG MUBA">PALEMBANG MUBA</option>
+                                                            <option value="PALLO">PALLO</option>
+                                                            <option value="PAMULANG">PAMULANG</option>
+                                                            <option value="PANCUR BATU">PANCUR BATU</option>
+                                                            <option value="PANGKALAN BUN">PANGKALAN BUN</option>
+                                                            <option value="PANGKALPINANG">PANGKALPINANG</option>
+                                                            <option value="PANGKEP">PANGKEP</option>
+                                                            <option value="PAPPAK BHARAT">PAPPAK BHARAT</option>
+                                                            <option value="PAPUA">PAPUA</option>
+                                                            <option value="PAPUA BARAT">PAPUA BARAT</option>
+                                                            <option value="PAPUA TIMUR">PAPUA TIMUR</option>
+                                                            <option value="PARAKAN">PARAKAN</option>
+                                                            <option value="PAREPARE">PAREPARE</option>
+                                                            <option value="PARIGIMOUTONG">PARIGIMOUTONG</option>
+                                                            <option value="PASES">PASES</option>
+                                                            <option value="PEKAN BARU">PEKAN BARU</option>
+                                                            <option value="PEMATANG SIANTAR">PEMATANG SIANTAR</option>
+                                                            <option value="PHILIPINE">PHILIPINE</option>
+                                                            <option value="POLEWALI">POLEWALI</option>
+                                                            <option value="POMTIANAK">POMTIANAK</option>
+                                                            <option value="PONTIANAK BARAT">PONTIANAK BARAT</option>
+                                                            <option value="PONTIANAK KOTA">PONTIANAK KOTA</option>
+                                                            <option value="PONTIANAK.">PONTIANAK.</option>
+                                                            <option value="PPONTIANAK">PPONTIANAK</option>
+                                                            <option value="PRAMBANAN">PRAMBANAN</option>
+                                                            <option value="PURWODADI">PURWODADI</option>
+                                                            <option value="PURWOKERTO">PURWOKERTO</option>
+                                                            <option value="PUTUSSIBAU">PUTUSSIBAU</option>
+                                                            <option value="RANTAU PRAPAT">RANTAU PRAPAT</option>
+                                                            <option value="RANTEPAO UTARA">RANTEPAO UTARA</option>
+                                                            <option value="RAWAMANGKUR">RAWAMANGKUR</option>
+                                                            <option value="RIAU">RIAU</option>
+                                                            <option value="RIAU KEPULAUAN">RIAU KEPULAUAN</option>
+                                                            <option value="ROKAN HUIU">ROKAN HUIU</option>
+                                                            <option value="ROKANHULU">ROKANHULU</option>
+                                                            <option value="RUTENG">RUTENG</option>
+                                                            <option value="SAMARINDA UTARA">SAMARINDA UTARA</option>
+                                                            <option value="SAME-MANUFAHI">SAME-MANUFAHI</option>
+                                                            <option value="SAMPIT">SAMPIT</option>
+                                                            <option value="SANGATTA">SANGATTA</option>
+                                                            <option value="SANGGATA">SANGGATA</option>
+                                                            <option value="SANGIHE">SANGIHE</option>
+                                                            <option value="SEMARANG BARAT">SEMARANG BARAT</option>
+                                                            <option value="SERENGAN">SERENGAN</option>
+                                                            <option value="SIAK SRI INDRAPURA">SIAK SRI INDRAPURA</option>
+                                                            <option value="SIANTANG">SIANTANG</option>
+                                                            <option value="SIANTAR">SIANTAR</option>
+                                                            <option value="SIAU TAGULANDANG BIARO">SIAU TAGULANDANG BIARO</option>
+                                                            <option value="SIMALUNGGUN">SIMALUNGGUN</option>
+                                                            <option value="SIMALUNGU">SIMALUNGU</option>
+                                                            <option value="SINALUNGUN">SINALUNGUN</option>
+                                                            <option value="SINGAPORE">SINGAPORE</option>
+                                                            <option value="SINGKIL">SINGKIL</option>
+                                                            <option value="SINGTANG">SINGTANG</option>
+                                                            <option value="SINTANG 78872">SINTANG 78872</option>
+                                                            <option value="SISKA">SISKA</option>
+                                                            <option value="SITUBANDO">SITUBANDO</option>
+                                                            <option value="SLEMAN">SLEMAN</option>
+                                                            <option value="SLOEMAN">SLOEMAN</option>
+                                                            <option value="SMBA TIMUR">SMBA TIMUR</option>
+                                                            <option value="SOLO">SOLO</option>
+                                                            <option value="SORONG BARAT">SORONG BARAT</option>
+                                                            <option value="SUAI">SUAI</option>
+                                                            <option value="SUARAKARTA">SUARAKARTA</option>
+                                                            <option value="SUKUHARJO">SUKUHARJO</option>
+                                                            <option value="SULA">SULA</option>
+                                                            <option value="SUMATERA SELATAN">SUMATERA SELATAN</option>
+                                                            <option value="SUMBAWA BESAR">SUMBAWA BESAR</option>
+                                                            <option value="SUMBER">SUMBER</option>
+                                                            <option value="SUNGAI LIAT">SUNGAI LIAT</option>
+                                                            <option value="SURINAME">SURINAME</option>
+                                                            <option value="TABALONG TANJUNG">TABALONG TANJUNG</option>
+                                                            <option value="TAIWAN">TAIWAN</option>
+                                                            <option value="TAMANAN">TAMANAN</option>
+                                                            <option value="TAMBUN SELATAN">TAMBUN SELATAN</option>
+                                                            <option value="TANATORAJA">TANATORAJA</option>
+                                                            <option value="TANGERANG KOTA">TANGERANG KOTA</option>
+                                                            <option value="TANGGERANG">TANGGERANG</option>
+                                                            <option value="TANGGERANG RAWA  BOGOR ">TANGGERANG RAWA  BOGOR </option>
+                                                            <option value="TANGGERANG SELATAN">TANGGERANG SELATAN</option>
+                                                            <option value="TANJAB BARAT">TANJAB BARAT</option>
+                                                            <option value="TANJUNG KARANG">TANJUNG KARANG</option>
+                                                            <option value="TANJUNGBALAI">TANJUNGBALAI</option>
+                                                            <option value="TANJUNGPINANG">TANJUNGPINANG</option>
+                                                            <option value="TAPANULI">TAPANULI</option>
+                                                            <option value="TAPIAN NAULI TENGAH">TAPIAN NAULI TENGAH</option>
+                                                            <option value="TARAKAN BARAT">TARAKAN BARAT</option>
+                                                            <option value="TARUTUNG">TARUTUNG</option>
+                                                            <option value="TAWAU - SABAH">TAWAU - SABAH</option>
+                                                            <option value="TELUK KUANTAN">TELUK KUANTAN</option>
+                                                            <option value="TEMINABUAN">TEMINABUAN</option>
+                                                            <option value="TENGERANG SELATAN">TENGERANG SELATAN</option>
+                                                            <option value="TENTENA">TENTENA</option>
+                                                            <option value="THAILAND">THAILAND</option>
+                                                            <option value="THEHOK">THEHOK</option>
+                                                            <option value="TIMOR LESTE">TIMOR LESTE</option>
+                                                            <option value="TIMOR TIMUR">TIMOR TIMUR</option>
+                                                            <option value="TIMORTENGAH UTARA">TIMORTENGAH UTARA</option>
+                                                            <option value="TIMUR">TIMUR</option>
+                                                            <option value="TIMUR TENGAH SELATAN">TIMUR TENGAH SELATAN</option>
+                                                            <option value="TOBASA">TOBASA</option>
+                                                            <option value="TONDANO">TONDANO</option>
+                                                            <option value="TRANGGERANG">TRANGGERANG</option>
+                                                            <option value="TTS">TTS</option>
+                                                            <option value="TTU">TTU</option>
+                                                            <option value="TUAL MALUKU TENGGARA">TUAL MALUKU TENGGARA</option>
+                                                            <option value="TUIANG BAWANG">TUIANG BAWANG</option>
+                                                            <option value="TULANGBAWANG">TULANGBAWANG</option>
+                                                            <option value="TULUNG AGUNG">TULUNG AGUNG</option>
+                                                            <option value="TULUNGAGNUNG">TULUNGAGNUNG</option>
+                                                            <option value="USA">USA</option>
+                                                            <option value="VERA CRUZ">VERA CRUZ</option>
+                                                            <option value="VIETNAM">VIETNAM</option>
+                                                            <option value="VIQURQUE">VIQURQUE</option>
+                                                            <option value="WAMENA">WAMENA</option>
+                                                            <option value="WARINGIN BARAT">WARINGIN BARAT</option>
+                                                            <option value="WARINGIN TIMUR">WARINGIN TIMUR</option>
+                                                            <option value="WONOSARI">WONOSARI</option>
+                                                            <option value="YAPEN">YAPEN</option>
+                                                            <option value="AILEU">AILEU</option>
+                                                            <option value="ANTANANARIVO">ANTANANARIVO</option>
+                                                            <option value="BATANG HARI">BATANG HARI</option>
+                                                            <option value="KEPULAUAN MERANTI">KEPULAUAN MERANTI</option>
+                                                            <option value="KEPULAUAN SANGIHE">KEPULAUAN SANGIHE</option>
+                                                            <option value="KEPULAUAN SIAU TAGULANDANG BIARO">KEPULAUAN SIAU TAGULANDANG BIARO</option>
+                                                            <option value="KEPULAUAN SULA">KEPULAUAN SULA</option>
+                                                            <option value="KEPULAUAN TALAUD">KEPULAUAN TALAUD</option>
+                                                            <option value="LANSING">LANSING</option>
+                                                            <option value="MOBAGU">MOBAGU</option>
+                                                            <option value="NEW YORK">NEW YORK</option>
+                                                            <option value="PARE-PARE">PARE-PARE</option>
+                                                            <option value="POLEWALI MAMASA">POLEWALI MAMASA</option>
+                                                            <option value="TULANG BAWANG TENGAH">TULANG BAWANG TENGAH</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="AlamatProvinsi" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="AlamatProvinsi">
+                                                            <option selected="selected" value="">-</option>
+                                                            <option value="DKI JAKARTA">DKI JAKARTA</option>
+                                                            <option value="JAWA BARAT">JAWA BARAT</option>
+                                                            <option value="JAWA TENGAH">JAWA TENGAH</option>
+                                                            <option value="DAERAH ISTIMEWA YOGYAKARTA">DAERAH ISTIMEWA YOGYAKARTA</option>
+                                                            <option value="JAWA TIMUR">JAWA TIMUR</option>
+                                                            <option value="SUMATERA UTARA">SUMATERA UTARA</option>
+                                                            <option value="SUMATERA BARAT">SUMATERA BARAT</option>
+                                                            <option value="RIAU">RIAU</option>
+                                                            <option value="JAMBI">JAMBI</option>
+                                                            <option value="SUMATERA SELATAN">SUMATERA SELATAN</option>
+                                                            <option value="LAMPUNG">LAMPUNG</option>
+                                                            <option value="KALIMANTAN BARAT">KALIMANTAN BARAT</option>
+                                                            <option value="KALIMANTAN TENGAH">KALIMANTAN TENGAH</option>
+                                                            <option value="KALIMANTAN SELATAN">KALIMANTAN SELATAN</option>
+                                                            <option value="KALIMANTAN TIMUR">KALIMANTAN TIMUR</option>
+                                                            <option value="SULAWESI UTARA">SULAWESI UTARA</option>
+                                                            <option value="SULAWESI TENGAH">SULAWESI TENGAH</option>
+                                                            <option value="SULAWESI SELATAN">SULAWESI SELATAN</option>
+                                                            <option value="SULAWESI TENGGARA">SULAWESI TENGGARA</option>
+                                                            <option value="MALUKU">MALUKU</option>
+                                                            <option value="BALI">BALI</option>
+                                                            <option value="NUSA TENGGARA BARAT">NUSA TENGGARA BARAT</option>
+                                                            <option value="NUSA TENGGARA TIMUR">NUSA TENGGARA TIMUR</option>
+                                                            <option value="PAPUA">PAPUA</option>
+                                                            <option value="BENGKULU">BENGKULU</option>
+                                                            <option value="BANTEN">BANTEN</option>
+                                                            <option value="MALUKU UTARA">MALUKU UTARA</option>
+                                                            <option value="KEPULAUAN BANGKA BELITUNG">KEPULAUAN BANGKA BELITUNG</option>
+                                                            <option value="GORONTALO">GORONTALO</option>
+                                                            <option value="PAPUA BARAT">PAPUA BARAT</option>
+                                                            <option value="KEPULAUAN RIAU">KEPULAUAN RIAU</option>
+                                                            <option value="SULAWESI BARAT">SULAWESI BARAT</option>
+                                                            <option value="LUAR NEGERI">LUAR NEGERI</option>
+                                                            <option value="NANGROE ACEH DARUSALAM">NANGROE ACEH DARUSALAM</option>
+                                                            <option value="SINGAPURA">SINGAPURA</option>
+                                                            <option value="TIMOR LESTE">TIMOR LESTE</option>
+                                                            <option value="AUSTRALIA">AUSTRALIA</option>
+                                                            <option value="USA">USA</option>
+                                                            <option value="MALAYSIA">MALAYSIA</option>
+                                                            <option value="MADAGASCAR">MADAGASCAR</option>
+                                                            <option value="PAPUA NUGINI">PAPUA NUGINI</option>
+                                                            <option value="BRUNEI DARUSSALAM">BRUNEI DARUSSALAM</option>
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="AlamatKodepos" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" asp-for="AlamatKodepos" class="form-control" placeholder="Kode Post Misal 53212">
+                                                        <span asp-validation-for="AlamatKodepos" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Golongan Darah</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="radio" asp-for="GolDarah" id="goldaro" value="O" checked>
+                                                        <label for="male">O</label>
+                                                        <input type="radio" asp-for="GolDarah" id="goldara" value="A">
+                                                        <label for="male">A</label>
+                                                        <input type="radio" asp-for="GolDarah" id="goldarb" value="B">
+                                                        <label for="male">B</label>
+                                                        <input type="radio" asp-for="GolDarah" id="goldarab" value="AB">
+                                                        <label for="male">AB</label>
+                                                        <input type="radio" asp-for="GolDarah" id="goldart" value="-">
+                                                        <label for="male">Belum Diketahui</label>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Warga Negara</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="radio" asp-for="Warganegara" id="wni" value="WNI" checked>
+                                                        <label for="male">WNI</label>
+                                                        <input type="radio" asp-for="Warganegara" id="wna" value="WNA">
+                                                        <label>WNA</label>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="NoKtp" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" asp-for="NoKtp" class="form-control" placeholder="Nomor KTP">
+                                                        <span asp-validation-for="NoKtp" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="TglAkhirBerlakuKtp" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" asp-for="TglAkhirBerlakuKtp" class="form-control" placeholder="dd/mm/yyyy">
+                                                        <span asp-validation-for="TglAkhirBerlakuKtp" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="Npwp" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="Npwp" class="form-control" placeholder=" Nomor NPWP">
+                                                        <span asp-validation-for="Npwp" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="StatusPtkp" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="StatusPtkp">
+                                                            <option selected="selected" value="">-</option>
+                                                            <option value="0">0</option>
+                                                            <option value="K0">K0</option>
+                                                            <option value="K1">K1</option>
+                                                            <option value="K2">K2</option>
+                                                            <option value="K3">K3</option>
+                                                            <option value="KO">KO</option>
+                                                            <option value="TK/0">TK/0</option>
+                                                            <option value="TK/B0">TK/B0</option>
+                                                            <option value="TK1">TK1</option>
+                                                            <option value="TK2">TK2</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="radio" asp-for="JnsKel" id="L" value="L">
+                                                        <label for="male">Laki-Laki</label>
+                                                        <input type="radio" asp-for="JnsKel" id="P" value="W">
+                                                        <label>Wanita</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="Agama" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="Agama">
+                                                            <option selected="selected" value="">-</option>
+                                                            <option value="Buddha">Buddha</option>
+                                                            <option value="Hindu">Hindu</option>
+                                                            <option value="Islam">Islam</option>
+                                                            <option value="Katolik">Katolik</option>
+                                                            <option value="Kristen">Kristen</option>
+                                                            <option value="Konghucu">Konghucu</option>
+                                                            <option value="Kepercayaan">Kepercayaan</option>
+                                                            <option value="Lainnya">Lainnya</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-2 col-form-label">Status Sipil</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="radio" asp-for="StatusSipil" id="belum" value="Belum Menikah" checked>
+                                                        <label>Belum Menikah</label>
+
+                                                        <input type="radio" asp-for="StatusSipil" id="nikah" value="Menikah">
+                                                        <label for="male">Menikah</label>
+
+                                                        <input type="radio" asp-for="StatusSipil" id="selesai" value="Cerai">
+                                                        <label>Cerai</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="NoPaspor" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="NoPaspor" class="form-control" placeholder=" Nomor Paspor">
+                                                        <span asp-validation-for="NoPaspor" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="NipPns" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="NipPns" class="form-control" placeholder=" NIP PNS">
+                                                        <span asp-validation-for="NipPns" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="StatusAktifitas" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="StatusAktifitas">
+                                                            <option value="Aktif">Aktif</option>
+                                                            <option value="Non Aktif">Non Aktif</option>
+                                                            <option value="Meninggal">Meninggal</option>
+                                                            <option value="Pensiun">Pensiun</option>
+                                                            <option value="Mengundurkan Diri">Mengundurkan Diri</option>
+                                                            <option value="Tugas Belajar">Tugas Belajar</option>
+                                                            <option value="Ijin Belajar">Ijin Belajar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="CurrentStatus" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="CurrentStatus">
+                                                            <option value="Aktif">Aktif</option>
+                                                            <option value="Non Aktif">Non Aktif</option>
+                                                            <option value="Meninggal">Meninggal</option>
+                                                            <option value="Pensiun">Pensiun</option>
+                                                            <option value="Mengundurkan Diri">Mengundurkan Diri</option>
+                                                            <option value="Tugas Belajar">Tugas Belajar</option>
+                                                            <option value="Ijin Belajar">Ijin Belajar</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="Nidn" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="Nidn" class="form-control" placeholder=" NIDN">
+                                                        <span asp-validation-for="Nidn" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="PendidikanTerakhir" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="PendidikanTerakhir">
+                                                            <option selected="selected" value="">-</option>
+                                                            <option value="SLTA">SLTA</option>
+                                                            <option value="AKADEMI">AKADEMI</option>
+                                                            <option value="S1">S1</option>
+                                                            <option value="S2">S2</option>
+                                                            <option value="S3">S3</option>
+                                                            <option value="D1">D1</option>
+                                                            <option value="D2">D2</option>
+                                                            <option value="D3">D3</option>
+                                                            <option value="SD">SD</option>
+                                                            <option value="SMP">SMP</option>
+
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="PendidikanDiakui" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="PendidikanDiakui">
+                                                            <option selected="selected" value="">-</option>
+                                                            <option value="SLTA">SLTA</option>
+                                                            <option value="AKADEMI">AKADEMI</option>
+                                                            <option value="S1">S1</option>
+                                                            <option value="S2">S2</option>
+                                                            <option value="S3">S3</option>
+                                                            <option value="D1">D1</option>
+                                                            <option value="D2">D2</option>
+                                                            <option value="D3">D3</option>
+                                                            <option value="SD">SD</option>
+                                                            <option value="SMP">SMP</option>
+
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="NoSertifikatPendidik" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="NoSertifikatPendidik" class="form-control" placeholder=" Nomor NPWP">
+                                                        <span asp-validation-for="NoSertifikatPendidik" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-2 col-form-label">Status Restitusi</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="radio" asp-for="StatusRestitusi" id="bujang" value="Restitusi Bujang" checked>
+                                                        <label>Restitusi Bujang</label>
+                                                        <input type="radio" asp-for="StatusRestitusi" id="keluarga" value="Restitusi Keluarga">
+                                                        <label for="male">Restitusi Keluarga</label>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                        </div>
+
+                                        <div class="tab-pane" id="kontak">
+                                            <div class="card-body card card-primary card-outline ">
+                                                <label asp-for="EmailInstitusi" class="col-sm-2 col-form-label"> Email Insitusi</label>
+                                                <div class="form-group col-md-5">
+
+                                                    <input type="email" asp-for="EmailInstitusi" class="form-control" placeholder="Tempat Lahir">
+                                                    <span asp-validation-for="EmailInstitusi" class="text-danger"></span>
+
+                                                </div>
+                                                <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+                                                <div class="form-group col-md-5">
+
+                                                    <input type="email" asp-for="Email" class="form-control" placeholder="Email">
+                                                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                                                </div>
+                                                <label asp-for="NoTelponRumah" class="col-sm-2 col-form-label">Telepon Rumah</label>
+                                                <div class="form-group col-md-5">
+
+                                                    <input type="number" asp-for="NoTelponRumah" class="form-control" placeholder="telpon rumah">
+                                                    <span asp-validation-for="NoTelponRumah" class="text-danger"></span>
+
+                                                </div>
+                                                <label asp-for="NoTelponHp" class="col-sm-2 col-form-label"> Nomor HP</label>
+                                                <div class="form-group col-md-5">
+
+                                                    <input type="number" asp-for="NoTelponHp" class="form-control" placeholder="Nomor HP">
+                                                    <span asp-validation-for="NoTelponHp" class="text-danger"></span>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!---  Penelitian-->
+
+                                        <div class="tab-pane" id="foto">
+                                            <div class="card-body card card-primary card-outline ">
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-2 col-form-label">File Foto</label>
+                                                    <input asp-for="FileFoto" type="file">
+                                                    <div id="previewFoto">
+                                                        @if (Model.FileFotom != null)
+                                                        {
+                                                            <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.FileFotom) " width="300" height="300">
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="" class="col-sm-2 col-form-label">File KTP</label>
+                                                    <input asp-for="FileKtp" type="file">
+                                                    <div id="previewKtp">
+                                                        @if (Model.FileKtpm != null)
+                                                        {
+                                                            <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.FileKtpm) " width="300" height="300">
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-2 col-form-label">File Npwp</label>
+                                                    <input asp-for="FileNpwp" type="file">
+                                                    <div id="previewNpwp">
+                                                        @if (Model.FileNpwpm != null)
+                                                        {
+                                                            <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.FileNpwpm) " width="300" height="300">
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-2 col-form-label">File Kartu Pegawai</label>
+                                                    <input asp-for="FileKartuPegawai" type="file">
+                                                    <div id="previewKartu">
+                                                        @if (Model.FileKartuPegawaim != null)
+                                                        {
+                                                            <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.FileKartuPegawaim) " width="300" height="300">
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-2 col-form-label">File Asuransi</label>
+                                                    <input asp-for="FileAsuransi" type="file">
+                                                    <div id="previewAsuransi">
+                                                        @if (Model.FileAsuransim != null)
+                                                        {
+                                                            <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.FileAsuransim)" width="300" height="300">
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane" id="karir">
+                                            <div class="card-body card card-primary card-outline ">
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Status Kepegawaian</label>
+                                                    <div class="col-sm-10">
+
+                                                        <input type="radio" asp-for="StatusKepegawaian" id="cln" value="Calon">
+                                                        <label for="male">Calon</label>
+                                                        <input type="radio" asp-for="StatusKepegawaian" id="ttp" value="Tetap">
+                                                        <label for="male">Tetap</label>
+                                                        <input type="radio" asp-for="StatusKepegawaian" id="dpk" value="DPK">
+                                                        <label for="male">DPK</label>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Status Fungsional</label>
+                                                    <div class="col-sm-10">
+
+                                                        <input type="radio" asp-for="StatusFungsional" id="aktif" value="Aktif">
+                                                        <label for="male">Aktif</label>
+                                                        <input type="radio" asp-for="StatusFungsional" id="studilk" value="Studi Luar Kota">
+                                                        <label for="male">Studi Luar Kota</label>
+                                                        <input type="radio" asp-for="StatusFungsional" id="studidk" value="Studi Dalam Kota">
+                                                        <label for="male">Studi Dalam Kota</label>
+                                                        <input type="radio" asp-for="StatusFungsional" id="studiln" value="Studi Luar Negri">
+                                                        <label for="male">Studi Luar Negri</label>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Fungsional</label>
+                                                    <select id="fungsional" asp-for="IdRefFungsional"
+                                                            asp-items="@(new SelectList(Model.fungsional,"IdRefFungsional","Deskripsi"))">
+                                                        <option value="">-</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Unit</label>
+                                                    <select asp-for="IdUnit"
+                                                            asp-items="@(new SelectList(Model.unit,"IdUnit","NamaUnit"))">
+                                                        <option value="">-</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Unit Penempatan</label>
+                                                    <select asp-for="MstIdUnit"
+                                                            asp-items="@(new SelectList(Model.unit,"IdUnit","NamaUnit"))">
+                                                        <option value="">-</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Sub Unit/Prodi</label>
+                                                    <select asp-for="IdUnitAkademik"
+                                                            asp-items="@(new SelectList(Model.prodi,"IdUnit","NamaUnitAkademik"))">
+                                                        <option>Please select one</option>
+                                                    </select>
+
+                                                
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Prodi EPSBED	</label>
+                                                    <select asp-for="IdUnitAkademikEpsbed"
+                                                            asp-items="@(new SelectList(Model.prodi,"IdUnit","NamaUnitAkademik"))">
+                                                        <option>Please select one</option>
+                                                    </select>
+                                                 
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Golongan Negri</label>
+                                                    <select asp-for="IdRefGolongan"
+                                                            asp-items="@(new SelectList(Model.golongan,"IdRefGolongan","Deskripsi"))">
+                                                        <option value="">-</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Golongan Lokal</label>
+                                                    <select asp-for="IdRefGolonganLokal"
+                                                            asp-items="@(new SelectList(Model.golongan,"IdRefGolongan","Deskripsi"))">
+                                                        <option value="">-</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Jabatan Akademik Negri</label>
+                                                    <select asp-for="IdRefJbtnAkademik"
+                                                            asp-items="@(new SelectList(Model.akademik,"IdRefJbtnAkademik","Deskripsi"))">
+                                                        <option value="">-</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="col-sm-2 col-form-label">Jabatan Akademik Lokal</label>
+                                                    <select asp-for="IdRefJbtnAkademikLokal"
+                                                            asp-items="@(new SelectList(Model.akademik,"IdRefJbtnAkademik","Deskripsi"))">
+                                                        <option value="">-</option>
+                                                    </select>
+                                                </div>
+                                               
+                                            </div>
+
+
+                                            <!--- / Publikasi-->
+                                        </div>
+
+
+
+                                        <!-- /.card-body -->
+                                    </div>
+
+
+                                    <input type="submit" class="btn btn-primary" value="Simpan Semua Data" />
+
+                                </div>
+                            </form>
+                        </div>
+
+
+
+                        <!-- /.nav-tabs-custom -->
+
+                    </div>
+
+                    <div class="card-body card card-primary card-outline ">
+
+
+                    </div>
+                    <!-- /.col -->
+
+
+                </div>
+            </div>
+            <!-- /.row -->
+        </section>
+    </div>
+
+</body>
+
+
+</html>
+<script>
+    $(document).ready(function () {
+        function previewFoto() {
+
+            var preview = document.querySelector('#previewFoto');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                    document.getElementById("FileFoto").value = "";
+                    $("#previewFoto").empty();
+                    return alert(file.name + " is not an image");
+                } // else...
+                if (file.size > 51200) {
+                    document.getElementById("FileFoto").value = "";
+                    $("#previewFoto").empty();
+                    return alert(file.name + " Lebih dari 500Kb");
+                } // else...
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewFoto").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FileFoto').addEventListener("change", previewFoto);
+
+        function previewKtp() {
+
+            var preview = document.querySelector('#previewKtp');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g)$/i.test(file.name)) {
+                    document.getElementById("FileKtp").value = "";
+                    $("#previewKtp").empty();
+                    return alert(file.name + " is not an image");
+                }
+                if (file.size > 51200) {
+                    document.getElementById("FileKtp").value = "";
+                    $("#previewKtp").empty();
+                    return alert(file.name + " Lebih dari 500Kb");
+                } // else...
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewKtp").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FileKtp').addEventListener("change", previewKtp);
+
+        function previewNpwp() {
+
+            var preview = document.querySelector('#previewNpwp');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g)$/i.test(file.name)) {
+                    document.getElementById("FileNpwp").value = "";
+                    $("#previewNpwp").empty();
+                    return alert(file.name + " is not an image");
+                }
+                if (file.size > 51200) {
+                    document.getElementById("FileNpwp").value = "";
+                    $("#previewNpwp").empty();
+                    return alert(file.name + " Lebih dari 500Kb");
+                } // else...
+
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewNpwp").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FileNpwp').addEventListener("change", previewNpwp);
+
+        function previewKartu() {
+
+            var preview = document.querySelector('#previewKartu');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g)$/i.test(file.name)) {
+                    document.getElementById("FileKartuPegawai").value = "";
+                    $("#previewKartu").empty();
+                    return alert(file.name + " is not an image");
+                }
+                if (file.size > 51200) {
+                    document.getElementById("FileKartuPegawai").value = "";
+                    $("#previewKartu").empty();
+                    return alert(file.name + " Lebih dari 500Kb");
+                } // else...
+
+
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewKartu").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FileKartuPegawai').addEventListener("change", previewKartu);
+        function previewNpwp() {
+
+            var preview = document.querySelector('#previewNpwp');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                    document.getElementById("fFileNpwp").value = "";
+                    $("#previewNpwp").empty();
+                    return alert(file.name + " is not an image");
+                } // else...
+                if (file.size > 51200) {
+                    document.getElementById("FileNpwp").value = "";
+                    $("#previewNpwp").empty();
+                    return alert(file.name + " Lebih dari 500Kb");
+                } // els
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewNpwp").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FileNpwp').addEventListener("change", previewNpwp);
+
+        function previewAsuransi() {
+
+            var preview = document.querySelector('#previewAsuransi');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g|)$/i.test(file.name)) {
+                    document.getElementById("FileAsuransi").value = "";
+                    $("#previewAsuransi").empty();
+                    return alert(file.name + " bukan JPG");
+                } // else...
+                if (file.size > 1024000) {
+                    document.getElementById("FileAsuransi").value = "";
+                    $("#previewAsuransi").empty();
+                    return alert(file.name + " Lebih dari 1MB");
+                } // else...
+
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewAsuransi").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FileAsuransi').addEventListener("change", previewAsuransi);
+
+    });
+</script>
+
+<script>
+    //Insert default item "Select" in dropdownlist on load
+    $(document).ready(function () {
+        //bikin npp readonly saat edit
+        if (document.getElementById("Npp").value != "")
+            $("#Npp").prop("readonly", true);
+        //end bikin npp readonly saat edit
+        var items = "<option value='0'>Pilih Fungsional Dahulu</option>";
+        $("#akademik").html(items);
+        var items = "<option value='0'>Hanya Untuk Fungsional Dosen </option>";
+        $("#Epsbed").html(items);
+        
+    });
+
+    //Bind dropdownlist
+
+
+        var Tridharma = $("#fungsional").val(); // mengambil opsi terpilih saat ini
+        $.ajax({
+            datatype: "text",
+            type: 'get',
+            url: 'FindAkademik',//your url of handler
+            data: {
+                fungsional_id: Tridharma
+            },
+            success: function (data) {
+
+                if (Tridharma == 1) {
+                    $('#fungsional').val(Tridharma);
+                    var item = "";
+
+                    $("#akademik").empty();
+                     $('#akademik').append('<option value="">-</option>');
+                    $.each(data, function (i, color) {
+                        item += '<option value="' + color.idUnit + '">' + color.namaUnit + '</option>'
+                    });
+                    $("#akademik").html(item);
+
+                    $("#Epsbed").empty();
+                      $('#Epsbed').append('<option value="">-</option>');
+                    $.each(data, function (i, color) {
+                        item += '<option value="' + color.idUnit + '">' + color.namaUnit + '</option>'
+                    });
+                    $("#Epsbed").html(item);
+                }
+                else {
+                    $('#fungsional').val(Tridharma);
+                    var item = "";
+                    $("#akademik").empty();
+                    $("#Epsbed").empty();
+                    $('#Epsbed').append('<option value="">-</option>');
+                    $.each(data, function (i, color) {
+                        item += '<option value="' + color.idUnit + '">' + color.namaUnit + '</option>'
+                    });
+                    $("#akademik").html(item);
+
+                }
+
+            },
+            error: function (jqxhr, textStatus, errorThrown) {
+                console.log("jqXHR: ", jqxhr);
+                console.log("textStatus: ", textStatus);
+                console.log("errorThrown: ", errorThrown);
+            },
+
+
+
+        });
+   
+</script>

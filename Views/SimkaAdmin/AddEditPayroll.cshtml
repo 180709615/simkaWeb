@@ -1,0 +1,85 @@
+﻿@model GabungPayroll
+@{
+    Layout = null;
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit (this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdMstTarifPayroll" />
+
+            <div class="form-group">
+                <label asp-for="IdRefJbtnAkademik" class="control-label">Jabatan Akademik</label>
+                <select asp-for="IdRefJbtnAkademik"
+                        asp-items="@(new SelectList(Model.akademik,"IdRefJbtnAkademik","Deskripsi"))">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRefStruktural" class="control-label">Jabatan Struktural</label>
+                <select asp-for="IdRefStruktural"
+                        asp-items="@(new SelectList(Model.struktural,"IdRefStruktural","Deskripsi"))">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRefGolongan" class="control-label">Golongan</label>
+                <select asp-for="IdRefGolongan"
+                        asp-items="@(new SelectList(Model.golongan,"IdRefGolongan","Deskripsi"))">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRefFungsional" class="control-label">Fungsional</label>
+                <select asp-for="IdRefFungsional"
+                        asp-items="@(new SelectList(Model.fungsional,"IdRefFungsional","Deskripsi"))">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRefJenjang" class="control-label">Jenjang</label>
+                <select asp-for="IdRefJenjang"
+                        asp-items="@(new SelectList(Model.jenjang,"IdRefJenjang","Deskripsi"))">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NamaTarifPayroll" class="control-label"></label>
+                <input asp-for="NamaTarifPayroll" class="form-control" />
+                <span asp-validation-for="NamaTarifPayroll" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nominal" class="control-label"></label>
+                <input asp-for="Nominal" type="number" class="form-control" />
+                <span asp-validation-for="Nominal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Jenis" class="control-label"></label>
+                <input asp-for="Jenis" class="form-control" />
+                <span asp-validation-for="Jenis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Masakerja" class="control-label"></label>
+                <input asp-for="Masakerja"  type="number" class="form-control" />
+                <span asp-validation-for="Masakerja" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ket1" class="control-label">Keterangan</label>
+                <input asp-for="Ket1" class="form-control" />
+                <span asp-validation-for="Ket1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JenjangKelas" class="control-label"></label>
+                <input asp-for="JenjangKelas" class="form-control" />
+                <span asp-validation-for="JenjangKelas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Isactive">
+                    <option value=true>Aktif</option>
+                    <option value=false>Tidak Aktif</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+</div>
+</div>

@@ -1,0 +1,51 @@
+﻿@model MstAsuransiForm
+@{
+    Layout = null;
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit (this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NoAsuransi" />
+            <input type="hidden" asp-for="Npp" readonly />
+            <div class="form-group">
+                <label asp-for="NamaInstitusi" class="control-label"></label>
+                <input asp-for="NamaInstitusi" class="form-control" />
+                <span asp-validation-for="NamaInstitusi" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NoAsuransiBaru" class="control-label"></label>
+                <input asp-for="NoAsuransiBaru" class="form-control" />
+                <span asp-validation-for="NoAsuransiBaru" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-5">
+                <label asp-for="TglBergabung" class="control-label"> Tanggal Bergabung</label>
+                <input type="date" asp-for="TglBergabung" class="form-control" placeholder="dd/mm/yyyy">
+                <span asp-validation-for="TglBergabung" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"> Status</label>
+                <select asp-for="Status">
+                    <option selected value=Aktif>Aktif</option>
+                    <option value=Nonaktif>Tidak Aktif</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        var selectedVal = $("#karyawan option:selected").val();
+       
+        $("#Npp").val(selectedVal);
+    });
+
+</script>

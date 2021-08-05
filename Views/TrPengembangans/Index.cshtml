@@ -1,0 +1,211 @@
+﻿@model IEnumerable<APIConsume.Models.TrPengembangan>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Npp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRefAppraisal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRefPengembangan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Judul)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TglMulai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TglSelesai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tempat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Penerbit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IssnIsbn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SumberDana)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DanaLokal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DanaEksternal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Peran)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TingkatPeran)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nilai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FilePengembangan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InstitusiDana)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileDokumen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateInserted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Similarity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NilaiAsesor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Edisi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JumlahHalaman)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BukuReferensi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BukuMonograf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrlWebJurnal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Terindeks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileArtikel)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Npp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRefAppraisal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRefPengembangan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Judul)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TglMulai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TglSelesai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tempat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Penerbit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssnIsbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SumberDana)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DanaLokal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DanaEksternal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Peran)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TingkatPeran)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nilai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FilePengembangan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstitusiDana)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileDokumen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateInserted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Similarity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NilaiAsesor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edisi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JumlahHalaman)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BukuReferensi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BukuMonograf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlWebJurnal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Terindeks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileArtikel)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdTrPengembangan">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdTrPengembangan">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdTrPengembangan">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

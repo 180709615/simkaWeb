@@ -1,0 +1,180 @@
+﻿@model APIConsume.Models.TrPengembangan
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+<h4>TrPengembangan</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdTrPengembangan" />
+            <div class="form-group">
+                <label asp-for="Npp" class="control-label"></label>
+                <input asp-for="Npp" class="form-control" />
+                <span asp-validation-for="Npp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRefAppraisal" class="control-label"></label>
+                <input asp-for="IdRefAppraisal" class="form-control" />
+                <span asp-validation-for="IdRefAppraisal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRefPengembangan" class="control-label"></label>
+                <input asp-for="IdRefPengembangan" class="form-control" />
+                <span asp-validation-for="IdRefPengembangan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Judul" class="control-label"></label>
+                <input asp-for="Judul" class="form-control" />
+                <span asp-validation-for="Judul" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TglMulai" class="control-label"></label>
+                <input asp-for="TglMulai" class="form-control" />
+                <span asp-validation-for="TglMulai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TglSelesai" class="control-label"></label>
+                <input asp-for="TglSelesai" class="form-control" />
+                <span asp-validation-for="TglSelesai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tempat" class="control-label"></label>
+                <input asp-for="Tempat" class="form-control" />
+                <span asp-validation-for="Tempat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Penerbit" class="control-label"></label>
+                <input asp-for="Penerbit" class="form-control" />
+                <span asp-validation-for="Penerbit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssnIsbn" class="control-label"></label>
+                <input asp-for="IssnIsbn" class="form-control" />
+                <span asp-validation-for="IssnIsbn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SumberDana" class="control-label"></label>
+                <input asp-for="SumberDana" class="form-control" />
+                <span asp-validation-for="SumberDana" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DanaLokal" class="control-label"></label>
+                <input asp-for="DanaLokal" class="form-control" />
+                <span asp-validation-for="DanaLokal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DanaEksternal" class="control-label"></label>
+                <input asp-for="DanaEksternal" class="form-control" />
+                <span asp-validation-for="DanaEksternal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Peran" class="control-label"></label>
+                <input asp-for="Peran" class="form-control" />
+                <span asp-validation-for="Peran" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TingkatPeran" class="control-label"></label>
+                <input asp-for="TingkatPeran" class="form-control" />
+                <span asp-validation-for="TingkatPeran" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nilai" class="control-label"></label>
+                <input asp-for="Nilai" class="form-control" />
+                <span asp-validation-for="Nilai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FilePengembangan" class="control-label"></label>
+                <input asp-for="FilePengembangan" class="form-control" />
+                <span asp-validation-for="FilePengembangan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstitusiDana" class="control-label"></label>
+                <input asp-for="InstitusiDana" class="form-control" />
+                <span asp-validation-for="InstitusiDana" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileDokumen" class="control-label"></label>
+                <input asp-for="FileDokumen" class="form-control" />
+                <span asp-validation-for="FileDokumen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateInserted" class="control-label"></label>
+                <input asp-for="DateInserted" class="form-control" />
+                <span asp-validation-for="DateInserted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Similarity" class="control-label"></label>
+                <input asp-for="Similarity" class="form-control" />
+                <span asp-validation-for="Similarity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NilaiAsesor" class="control-label"></label>
+                <input asp-for="NilaiAsesor" class="form-control" />
+                <span asp-validation-for="NilaiAsesor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Edisi" class="control-label"></label>
+                <input asp-for="Edisi" class="form-control" />
+                <span asp-validation-for="Edisi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JumlahHalaman" class="control-label"></label>
+                <input asp-for="JumlahHalaman" class="form-control" />
+                <span asp-validation-for="JumlahHalaman" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BukuReferensi" class="control-label"></label>
+                <input asp-for="BukuReferensi" class="form-control" />
+                <span asp-validation-for="BukuReferensi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BukuMonograf" class="control-label"></label>
+                <input asp-for="BukuMonograf" class="form-control" />
+                <span asp-validation-for="BukuMonograf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doi" class="control-label"></label>
+                <input asp-for="Doi" class="form-control" />
+                <span asp-validation-for="Doi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlWebJurnal" class="control-label"></label>
+                <input asp-for="UrlWebJurnal" class="form-control" />
+                <span asp-validation-for="UrlWebJurnal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Terindeks" class="control-label"></label>
+                <input asp-for="Terindeks" class="form-control" />
+                <span asp-validation-for="Terindeks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileArtikel" class="control-label"></label>
+                <input asp-for="FileArtikel" class="form-control" />
+                <span asp-validation-for="FileArtikel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>

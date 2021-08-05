@@ -1,0 +1,755 @@
+﻿@model TampilRestitusi
+@using System.Globalization
+@{
+    ViewData["Title"] = "KelolaRekanan";
+    Layout = "~/Views/Shared/_LayoutDosen.cshtml";
+}
+
+
+<head>
+    <title>Lihat Restitusi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <!--sweetalert-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+</head>
+
+
+<!-- Main content -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><b>Restitusi</b></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+
+
+        <div style="width:100%; margin:0" class="tab-pane">
+            <div class="row">
+                <div class="col-md-10">
+
+                    <h3>Saldo Bulan @DateTime.Now.AddMonths(0).ToString("MMMM"):     @Model.SaldoBulanIni</h3>
+                    <br />
+                    <h3>Saldo bulan @DateTime.Now.AddMonths(1).ToString("MMMM");: @Model.SaldoBulanDepan</h3>
+                    <br />
+
+                    <h3>Hutang: @Model.NominalHutang</h3>
+                    <br />
+
+                    <a> Pilih Tahun untuk melihat rekap restitusi:</a>
+
+                    <select id="tahun">
+                        <option selected="selected" value="0">Silahkan Pilih</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                        <option value="2014">2014</option>
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+
+                    </select>
+
+
+                    <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                       id="tombol"><i class="fa fa-plus"></i> Lihat</a>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header p">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#rekap" data-toggle="tab">Rekap hutang</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#obat" data-toggle="tab">Obat</a></li>
+
+                            <li class="nav-item"><a class="nav-link" href="#kacamata" data-toggle="tab">Kacamata</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#buku" data-toggle="tab">Buku</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#rawat" data-toggle="tab">Rawat Inap</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="rekap">
+
+                                <div style="overflow-x:auto;">
+                                    <table id="tabelrekap" class="table table-sm table-striped table-bordered m-2">
+                                    </table>
+
+                                </div>
+                                <div style="overflow-x:auto;">
+                                    <table id="tabeldetail" class="table table-sm table-striped table-bordered m-2">
+                                    </table>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="obat">
+
+
+                                <  <div style="overflow-x:auto;">
+                                    <table id="tabelobat" class="table table-sm table-striped table-bordered m-2">
+                                    </table>
+                                </div>
+                            </div>
+
+
+                                <!---  Penelitian-->
+
+
+                                <div class="tab-pane" id="kacamata">
+                                    <div style="overflow-x:auto;">
+                                        <table id="tabelkacamata" class="table table-sm table-striped table-bordered m-2">
+                                        </table>
+                                    </div>
+
+                                </div>
+
+
+                                <!--- / Penelitian-->
+                                <!-- /.card-header -->
+                                <!---  Publikasi-->
+                                <div class="tab-pane" id="buku">
+                                    <div style="overflow-x:auto;">
+                                        <table id="tabelbuku" class="table table-sm table-striped table-bordered m-2">
+                                         
+                                        </table>
+                                    </div>
+
+                                    <!--- / Publikasi-->
+                                </div>
+                                <div class="tab-pane" id="rawat">
+
+
+
+                                    <div style="overflow-x:auto;">
+
+                                        <table id="tabelrawatinap" class="table table-sm table-striped table-bordered m-2">
+                                        </table>
+                                    </div>
+
+                                    </div>
+
+
+
+
+                                </div>
+                        </div>
+
+
+                    </div>
+                    </div>
+        </section>
+   
+                                    </div>
+                                    <!-- /.content-wrapper -->
+                                    <footer class="main-footer">
+                                        <div class="float-right d-none d-sm-block">
+                                            <b>Version</b> 3.0.2
+                                        </div>
+                                        <small>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</small> All rights
+                                        reserved.
+                                    </footer>
+
+                                    <!-- Control Sidebar -->
+                                    <!-- /.control-sidebar -->
+
+
+
+
+
+                                    @section Scripts{
+
+                                        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+                                        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+                                        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+                                        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+                                        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"
+                                                asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.min.js"
+                                                asp-fallback-test="window.jQuery && window.jQuery.validator"
+                                                crossorigin="anonymous"
+                                                integrity="sha384-Fnqn3nxp3506LP/7Y3j/25BlWeA3PXTyT1l78LjECcPaKCV12TsZP7yyMxOe/G/k">
+                                        </script>
+                                        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
+                                                asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+                                                asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
+                                                crossorigin="anonymous"
+                                                integrity="sha384-JrXK+k53HACyavUKOsL+NkmSesD2P+73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH">
+                                        </script>
+                                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
+                                        <!--toastr-->
+                                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+                                        <!--sweetalert-->
+                                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+                                        <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+                                        <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+                                        <script src="https://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
+
+                                        <script>
+                                            var popup, dataTable;
+
+                                            $(document).ready(function () {
+                                                $("#tombol").click(function () {
+                                                    var tgl = $('#tahun').val();
+                                                    if (tgl == "")
+                                                        alert(" Masukkan Tanggal Dahulu")
+                                                    else {
+                                                        dataTable = $('#tabelrekap').DataTable({
+                                                            destroy: true,
+                                                            "responsive": true,
+                                                            "ajax": {
+                                                                "url": "/Administrasi/LoadRestitusi?tgl=" + tgl,
+                                                                "type": "POST",
+                                                                "destroy": true,
+                                                                "datatype": "json"
+                                                            },
+
+                                                            "columns": [
+                                                                {
+                                                                    data: "idTrRestitusi",
+                                                                    title: "ID",
+                                                                    name: "npp",
+                                                                    type: "readonly",
+                                                                    "visible": false,
+
+                                                                },
+
+                                                                {
+                                                                    data: "tglKuitansi",
+                                                                    title: "Tanggal Kuitansi",
+                                                                    render: function (data) {
+                                                                        return moment(data).format('DD-MM-YYYY');
+                                                                    }
+                                                                },
+                                                                {
+                                                                    data: "namaRekanan",
+                                                                    title: "Nama Rekanan"
+                                                                },
+                                                                {
+                                                                    data: "nominalKuitansi",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "Nominal Kuitansi"
+                                                                },
+                                                                {
+                                                                    data: "nominalHutang",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "Nominal Hutang"
+                                                                },
+                                                                {
+                                                                    data: "nominalGabungHutang",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "Gabungan Sebelumnya"
+                                                                },
+                                                                {
+                                                                    data: "jmlAngsuran",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "terbayar"
+                                                                },
+
+                                                                {
+                                                                    "data": "idTrRestitusi", // diganti sama id
+                                                                    "render": function (data) {
+                                                                        return "<a class='btn btn-default btn-sm' onclick=ShowPopup('" + data + "')><i class='fa fa-pencil'></i> Detail</a>";
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "language": {
+                                                                "emptyTable": "no data found."
+                                                            }
+                                                        });
+
+                                                        dataTable = $('#tabelobat').DataTable({
+                                                            destroy: true,
+                                                            "responsive": true,
+                                                            "ajax": {
+                                                                "url": "/Administrasi/LoadRestitusiObat?tgl=" + tgl,
+                                                                "type": "POST",
+                                                                "destroy": true,
+                                                                "datatype": "json"
+                                                            },
+
+                                                            "columns": [
+                                                                {
+                                                                    "data": null, "sortable": false,
+                                                                    render: function (data, type, row, meta) {
+                                                                        return meta.row + meta.settings._iDisplayStart + 1;
+                                                                    }
+                                                                },
+
+
+                                                                {
+                                                                    data: "keterangan",
+                                                                    title: "Rs-Nama",
+                                                                },
+
+                                                                {
+                                                                    data: "tglAmbil",
+
+                                                                    title: "Tanggal Ambil",
+                                                                },
+                                                                {
+                                                                    data: "tglKuitansi",
+                                                                    title: "Tanggal Kuitansi",
+                                                                    render: function (data) {
+                                                                        return moment(data).format('DD-MM-YYYY');
+                                                                    }
+                                                                },
+                                                                {
+                                                                    data: "nominalKuitansi",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "Nominal Kuitansi"
+                                                                },
+
+
+
+
+                                                            ],
+                                                            "language": {
+                                                                "emptyTable": "no data found."
+                                                            }
+                                                        });
+                                                        dataTable = $('#tabelrawatinap').DataTable({
+                                                            destroy: true,
+                                                            "responsive": true,
+                                                            "ajax": {
+                                                                "url": "/Administrasi/LoadRestitusiRawatInap?tgl=" + tgl,
+                                                                "type": "POST",
+                                                                "destroy": true,
+                                                                "datatype": "json"
+                                                            },
+
+                                                            "columns": [
+                                                                {
+                                                                    "data": null, "sortable": false,
+                                                                    render: function (data, type, row, meta) {
+                                                                        return meta.row + meta.settings._iDisplayStart + 1;
+                                                                    }
+                                                                },
+
+
+                                                                {
+                                                                    data: "keterangan",
+                                                                    title: "Rs-Nama",
+                                                                },
+
+                                                                {
+                                                                    data: "tglAmbil",
+
+                                                                    title: "Tanggal Ambil",
+                                                                },
+                                                                {
+                                                                    data: "tglKuitansi",
+                                                                    title: "Tanggal Kuitansi",
+                                                                    render: function (data) {
+                                                                        return moment(data).format('DD-MM-YYYY');
+                                                                    }
+                                                                },
+                                                                {
+                                                                    data: "nominalKuitansi",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "Nominal Kuitansi"
+                                                                },
+
+
+
+
+                                                            ],
+                                                            "language": {
+                                                                "emptyTable": "no data found."
+                                                            }
+                                                        });
+                                                        dataTable = $('#tabelbuku').DataTable({
+                                                            destroy: true,
+                                                            "responsive": true,
+                                                            "ajax": {
+                                                                "url": "/Administrasi/LoadRestitusiBuku?tgl=" + tgl,
+                                                                "type": "POST",
+                                                                "destroy": true,
+                                                                "datatype": "json"
+                                                            },
+
+                                                            "columns": [
+                                                                {
+                                                                    "data": null, "sortable": false,
+                                                                    render: function (data, type, row, meta) {
+                                                                        return meta.row + meta.settings._iDisplayStart + 1;
+                                                                    }
+                                                                },
+
+
+                                                                {
+                                                                    data: "keterangan",
+                                                                    title: "Rs-Nama",
+                                                                },
+
+                                                                {
+                                                                    data: "tglAmbil",
+
+                                                                    title: "Tanggal Ambil",
+                                                                },
+                                                                {
+                                                                    data: "tglKuitansi",
+                                                                    title: "Tanggal Kuitansi",
+                                                                    render: function (data) {
+                                                                        return moment(data).format('DD-MM-YYYY');
+                                                                    }
+                                                                },
+                                                                {
+                                                                    data: "nominalKuitansi",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "Nominal Kuitansi"
+                                                                },
+
+
+
+
+                                                            ],
+                                                            "language": {
+                                                                "emptyTable": "no data found."
+                                                            }
+                                                        });
+
+                                                        dataTable = $('#tabelkacamata').DataTable({
+                                                            destroy: true,
+                                                            "responsive": true,
+                                                            "ajax": {
+                                                                "url": "/Administrasi/LoadRestitusiKacamata?tgl=" + tgl,
+                                                                "type": "POST",
+                                                                "destroy": true,
+                                                                "datatype": "json"
+                                                            },
+
+                                                            "columns": [
+                                                                {
+                                                                    "data": null, "sortable": false,
+                                                                    render: function (data, type, row, meta) {
+                                                                        return meta.row + meta.settings._iDisplayStart + 1;
+                                                                    }
+                                                                },
+
+
+
+                                                                {
+                                                                    data: "tglAmbil",
+
+                                                                    title: "Tanggal Ambil",
+                                                                },
+                                                                {
+                                                                    data: "tglKuitansi",
+                                                                    title: "Tanggal Kuitansi",
+                                                                    render: function (data) {
+                                                                        return moment(data).format('DD-MM-YYYY');
+                                                                    }
+                                                                },
+                                                                {
+                                                                    data: "nominalKuitansi",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "Nominal Kuitansi"
+                                                                },
+                                                                {
+                                                                    data: "nominal",
+                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
+                                                                    title: "Nominal Diganti"
+                                                                },
+
+
+
+
+                                                            ],
+                                                            "language": {
+                                                                "emptyTable": "no data found."
+                                                            }
+                                                        });
+                                                    }
+
+
+                                                });
+                                            });
+
+
+                                            function ShowPopup(data) {
+
+
+                                                dataTable = $('#tabeldetail').DataTable({
+                                                    destroy: true,
+                                                    "responsive": true,
+                                                    "ajax": {
+                                                        "url": "/Administrasi/LoadDetailRestitusi?idres=" + data,
+                                                        "type": "POST",
+                                                        "destroy": true,
+                                                        "datatype": "json"
+                                                    },
+
+                                                    "columns": [
+                                                        {
+                                                            data: "idTrRestitusi",
+                                                            title: "ID",
+                                                            name: "npp",
+                                                            type: "readonly",
+                                                            "visible": false,
+
+                                                        },
+
+                                                        {
+                                                            data: "tglKuitansi",
+                                                            title: "Tanggal Kuitansi",
+                                                            render: function (data) {
+                                                                return moment(data).format('DD-MM-YYYY');
+                                                            }
+                                                        },
+                                                        {
+                                                            data: "namaRekanan",
+                                                            title: "Nama Rekanan"
+                                                        },
+                                                        {
+                                                            data: "mulaiAngsur",
+                                                            render: $.fn.dataTable.render.number('.', ',', 2),
+                                                            title: "Nominal Kuitansi"
+                                                        },
+                                                        {
+                                                            data: "jmlAngsuran",
+                                                            render: $.fn.dataTable.render.number('.', ',', 2),
+                                                            title: "Nominal Hutang"
+                                                        },
+                                                        {
+                                                            data: "isGabung",
+                                                            render: $.fn.dataTable.render.number('.', ',', 2),
+                                                            title: "Status"
+                                                        },
+                                                        {
+                                                            "data": "idTrRestitusi", // diganti sama id
+                                                            "render": function (data) {
+                                                                return "<a class='btn btn-default btn-sm' onclick=ShowPopup('" + data + "')><i class='fa fa-pencil'></i> Detail</a>";
+                                                            }
+                                                        }
+                                                    ],
+                                                    "language": {
+                                                        "emptyTable": "no data found."
+                                                    }
+                                                });
+
+
+                                            }
+
+
+                                            function SubmitAddEdit(form) {
+                                                $.validator.unobtrusive.parse(form);
+                                                if ($(form).valid()) {
+                                                    var data = $(form).serializeJSON();
+                                                    data = JSON.stringify(data);
+                                                    console.log(data);
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '/SimkaAdmin/PostRekanan',
+                                                        data: data,
+
+                                                        contentType: 'application/json',
+                                                        success: function (data) {
+                                                            if (data.success) {
+                                                                popup.dialog('close');
+                                                                ShowMessage(data.message);
+                                                                dataTable.ajax.reload();
+                                                            }
+                                                        }
+                                                    });
+
+                                                }
+                                                return false;
+                                            }
+
+                                            function Delete(id) {
+                                                swal({
+                                                    title: "Are you sure want to Delete?",
+                                                    text: "You will not be able to restore the file!",
+                                                    type: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#DD6B55",
+                                                    confirmButtonText: "Yes, delete it!",
+                                                    closeOnConfirm: true
+                                                }, function () {
+                                                    $.ajax({
+                                                        type: 'DELETE',
+                                                        url: '/SimkaAdmin/DeleteRekanan/' + id,
+                                                        success: function (data) {
+                                                            if (data.success) {
+                                                                ShowMessage(data.message);
+                                                                dataTable.ajax.reload();
+                                                            }
+                                                        }
+                                                    });
+                                                });
+
+
+                                            }
+
+
+                                            function ShowMessage(msg) {
+                                                toastr.success(msg);
+                                            }
+
+
+                                        </script>
+
+
+
+                                        <!--
+
+
+            <script>
+
+
+                $(document).ready(function () {
+
+                    var columnDefs = [{
+                        data: "idMstRekanan",
+                        title: "ID",
+                        type: "readonly"
+
+                    },
+                    {
+                        data: "jenis",
+                        title: "Jenis Rekanan"
+                    },
+                    {
+                        data: "namaRekanan",
+                        title: "Nama Rekanan"
+                    },
+                    {
+                        data: "alamat",
+                        title: "Alamat"
+                    },
+                    {
+                        data: "kota",
+                        title: "Kota"
+                    },
+                    {
+                        data: "kodepos",
+                        title: "Kode Pos"
+                    },
+
+
+
+
+                    ];
+
+                    var myTable;
+
+                    // local URL's are not allowed
+
+
+                    myTable = $('#example').DataTable({
+                        "sPaginationType": "full_numbers",
+                        ajax: {
+                            "url": "/SimkaAdmin/LoadDataJ",
+                            "type": "POST",
+                            "datatype": "json",
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("XSRF-TOKEN",
+                                    $('input:hidden[name="__RequestVerificationToken"]').val());
+                                dataSrc: ''
+                            },
+                        },
+                        columns: columnDefs,
+                        dom: 'Bfrtip',        // Needs button container
+                        select: 'single',
+                        responsive: true,
+                        altEditor: true,
+                        buttons: {
+                            dom: {
+                                button: {
+                                    className: ''
+                                }
+                            }
+                            ,// Enable altEditor
+                            buttons: [{
+                                text: 'Add',
+                                className: 'btn btn-primary',
+                                name: 'add'        // do not change name
+                            },
+                            {
+                                extend: 'selected', // Bind to Selected row
+                                text: 'Edit',
+                                className: 'btn btn-secondary',
+                                name: 'edit'        // do not change name
+                            },
+                            {
+                                extend: 'selected', // Bind to Selected row
+                                text: 'Delete',
+                                className: 'btn btn-danger',
+                                name: 'delete'
+                                // do not change name
+                            },
+                            {
+                                text: 'Refresh',
+                                className: 'btn btn-success',
+                                name: 'refresh'      // do not change name
+                            }]
+                        },
+                        onRefresh: function(){
+                            $ajax({
+                                "url": "/SimkaAdmin/LoadDataJ",
+                                "type": "POST",
+                                "datatype": "json",
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("XSRF-TOKEN",
+                                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                                    dataSrc: ''
+                                },
+                            });
+                    },
+                        onAddRow: function (datatable, rowdata, success, error) {
+                            $.ajax({
+                                // a tipycal url would be / with type='PUT'
+                                url: url_ws_mock_ok,
+                                type: 'GET',
+                                data: rowdata,
+                                success: success,
+                                error: error
+                            });
+                        },
+                        onDeleteRow: function (datatable, rowdata, success, error) {
+                            $.ajax({
+                                // a tipycal url would be /{id} with type='DELETE'
+                                url: url_ws_mock_ok,
+                                type: 'GET',
+                                data: rowdata,
+                                success: success,
+                                error: error
+                            });
+                        },
+                        onEditRow: function (datatable, rowdata, success, error) {
+                            $.ajax({
+                                // a tipycal url would be /{id} with type='POST'
+                                url: url_ws_mock_ok,
+                                type: 'GET',
+                                data: rowdata,
+                                success: success,
+                                error: error
+                            });
+                        }
+                    });
+
+                    //tempat taruh fungsi baru
+
+
+                });
+            </script>-->
+                                    }

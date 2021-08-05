@@ -1,0 +1,233 @@
+﻿@model GabungKeluarga
+
+@{
+    Layout = null;
+}
+<html>
+<body>
+
+    <form onsubmit="return SubmitAddEdit (this) " id="formsimka" >
+        <div class="tab-pane" id="keluarga">
+            <div class="card-body card card-primary card-outline ">
+                <div class="form-group row">
+
+                    <div class="col-sm-5">
+                        <input type="text" asp-for="IdKeluarga"   type="hidden" class="form-control">
+                        <span asp-validation-for="IdKeluarga" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <input readonly="readonly" type="hidden"  asp-for="Npp" class="form-control">
+                    <span asp-validation-for="Npp" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Nama" class="col-sm-2 col-form-label">Nama</label>
+                <div class="col-sm-5">
+                    <input type="text" asp-for="Nama" class="form-control">
+                    <span asp-validation-for="Nama" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-2 col-form-label">Hubungan Keluarga</label>
+                <select asp-for="IdRefKeluarga"
+                        asp-items="@(new SelectList(Model.RefKeluargas,"IdRefKeluarga","Deskripsi"))">
+                    <option value='0'>-</option>
+                </select>
+                <span asp-validation-for="IdRefKeluarga" class="text-danger"></span>
+            </div>
+            <div class="row">
+
+                <label asp-for="TempatLahir" class="col-sm-2 col-form-label"> Tempat Tanggal Lahir</label>
+                <div class="form-group col-md-5">
+
+                    <input type="text" asp-for="TempatLahir" class="form-control" placeholder="Tempat Lahir">
+                    <span asp-validation-for="TempatLahir" c lass="text-danger"></span>
+
+                </div>
+                <div class="form-group col-md-5">
+                    <input type="date" asp-for="TglLahir" class="form-control" placeholder="dd/mm/yyyy">
+                    <span asp-validation-for="TglLahir" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="JnsKel" class="col-sm-10 col-form-label">Jenis Kelamin</label>
+                <div class="col-sm-10">
+                    <input type="radio" asp-for="JnsKel" value="L" id="male">
+                    <label for="male">Laki-Laki</label>
+                    <input type="radio" asp-for="JnsKel" value="P" id="female">
+                    <label>Wanita</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="GolDarah" class="col-sm-2 col-form-label">Golongan Darah</label>
+                <div class="col-sm-10">
+                    <input type="radio" asp-for="GolDarah" id="goldaro" value="O" checked>
+                    <label for="male">O</label>
+                    <input type="radio" asp-for="GolDarah" id="goldara" value="A">
+                    <label for="male">A</label>
+                    <input type="radio" asp-for="GolDarah" id="goldarb" value="B">
+                    <label for="male">B</label>
+                    <input type="radio" asp-for="GolDarah" id="goldarab" value="AB">
+                    <label for="male">AB</label>
+                    <input type="radio" asp-for="GolDarah" id="goldart" value=" ">
+                    <label for="male">Belum Diketahui</label>
+
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label for="StatusSipil" class="col-sm-10 col-form-label">Status Sipil</label>
+                <div class="col-sm-10">
+
+                    <input type="radio" asp-for="StatusSipil" id="belumnikah" value="Belum Menikah" checked>
+                    <label>Belum Menikah</label>
+
+                    <input type="radio" asp-for="StatusSipil" id="nikah" value="Menikah">
+                    <label for="male">Menikah</label>
+
+                    <input type="radio" asp-for="StatusSipil" id="cerai" value="Cerai">
+                    <label>Cerai</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-10 col-form-label">Masih Tanggungan?</label>
+                <div class="col-sm-10">
+                    <input type="radio" asp-for="IsTanggung" id="tanggung1" value="True">
+                    <label for="male">Ya</label>
+                    <input type="radio" asp-for="IsTanggung" id="tanggung2" value="False">
+                    <label>Tidak</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-10 col-form-label">Tanggungan Yadapen?</label>
+                <div class="col-sm-10">
+                    <input type="radio" asp-for="IsTanggungYadapen" id="yadapen1" value="True">
+                    <label for="male">Ya</label>
+                    <input type="radio" asp-for="IsTanggungYadapen" id="yadapen2" value="False">
+                    <label>Tidak</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-sm-2 col-form-label">File Foto</label>
+                <input asp-for="FileFoto"  type="file">
+                <div id="previewFoto">
+                    @if (Model.FileFotom != null)
+                    {
+                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.FileFotom) " width="300" height="300">
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <label for="" class="col-sm-2 col-form-label">File Surat</label>
+                <input asp-for="FileSurat"  type="file">
+                <div id="previewSurat">
+                    @if (Model.FileSuratm != null)
+                    {
+                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.FileSuratm) " width="300" height="300">
+                    }
+                </div>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Simpan Data Keluarga" />
+
+
+        </div>
+
+    </form>
+
+</body>
+</html>
+<script>
+    $(document).ready(function (){
+        //Mengisikan NPP
+        var selectedVal = $("#karyawan option:selected").val();
+
+        $("#Npp").val(selectedVal);
+
+        function previewFoto() {
+
+            var preview = document.querySelector('#previewFoto');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g)$/i.test(file.name)) {
+                    document.getElementById("FileFoto").value = "";
+                    $("#previewFoto").empty();
+                    return alert(file.name + " is not an image");
+                }
+                if (file.size > 51200) {
+                    document.getElementById("FileFoto").value = "";
+                    $("#previewFoto").empty();
+                    return alert(file.name + " Lebih dari 500Kb");
+                } // else...
+
+
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewFoto").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FileFoto').addEventListener("change", previewFoto);
+
+        function previewSurat() {
+
+            var preview = document.querySelector('#PreviewSurat');
+
+            if (this.files) {
+                [].forEach.call(this.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+
+                // Make sure `file.name` matches our extensions criteria
+                if (!/\.(jpe?g)$/i.test(file.name)) {
+                    document.getElementById("FileSurat").value = "";
+                    $("#previewSurat").empty();
+                    return alert(file.name + " is not an image");
+                }
+                if (file.size > 51200) {
+                    document.getElementById("FileSurat").value = "";
+                    $("#previewSurat").empty();
+                    return alert(file.name + " Lebih dari 500Kb");
+                } // else...
+
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 200;
+                    image.title = file.name;
+                    image.src = this.result;
+                    $("#previewSurat").empty();
+                    preview.append(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.querySelector('#FileSurat').addEventListener("change", previewSurat);
+    });
+
+
+</script>

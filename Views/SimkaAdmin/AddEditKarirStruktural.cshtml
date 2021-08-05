@@ -1,0 +1,69 @@
+﻿@model TrKarirStrukturalForm
+@{
+    Layout = null;
+}
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit(this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="NoSk" class="control-label"></label>
+                <input type="text" asp-for="NoSk" />
+                <span asp-validation-for="NoSk" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 col-form-label">Pilih Karyawan / Dosen</label>
+                <select asp-for="Npp"
+                        asp-items="@(new SelectList(Model.karyawan,"Npp","Nama"))">
+                    <option value="0">-</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="IdUnit" class="col-sm-2 col-form-label">Pilih Unit</label>
+                <select asp-for="IdUnit"
+                        asp-items="@(new SelectList(Model.unit,"IdUnit","NamaUnit"))">
+                    <option value="0">-</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-2 col-form-label">Jabatan Struktural Baru</label>
+                <select asp-for="IdRefStruktural"
+                        asp-items="@(new SelectList(Model.struktural,"IdRefStruktural","Deskripsi"))">
+                    <option value="0">-</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TglAwal" class="control-label"></label>
+                <input type="date" asp-for="TglAwal" />
+                <span asp-validation-for="TglAwal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TglAkhir" class="control-label"></label>
+                <input type="date" asp-for="TglAkhir" />
+                <span asp-validation-for="TglAkhir" class="text-danger"></span>
+            </div>
+
+            
+
+
+            <div class="form-group">
+                <label asp-for="Status" class="col-sm-2 col-form-label"> Jenis</label>
+                <select asp-for="Status">
+                    <option value="0">- Select -</option>
+                    <option value="Aktif">Aktif</option>
+                    <option value="NonAktif">Tidak Aktif</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

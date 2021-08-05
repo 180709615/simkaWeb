@@ -1,0 +1,201 @@
+﻿@model APIConsume.Models.TrPengembangan
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+<div>
+    <h4>TrPengembangan</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Npp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Npp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdRefAppraisal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdRefAppraisal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdRefPengembangan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdRefPengembangan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Judul)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Judul)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TglMulai)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TglMulai)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TglSelesai)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TglSelesai)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tempat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tempat)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Penerbit)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Penerbit)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IssnIsbn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IssnIsbn)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SumberDana)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SumberDana)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DanaLokal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DanaLokal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DanaEksternal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DanaEksternal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Peran)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Peran)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TingkatPeran)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TingkatPeran)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nilai)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nilai)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FilePengembangan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FilePengembangan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InstitusiDana)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InstitusiDana)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FileDokumen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FileDokumen)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateInserted)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateInserted)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Similarity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Similarity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NilaiAsesor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NilaiAsesor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Edisi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Edisi)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.JumlahHalaman)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.JumlahHalaman)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BukuReferensi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BukuReferensi)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BukuMonograf)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BukuMonograf)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Doi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Doi)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UrlWebJurnal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UrlWebJurnal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Terindeks)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Terindeks)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FileArtikel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FileArtikel)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdTrPengembangan">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+</body>
+</html>

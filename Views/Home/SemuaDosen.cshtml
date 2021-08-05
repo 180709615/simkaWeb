@@ -1,0 +1,82 @@
+﻿@model Sister_Dosen
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{ Layout = "_Layout"; ViewBag.Title = "Semua Dosen";}
+
+<style type="text/css">
+    .SmallButton1 {
+        height: 30px;
+        width: 70px;
+    }
+</style>
+
+
+<a asp-action="MailSender"
+   class="btn btn-default">
+    email
+</a>
+
+<form asp-action="Semuadosen" method="post">
+    <select name="sortOrder">
+        <option value="">Pilih Fakultas</option>
+        <option value="fbe ">FBE</option>
+        <option value="fh">FH</option>
+        <option value="fisip">FISIP</option>
+        <option value="ft">FT</option>
+        <option value="ftb">FTB</option>
+        <option value="fti">FTI</option>
+    </select>
+    <input type="submit" />
+
+</form>
+<form asp-action="Semuadosen">
+    <p>
+        Nama Dosen <input type="text" name="searchString">
+        <input type="submit" value="Cari" />
+    </p>
+</form>
+
+<p class="text-danger">@ViewData["Nama"]</p>
+
+@if (Model != null)
+{
+
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead>
+            <tr>
+
+                <th> <a asp-action="semuadosen" asp-route-sortOrder="@ViewData["NameSortParm"]">Nama Dosen </a> </th>
+                <th> <a asp-action="semuadosen" asp-route-sortOrder="@ViewData["FakultasSortParm"]">Fakultas </a> </th>
+                <th> <a asp-action="semuadosen" asp-route-sortOrder="@ViewData["ProgramStudiSortParam"]">Program Studi</a> </th>
+
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var r in Model.data)
+            {
+                <tr>
+
+                    <td>@r.nama_dosen</td>
+                    <td>@r.fakultas</td>
+                    <td>@r.nama_program_studi</td>
+                    <td>@r.id_dosen</td>
+                    <td>
+                        <form method="post" asp-action="DetailDosen">
+
+                            <input value="@r.id_dosen" type="text" id="idDosen" name="idDosen" hidden />
+                            <button type="submit" asp-action="DetailDosen" class="btn btn-primary btn-block btn-flat">Lihat</button>
+
+
+                        </form>
+                    </td>
+
+
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+}

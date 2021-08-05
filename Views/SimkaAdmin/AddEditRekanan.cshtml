@@ -1,0 +1,53 @@
+﻿@model MstRekanan
+@{
+    Layout = null;
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit(this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdMstRekanan" />
+            <div class="form-group">
+                <label asp-for="Jenis" class="control-label"></label>
+                <input asp-for="Jenis" class="form-control" />
+                <span asp-validation-for="Jenis" class="text-danger"></span>
+                <label asp-for="NamaRekanan" class="control-label"></label>
+                <input asp-for="NamaRekanan" class="form-control" />
+                <span asp-validation-for="NamaRekanan" class="text-danger"></span>
+                <label asp-for="Alamat" class="control-label"></label>
+                <input asp-for="Alamat" class="form-control" />
+                <span asp-validation-for="Alamat" class="text-danger"></span>
+                <label asp-for="Kota" class="control-label"></label>
+                <input asp-for="Kota" class="form-control" />
+                <span asp-validation-for="Kota" class="text-danger"></span>
+                <label asp-for="Kodepos" class="control-label"></label>
+                <input asp-for="Kodepos" type="number" class="form-control" />
+                <span asp-validation-for="Kodepos" class="text-danger"></span>
+                <label asp-for="NoTelp" class="control-label"></label>
+                <input asp-for="NoTelp" type="number" class="form-control" />
+                <span asp-validation-for="NoTelp" class="text-danger"></span>
+                <label asp-for="Npwp" class="control-label"></label>
+                <input asp-for="Npwp" class="form-control" />
+                <span asp-validation-for="Npwp" class="text-danger"></span>
+                <label asp-for="KontakPerson" class="control-label"></label>
+                <input asp-for="KontakPerson" class="form-control" />
+                <span asp-validation-for="KontakPerson" class="text-danger"></span>
+                <label asp-for="NoHp" class="control-label"></label>
+                <input asp-for="NoHp" type="number" class="form-control" />
+                <span asp-validation-for="NoHp" class="text-danger"></span>
+                <div class="form-group">
+                    <select asp-for="IsAktif">
+                        <option value=true>Aktif</option>
+                        <option value=false>Not Tidak Aktif</option>
+                  
+                    </select>
+
+                </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

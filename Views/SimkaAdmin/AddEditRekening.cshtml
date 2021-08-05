@@ -1,0 +1,52 @@
+﻿@model FormRekening
+@{
+    Layout = null;
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit (this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NoRekening" />
+            <input type="hidden" asp-for="Npp" readonly />
+            <div class="form-group">
+                <label asp-for="NamaBank" class="control-label"></label>
+                <input asp-for="NamaBank" class="form-control" />
+                <span asp-validation-for="NamaBank" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoRekeningBaru" class="control-label"></label>
+                <input asp-for="NoRekeningBaru" class="form-control" />
+                <span asp-validation-for="NoRekeningBaru" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <select asp-for="Status">
+                    <option selected value=Aktif>Aktif</option>
+                    <option value=Nonaktif>Tidak Aktif</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <select asp-for="StatusRekening">
+                    <option selected value=Aktif>Aktif</option>
+                    <option value=Nonaktif>Tidak Aktif</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        var selectedVal = $("#karyawan option:selected").val();
+       
+        $("#Npp").val(selectedVal);
+
+    });
+
+</script>

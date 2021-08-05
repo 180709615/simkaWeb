@@ -1,0 +1,23 @@
+﻿{
+  "name": "Sistem Informasi Kepegawaian UAJY",
+  "short_name": "SIMKA UAJY",
+  "orientation": "portrait",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/pwa.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/pwa.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "color": "#ffffff",
+  "background_color": "#0661A8",
+  "theme_color": "#0661A8",
+  "prefer_related_applications": false
+}

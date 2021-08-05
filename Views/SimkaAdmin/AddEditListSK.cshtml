@@ -1,0 +1,38 @@
+﻿@model GabungListSk
+@{
+    Layout = null;
+}
+    <head>
+       
+    </head>
+<h4>Pilih Karyawan / DOsen </h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEditListSK (this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input readonly="readonly" asp-for="NoSk" />
+
+            <div class="form-group">
+                 <label  class="control-label"> Pilih Karyawan</label>
+                <select asp-for="Npp"
+                        asp-items="@(new SelectList(Model.karyawans,"Npp","Nama"))" data-max-options="1">
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Peran" class="control-label"></label>
+                <input asp-for="Peran" class="form-control" />
+                <span asp-validation-for="Peran" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+     

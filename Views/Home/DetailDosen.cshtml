@@ -1,0 +1,165 @@
+﻿@model Sister_DosenPenelitian
+@{ Layout = "_Layout"; ViewBag.Title = "Detail Dosen ";}
+
+
+Nama Dosen : @Model.dos.data.nama_dosen
+<br />
+Fakultas: @Model.dos.data.fakultas
+<br />
+Program Studi: @Model.dos.data.nama_program_studi
+
+<br />
+NPP: @Model.dos.data.nidn
+<br />
+<h2>Penelitian</h2>
+
+
+@if (Model.pen.data.Length == 0)
+{
+
+    <p>tidak ada data</p>
+
+}
+else
+{
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead><tr><th>Judul Penelitian</th><th>Jenis Penelitian</th><th> Tahun Ajaran</th></tr></thead>
+        <tbody>
+            @foreach (var r in Model.pen.data)
+            {
+                <tr>
+
+                    <td>@r.judul_penelitian_pengabdian</td>
+                    <td>@r.nama_skim</td>
+                    <td>@r.nama_tahun_ajaran</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+<h2>Pengabdian</h2>
+@if (Model.abdi.data.Length == 0)
+{
+
+    <p>tidak ada data</p>
+
+}
+else
+{
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead><tr><th>Judul Pengabdian</th><th>Jenis Pengabdian</th><th> Tahun Ajaran</th></tr></thead>
+        <tbody>
+            @foreach (var r in Model.abdi.data)
+            {
+                <tr>
+
+                    <td>@r.judul_penelitian_pengabdian</td>
+                    <td>@r.jenis_penelitian_pengabdian</td>
+                    <td>@r.nama_tahun_ajaran</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+<h2>Peran Pembicara</h2>
+@if (Model.bicara.data.Length == 0)
+{
+
+    <p>tidak ada data</p>
+
+}
+else
+{
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead><tr><th>Judul Pengabdian</th><th>Jenis Pengabdian</th><th> Tahun Ajaran</th></tr></thead>
+        <tbody>
+            @foreach (var r in Model.abdi.data)
+            {
+                <tr>
+
+                    <td>@r.judul_penelitian_pengabdian</td>
+                    <td>@r.jenis_penelitian_pengabdian</td>
+                    <td>@r.nama_tahun_ajaran</td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+<h2>Publikasi </h2>
+@if (Model.publi.data.Length == 0)
+{
+
+    <p>tidak ada data</p>
+
+}
+else
+{
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead><tr><th>Judul Publikasi </th><th>Jenis Publikasi </th><th> Tanggal Publikasi</th></tr></thead>
+        <tbody>
+            @foreach (var r in Model.publi.data)
+            {
+                <tr>
+
+                    <td>@r.judul_publikasi_paten</td>
+                    <td>@r.nama_jenis_publikasi</td>
+                    <td>@r.tanggal_terbit</td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+<h2>Pengajaran </h2>
+@if (Model.ajar.data.Length == 0)
+{
+
+    <p>tidak ada data</p>
+
+}
+else
+{
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead><tr><th> Nama Makul</th><th>Kelas </th><th> Tanggal Publikasi</th><th> Tanggal Publikasi</th></tr></thead>
+        <tbody>
+            @foreach (var r in Model.ajar.data)
+            {
+            <tr>
+
+                <td>@r.nama_mata_kuliah</td>
+                <td>@r.nama_kelas_kuliah</td>
+                <td>@r.jumlah_mahasiswa</td>
+                <td>@r.</td>
+
+
+
+
+
+
+            </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+
+
+
+<a asp-action="SemuaDosen"
+   class="btn btn-default">
+    Kembali
+</a>
+
