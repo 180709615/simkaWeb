@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 
+
 namespace APIConsume
 {
     public class Startup
@@ -29,6 +30,8 @@ namespace APIConsume
             services.AddRazorPages();
             services.AddDbContext<SIATMAX_SISTERContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DATA_SISTERContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DataSisterConnection")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddProgressiveWebApp();
             services.AddControllers().AddNewtonsoftJson();

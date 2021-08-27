@@ -16,3 +16,4 @@ namespace APIConsume.Models
         public TblBiayaSlInternal IdBiayaSlIntNavigation { get; set; }
     }
 }
+

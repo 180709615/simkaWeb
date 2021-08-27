@@ -50,41 +50,42 @@ namespace APIControllers.Controllers
         public async Task<string> SendEmail(string Name, string Email, string Message)
         {
 
-            try
-            {
-                // Credentials  
-                //  var credentials = new NetworkCredential("sskkpuajy@gmail.com", "bersamasskkp");
-                var credentials = new NetworkCredential("testMhs@uajy.ac.id", "MhsCoba868");
-                // Mail message
+            //try
+            //{
+            //    // Credentials  
+            //    //  var credentials = new NetworkCredential("sskkpuajy@gmail.com", "bersamasskkp");
+            //    var credentials = new NetworkCredential("testMhs@uajy.ac.id", "MhsCoba868");
+            //    // Mail message
 
 
-                var mail = new MailMessage()
-                {
-                    From = new MailAddress("testMhs@uajy.ac.id"),
-                    Subject = "Informasi Login",
-                    Body = Message
-                };
-                mail.IsBodyHtml = true;
-                mail.To.Add(new MailAddress(Email));
-                // Smtp client
-                var client = new SmtpClient()
-                {
-                    Port = 587,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Host = "SMTP.Office365.com",
-                    EnableSsl = true,
-                    Credentials = credentials
-                };
-                client.Send(mail);
-                return await Task.FromResult("Email Sent Successfully!");
-            }
-            catch (System.Exception e)
-            {
-                Console.WriteLine("aaaaa");
-                Console.WriteLine(e.Message);
-                return e.Message;
-            }
+            //    var mail = new MailMessage()
+            //    {
+            //        From = new MailAddress("testMhs@uajy.ac.id"),
+            //        Subject = "Informasi Login",
+            //        Body = Message
+            //    };
+            //    mail.IsBodyHtml = true;
+            //    mail.To.Add(new MailAddress(Email));
+            //    // Smtp client
+            //    var client = new SmtpClient()
+            //    {
+            //        Port = 587,
+            //        DeliveryMethod = SmtpDeliveryMethod.Network,
+            //        UseDefaultCredentials = false,
+            //        Host = "SMTP.Office365.com",
+            //        EnableSsl = true,
+            //        Credentials = credentials
+            //    };
+            //    client.Send(mail);
+            //    return await Task.FromResult("Email Sent Successfully!");
+            //}
+            //catch (System.Exception e)
+            //{
+            //    Console.WriteLine("aaaaa");
+            //    Console.WriteLine(e.Message);
+            //    return e.Message;
+            //}
+            return ("emailsender");
 
         }
         public async Task<IActionResult> Index(string username, string password, int fungsional)

@@ -11,8 +11,9 @@ namespace APIConsume.Models
         public int error_code { get; set; }
         public string error_desc { get; set; }
         public Penelitians[] data { get; set; }
+        //public Penelitians data { get; set; }
     }
-
+    
     public class Penelitians
     {
         public string id_penelitian_pengabdian { get; set; }

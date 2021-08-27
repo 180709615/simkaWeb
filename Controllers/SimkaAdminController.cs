@@ -1205,7 +1205,7 @@ namespace APIConsume.Controllers
                 }
                 else
                 {
-                    _context.Update(mstrekanan);
+                    _context.MstRekanan.Update(mstrekanan);
 
                     await _context.SaveChangesAsync();
 

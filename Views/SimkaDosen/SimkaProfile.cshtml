@@ -1,11 +1,8 @@
 ﻿@model SimkaDosenPenelitian
 @using  Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@{
-
-    ViewData["Title"] = "View";
-    Layout = "~/Views/Shared/_LayoutDosen.cshtml";
-}
+@{ ViewData["Title"] = "View";
+                Layout = "~/Views/Shared/_LayoutDosen.cshtml"; }
 
 
 
@@ -14,7 +11,7 @@
 <head>
     <title>Profil @HttpContextAccessor.HttpContext.Session.GetString("Nama") - SIMKA UAJY</title>
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
 </head>
 <body>
@@ -25,7 +22,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                     
+
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -54,11 +51,9 @@
 
                                     @if (Model.Karyawan.FileFoto != null)
                                     {
-                                        <img class="profile-user-img img-fluid img-circle"
-                                             src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.Karyawan.FileFoto)"
-                                             alt="User profile picture">
-
-                                    }
+                        <img class="profile-user-img img-fluid img-circle"
+                             src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.Karyawan.FileFoto)"
+                             alt="User profile picture">}
                                 </div>
                                 <br>
                                 <h4 class=" text-center"><b>@Model.Karyawan.Npp </b></h4>
@@ -69,19 +64,13 @@
 
                                         @if (Model.Karyawan.IdUnitNavigation != null)
                                         {
-                                            @Model.Karyawan.IdUnitNavigation.NamaUnit
+                            @Model.Karyawan.IdUnitNavigation.NamaUnit
                                             <br>
-                                            @if (@Model.Karyawan.MstIdUnitNavigation != null)
+                                                            @if (@Model.Karyawan.MstIdUnitNavigation != null)
+                                                            {
+                                            @if (@Model.Karyawan.IdUnitNavigation.NamaUnit != @Model.Karyawan.MstIdUnitNavigation.NamaUnit)
                                             {
-                                                @if (@Model.Karyawan.IdUnitNavigation.NamaUnit != @Model.Karyawan.MstIdUnitNavigation.NamaUnit)
-                                                {
-                                                    @Model.Karyawan.MstIdUnitNavigation.NamaUnit
-                                                }
-                                            }
-
-
-
-                                        }
+                        @Model.Karyawan.MstIdUnitNavigation.NamaUnit}}}
 
 
                                     </b>
@@ -92,15 +81,14 @@
                                     <li class="list-group-item">
                                         @if (Model.Akademik != null)
                                         {
-                                            <b>Program Sudi:</b> <a class="float-right">@Model.Akademik.NamaUnitAkademik </a>
-                                        }
+                            <b>Program Sudi:</b> <a class="float-right">@Model.Akademik.NamaUnitAkademik </a>}
 
                                     </li>
                                     <li class="list-group-item">
                                         <b>Tempat, Tanggal Lahir:</b> <a class="float-right">
-    @Model.Karyawan.TempatLahir -
-    @Convert.ToDateTime(Model.Karyawan.TglLahir).ToString("dd/MM/yyyy")   
-</a>
+                                            @Model.Karyawan.TempatLahir -
+                                            @Convert.ToDateTime(Model.Karyawan.TglLahir).ToString("dd/MM/yyyy")
+                                        </a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>Email:</b> <a class="float-right">@Model.Karyawan.Email</a>
@@ -110,8 +98,10 @@
                                     </li>
                                 </ul>
 
-                                <a><b>Alamat:</b> 
-                                @Model.Karyawan.Alamat</a>
+                                <a>
+                                    <b>Alamat:</b>
+                                    @Model.Karyawan.Alamat
+                                </a>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -139,10 +129,10 @@
                                         </tbody>
 
                                     </table>
-                                    </div>
                                 </div>
-                                <!-- /.card-body -->
                             </div>
+                            <!-- /.card-body -->
+                        </div>
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -165,7 +155,7 @@
                                             <div class="mb-3">
 
                                                 @Html.Raw(@Model.Karyawan.BiografiSingkat)
-
+                                                @*Html.Raw karena teks yg disimpen formatnya html, jadi harus di decode*@
 
                                             </div>
 
@@ -175,8 +165,9 @@
 
                                     <div class="tab-pane" id="pengajaran">
 
-                                        <p> tabel pengajaran dari sister </p>
-
+                                        <b> Pengajaran dari SISTER </b>
+                                        <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                                           onclick="SinkronPengajaranSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
                                         <div style="overflow-x:auto;">
                                             <table id="tabelpengajaran" class="table table-sm table-striped table-bordered m-2">
                                                 <thead>
@@ -186,7 +177,7 @@
                                                         <th> Nama mata Kuliah</th>
                                                         <th>Nama jenis Evaluasi</th>
                                                         <th> nama kelas Kuliah</th>
-                                                        <th> Jumlah mahasiswa</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -241,9 +232,7 @@
                                                                     @r.Lokasi
                                                                 </td>
                                                             </tr>
-                                                        }
-
-                                                    }
+                                                        } }
                                                     else
                                                     {
                                                         <tr>
@@ -264,12 +253,14 @@
                                             </table>
                                         </div>
                                         <b>Penelitian dari Sister</b>
-                                        <table id="penelitiansister" class="table table-sm table-striped table-bordered m-2">
+                                        <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                                           onclick="SinkronPenelitianSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                        <table id="penelitiansister" class="table table-md table-striped table-bordered m-2">
                                             <thead>
                                                 <tr>
                                                     <th> NO </th>
-                                                    <th> Jenis Penelitian</th>
                                                     <th> Judul Penelitian</th>
+                                                    <th> Durasi Kegiatan</th>
                                                     <th> Skim Penelitan</th>
                                                     <th> Tahun Ajaran</th>
 
@@ -286,6 +277,9 @@
                                     <!-- /.card-header -->
                                     <!---  Publikasi-->
                                     <div class="tab-pane" id="publikasi">
+                                        <b>Publikasi dari SISTER</b>
+                                        <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                                           onclick="SinkronPublikasiSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
                                         <div style="overflow-x:auto;">
                                             <table id="tabelpublikasi" class="table table-sm table-striped table-bordered m-2">
                                                 <thead>
@@ -301,86 +295,92 @@
                                                 <tbody>
                                                 </tbody>
                                             </table>
-                                            </div>
-
-                                            <!--- / Publikasi-->
                                         </div>
-                                        <div class="tab-pane" id="pengabdian">
-                                            <table class="table table-sm table-striped table-bordered m-2">
-                                                <thead>
-                                                    <tr>
 
-                                                        <th> Judul Penelitian</th>
-                                                        <th> Keluaran</th>
-                                                        <th> Tanggal Mulai</th>
-                                                        <th> Tanggal Selesai</th>
-                                                        <th> Lokasi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                        <!--- / Publikasi-->
+                                    </div>
+                                    
 
-                                                    @if (Model.Pengabdian.Count != 0)
-                                                    {
-                                                        @foreach (var r in Model.Pengabdian)
-                                                        {
-                                                            <tr>
-                                                                <td>
+                                    <div class="tab-pane" id="pengabdian">
+                                        <b>Pengabdian dari Simka</b>
+                                        <table class="table table-sm table-striped table-bordered m-2">
+                                            <thead>
+                                                <tr>
 
-                                                                    @r.JudulKegiatan
-                                                                </td>
-                                                                <td>
-                                                                    @r.Outcome
-                                                                </td>
-                                                                <td>
-                                                                    @r.Awal
-                                                                </td>
-                                                                <td>
-                                                                    @r.Akhir
-                                                                </td>
-                                                                <td>
-                                                                    @r.Lokasi
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                    else
+                                                    <th> Judul Penelitian</th>
+                                                    <th> Keluaran</th>
+                                                    <th> Tanggal Mulai</th>
+                                                    <th> Tanggal Selesai</th>
+                                                    <th> Lokasi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
+                                                @if (Model.Pengabdian.Count != 0)
+                                                {
+                                                    @foreach (var r in Model.Pengabdian)
                                                     {
                                                         <tr>
+                                                            <td>
 
-                                                            <td> Tidak ada data pada SIMKA</td>
-
+                                                                @r.JudulKegiatan
+                                                            </td>
+                                                            <td>
+                                                                @r.Outcome
+                                                            </td>
+                                                            <td>
+                                                                @r.Awal
+                                                            </td>
+                                                            <td>
+                                                                @r.Akhir
+                                                            </td>
+                                                            <td>
+                                                                @r.Lokasi
+                                                            </td>
                                                         </tr>
                                                     }
+                                                }
+                                                else
 
-                                                </tbody>
-                                            </table>
-                                            <table id="tabelpengabdian" class="table table-sm table-striped table-bordered m-2">
-                                                <thead>
+                                                {
                                                     <tr>
-                                                        <th>NO</th>
-                                                        <th> Judul Penelitian</th>
-                                                        <th>Jenis </th>
-                                                        <th> Durasi</th>
-                                                        <th> SKIM</th>
-                                                        <th> Tahun Ajaran</th>
+
+                                                        <td> Tidak ada data pada SIMKA</td>
+
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
+                                                }
 
-
-
-
-                                        </div>
-
-
+                                            </tbody>
+                                        </table>
+                                        <b>Pengabdian dari Sister</b>
+                                        <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                                           onclick="SinkronPengabdianSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                        <table id="tabelpengabdian" class="table table-sm table-striped table-bordered m-2">
+                                            <thead>
+                                                <tr>
+                                                    <th>NO</th>
+                                                    <th> Judul Penelitian</th>
+                                                   
+                                                    <th> Durasi</th>
+                                                    <th> SKIM</th>
+                                                    <th> Tahun Ajaran</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
 
 
 
 
                                     </div>
+
+
+
+
+
+
+                                </div>
 
                             </div>
                         </div>
@@ -438,20 +438,23 @@
 
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-       
+
     </script>
     <script>
 
+        var dataTablePublikasiSISTER, dataTablePenelitianSISTER, dataTablePengabdianSISTER, dataTablePengajaranSISTER;
+        var sweet_loader = '<div class="sweet_loader"><svg viewBox="0 0 140 140" width="140" height="140"><g class="outline"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="rgba(0,0,0,0.1)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></g><g class="circle"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="#71BBFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="200" stroke-dasharray="300"></path></g></svg></div>';
 
         $(document).ready(function () {
 
-            $("#tabelpengajaran").DataTable({
+            dataTablePengajaranSISTER = $("#tabelpengajaran").DataTable({
                 "paging": false,
                 "ordering": false,
-              
+
                 "processing": true, // for show progress bar
 
                 "filter": false, // this is for disable filter (search box)
@@ -490,10 +493,11 @@
             });
 
 
-            $("#tabelpublikasi").DataTable({
+
+            dataTablePublikasiSISTER = $("#tabelpublikasi").DataTable({
                 "paging": false,
                 "ordering": false,
-               
+
                 "processing": true, // for show progress bar
 
                 "filter": false, // this is for disable filter (search box)
@@ -532,16 +536,60 @@
             });
 
 
-            $("#tabelpengabdian").DataTable({
+           
+
+            dataTablePengabdianSISTER = $("#tabelpengabdian").DataTable({
                 "paging": false,
                 "ordering": false,
-               
+
                 "processing": true, // for show progress bar
 
                 "filter": false, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
                 "ajax": {
                     "url": "/SimkaDosen/LoadDataPengabdian",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "language": {
+                    "emptyTable": "Tidak Ada Data Pada Sister"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": true,
+                        "searchable": true,
+                        "width": "80%"
+                    }],
+
+
+                "columns": [
+                    {
+                        "data": null, "sortable": false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { "data": "judul_penelitian_pengabdian", "name": "nama_mata_kuliah", "autoWidth": true },
+                    
+                    { "data": "durasi_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "nama_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "nama_tahun_ajaran", "name": "nama_kelas_kuliah", "autoWidth": true },
+
+                ]
+
+            });
+
+            dataTablePenelitianSISTER = $("#penelitiansister").DataTable({
+                "paging": false,
+                "ordering": false,
+                "paging": true,
+                "processing": true, // for show progress bar
+
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/SimkaDosen/LoadDataPenelitian",
                     "type": "POST",
                     "datatype": "json"
                 },
@@ -564,7 +612,7 @@
                         }
                     },
                     { "data": "judul_penelitian_pengabdian", "name": "nama_mata_kuliah", "autoWidth": true },
-                    { "data": "jenis_penelitian_pengabdian", "name": "nama_jenis_evaluasi", "autoWidth": true },
+
                     { "data": "durasi_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
                     { "data": "nama_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
                     { "data": "nama_tahun_ajaran", "name": "nama_kelas_kuliah", "autoWidth": true },
@@ -573,119 +621,251 @@
 
             });
 
-        $("#penelitiansister").DataTable({
-            "paging": false,
-            "ordering": false,
-            "paging": true,
-            "processing": true, // for show progress bar
-
-            "filter": false, // this is for disable filter (search box)
-            "orderMulti": false, // for disable multiple column at once
-            "ajax": {
-                "url": "/SimkaDosen/LoadDataPenelitian",
-                "type": "POST",
-                "datatype": "json"
-            },
-            "language": {
-                "emptyTable": "Tidak Ada Data Pada Sister"
-            },
-            "columnDefs":
-                [{
-                    "targets": [0],
-                    "visible": true,
-                    "searchable": true
-                }],
-
-
-            "columns": [
-                {
-                    "data": null, "sortable": false,
-                    render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                { "data": "judul_penelitian_pengabdian", "name": "nama_mata_kuliah", "autoWidth": true },
             
-                { "data": "durasi_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
-                { "data": "nama_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
-                { "data": "nama_tahun_ajaran", "name": "nama_kelas_kuliah", "autoWidth": true },
 
-            ]
-
-        });
-
-        $("#tabelpendidikan").DataTable({
-            "paging": false,
-            "ordering": false,
-            "info":false,
-            "processing": true, // for show progress bar
-            "destroy": true,
-            "filter": false, // this is for disable filter (search box)
-            "orderMulti": false, // for disable multiple column at once
-            "ajax": {
-                "url": "/SimkaDosen/LoadDataRiwayatPendidikan",
-                "type": "POST",
-                "datatype": "json"
-            },
-           
-
-            "columns": [
-                {
-                    "data": null, "sortable": false,
-                    render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
+            $("#tabelpendidikan").DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "processing": true, // for show progress bar
+                "destroy": true,
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/SimkaDosen/LoadDataRiwayatPendidikan",
+                    "type": "POST",
+                    "datatype": "json"
                 },
-                { "data": "namaSekolah", "name": "namaSekolah", "autoWidth": true },
-                { "data": "deskripsi", "name": "deskripsi", "autoWidth": true },
-                { "data": "programStudi", "name": "programStudi", "autoWidth": true },
-                { "data": "status", "name": "status", "autoWidth": true },
-                { "data": "tahunLulus", "name": "tahunLulus", "autoWidth": true },
 
-            ]
 
-        });
-
-           
-                dataTable = $('#tabelpengembangansimka').DataTable({
-                    "responsive": true,
-                    "paging": true,
-                    "ordering": false,
-                   
-                    "ajax": {
-                        "url": "/SimkaDosen/LoadDataTrPengembangan",
-                        "type": "GET",
-                        "datatype": "json"
+                "columns": [
+                    {
+                        "data": null, "sortable": false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
                     },
-                    "columns": [
-                        {
-                            "data": null, "sortable": false,
-                            render: function (data, type, row, meta) {
-                                return meta.row + meta.settings._iDisplayStart + 1;
-                            }
-                        },
-                        {
-                            data: "refPe",
-                            title: "Jenis Pengembangan",
+                    { "data": "namaSekolah", "name": "namaSekolah", "autoWidth": true },
+                    { "data": "deskripsi", "name": "deskripsi", "autoWidth": true },
+                    { "data": "programStudi", "name": "programStudi", "autoWidth": true },
+                    { "data": "status", "name": "status", "autoWidth": true },
+                    { "data": "tahunLulus", "name": "tahunLulus", "autoWidth": true },
 
-                        }, {
-                            data: "apr",
-                            title: "Butir TriDharma",
+                ]
 
-                        },
-                        {
-                            data: "judul",
-                            title: "Judul",
+            });
 
-                        },
 
-                      
-                    ],
-                    "language": {
-                        "emptyTable": "no data found."
-                    }
-                });
+            dataTable = $('#tabelpengembangansimka').DataTable({
+                "responsive": true,
+                "paging": true,
+                "ordering": false,
+
+                "ajax": {
+                    "url": "/SimkaDosen/LoadDataTrPengembangan",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    {
+                        "data": null, "sortable": false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: "refPe",
+                        title: "Jenis Pengembangan",
+
+                    }, {
+                        data: "apr",
+                        title: "Butir TriDharma",
+
+                    },
+                    {
+                        data: "judul",
+                        title: "Judul",
+
+                    },
+
+
+                ],
+                "language": {
+                    "emptyTable": "no data found."
+                }
+            });
+
             
+
         });
+
+        
+        function SinkronPengabdianSISTER() {
+            swal.fire({
+                icon: 'info',
+                html: '<h5>Loading...</h5>',
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: false
+
+            });
+            console.log("btn Pengabdian sister clicked")
+            $.ajax({
+                type: 'get',
+                // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                url: '/SimkaDosen/SinkronDataPengabdianSISTER',
+
+
+                datatype: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        console.log(data.message)
+                        toastr.success("Sinkronisasi Pengabdian Berhasil");
+                        dataTablePengabdianSISTER.ajax.reload();
+                        swal.fire({
+                            icon: 'success',
+                            html: '<h5>Sinkronisasi Berhasil</h5>'
+                        });
+                    }
+                },
+                error: function (data) {
+
+                    console.log("ini gagal")
+                    toastr.error("Sinkronisasi Pengabdian Gagal");
+                }
+            });
+
+            //swal.close();
+            //setTimeout(function () {
+            //    swal.close();
+            //}, 3000);
+        }
+
+        function SinkronPenelitianSISTER() {
+            swal.fire({
+                icon: 'info',
+                html: '<h5>Loading...</h5>',
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: false
+
+            });
+            console.log("btn penelitian sister clicked")
+            $.ajax({
+                type: 'get',
+               // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                url: '/SimkaDosen/SinkronDataPenelitianSISTER',
+                
+
+                datatype: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        console.log(data.message)
+                        toastr.success("Sinkronisasi Penelitian Berhasil");
+                        dataTablePenelitianSISTER.ajax.reload();
+                        swal.fire({
+                            icon: 'success',
+                            html: '<h5>Sinkronisasi Berhasil</h5>'
+                        });
+                    }
+                },
+                error: function (data) {
+
+                    console.log("ini gagal")
+                    toastr.error("sinkronisasi penelitian gagal");
+                }
+            });
+            
+            //swal.close();
+            //setTimeout(function () {
+            //    swal.close();
+            //}, 3000);
+        }
+
+        function SinkronPengajaranSISTER() {
+            swal.fire({
+                icon: 'info',
+                html: '<h5>Loading...</h5>',
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: false
+
+            });
+            console.log("btn Pengajaran sister clicked")
+            $.ajax({
+                type: 'get',
+                // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                url: '/SimkaDosen/SinkronDataPengajaranSISTER',
+
+
+                datatype: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        console.log(data.message)
+                        toastr.success("Sinkronisasi Pengajaran Berhasil");
+                        dataTablePengajaranSISTER.ajax.reload();
+                        swal.fire({
+                            icon: 'success',
+                            html: '<h5>Sinkronisasi Berhasil</h5>'
+                        });
+                    }
+                },
+                error: function (data) {
+
+                    console.log("ini gagal")
+                    toastr.error("Sinkronisasi Pengajaran Gagal");
+                }
+            });
+
+            //swal.close();
+            //setTimeout(function () {
+            //    swal.close();
+            //}, 3000);
+        }
+
+        function SinkronPublikasiSISTER() {
+            swal.fire({
+                icon: 'info',
+                html: '<h5>Loading...</h5>',
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: false
+
+            });
+            console.log("btn Publikasi sister clicked")
+            $.ajax({
+                type: 'get',
+                // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                url: '/SimkaDosen/SinkronDataPublikasiSISTER',
+
+
+                datatype: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        console.log(data.message)
+                        toastr.success("Sinkronisasi Publikasi Berhasil");
+                        dataTablePublikasiSISTER.ajax.reload();
+                        swal.fire({
+                            icon: 'success',
+                            html: '<h5>Sinkronisasi Berhasil</h5>'
+                        });
+                    }
+                },
+                error: function (data) {
+
+                    console.log("ini gagal")
+                    toastr.error("Sinkronisasi Publikasi Gagal");
+                }
+            });
+
+            //swal.close();
+            //setTimeout(function () {
+            //    swal.close();
+            //}, 3000);
+        }
     </script>
+
+    <style>
+        
+    </style>
 }

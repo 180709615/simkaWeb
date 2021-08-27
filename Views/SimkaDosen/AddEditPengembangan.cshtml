@@ -1,8 +1,6 @@
 ﻿@model TrPengembanganForm
 
-@{
-    Layout = null;
-}
+@{ Layout = null; }
 <html>
 <body>
     <div class="row">
@@ -31,7 +29,7 @@
                     <div class="form-group">
                         <label for="" class="col-sm-2 col-form-label">Jenis Pengembangan</label>
 
-                        <select  class="form-control" asp-for="@Model.IdRefPengembangan" id="pengembangan"></select>
+                        <select class="form-control" asp-for="@Model.IdRefPengembangan" id="pengembangan"></select>
                         <span asp-validation-for="IdRefPengembangan" class="text-danger"></span>
                     </div>
                 </div>
@@ -122,8 +120,7 @@
                     <div id="previewFoto">
                         @if (Model.FilePengembangan != null)
                         {
-                            <img src="data:image/jpg;base64,@System.Convert.ToBase64String(Model.FilePengembangan) " width="600">
-                        }
+            <img src="data:image/jpg;base64,@System.Convert.ToBase64String(Model.FilePengembangan) " width="600">}
                     </div>
                 </div>
 
@@ -131,9 +128,9 @@
                 <input type="submit" class="btn btn-primary" value="Simpan Data Pengembangan" />
 
             </form>
+        </div>
     </div>
-    </div>
-   
+
 
 </body>
 </html>
