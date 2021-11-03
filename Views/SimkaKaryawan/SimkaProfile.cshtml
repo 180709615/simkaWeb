@@ -43,6 +43,29 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                @if (TempData["SuccessMessage"] != null && TempData["SuccessMessage"] != "")
+                {
+                    <div class="alert alert-success alert-dismissible">
+
+
+                        <h4>
+                            Pemberitahuan
+                        </h4>
+
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x </button>
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+                @if (TempData["ErrorMessage"] != null && TempData["ErrorMessage"] != "")
+                {
+                    <div class="alert alert-danger alert-dismissible">
+
+                        <h5>Pemberitahuan</h5>
+
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x </button>
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
                 <div class="row">
                     <div class="col-md-3">
 
@@ -59,11 +82,9 @@
 
                                     @if (Model.Karyawan.FileFoto != null)
                                     {
-                                        <img class="profile-user-img img-fluid img-circle"
-                                             src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.Karyawan.FileFoto)"
-                                             alt="User profile picture">
-
-                                    }
+                        <img class="profile-user-img img-fluid img-circle"
+                             src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.Karyawan.FileFoto)"
+                             alt="User profile picture">}
                                 </div>
                                 <br>
                                 <h4 class=" text-center"><b>@Model.Karyawan.Npp </b></h4>
@@ -74,19 +95,13 @@
 
                                         @if (Model.Karyawan.IdUnitNavigation != null)
                                         {
-                                            @Model.Karyawan.IdUnitNavigation.NamaUnit
+                            @Model.Karyawan.IdUnitNavigation.NamaUnit
                                             <br>
-                                            @if (@Model.Karyawan.MstIdUnitNavigation != null)
+                                                            @if (@Model.Karyawan.MstIdUnitNavigation != null)
+                                                            {
+                                            @if (@Model.Karyawan.IdUnitNavigation.NamaUnit != @Model.Karyawan.MstIdUnitNavigation.NamaUnit)
                                             {
-                                                @if (@Model.Karyawan.IdUnitNavigation.NamaUnit != @Model.Karyawan.MstIdUnitNavigation.NamaUnit)
-                                                {
-                                                    @Model.Karyawan.MstIdUnitNavigation.NamaUnit
-                                                }
-                                            }
-
-
-
-                                        }
+                        @Model.Karyawan.MstIdUnitNavigation.NamaUnit}}}
 
 
                                     </b>
@@ -97,8 +112,7 @@
                                     <li class="list-group-item">
                                         @if (Model.Akademik != null)
                                         {
-                                            <b>Program Sudi:</b> <a class="float-right">@Model.Akademik.NamaUnitAkademik </a>
-                                        }
+                            <b>Program Sudi:</b> <a class="float-right">@Model.Akademik.NamaUnitAkademik </a>}
 
                                     </li>
                                     <li class="list-group-item">
@@ -150,6 +164,8 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+                        <button type="button" class="btn btn-success btn-block" style="width:100%;" onclick="goToUbahPassword()">Ubah Password</button>
+
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -176,7 +192,7 @@
 
                                     </div>
 
-                                    
+
 
 
                                 </div>
@@ -310,7 +326,7 @@
                 {
                     "data": null, "sortable": false,
                     render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
+                        return m0eta.row + meta.settings._iDisplayStart + 1;
                     }
                 },
                 { "data": "namaSekolah", "name": "namaSekolah", "autoWidth": true },
@@ -322,5 +338,8 @@
             ]
 
         });
+        function goToUbahPassword() {
+            window.location.replace("/SimkaKaryawan/UbahPasswordFormKaryawan")
+        }
     </script>
 }

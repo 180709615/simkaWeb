@@ -10,9 +10,12 @@ namespace APIConsume.Models
     {
         public string error_code { get; set; }
         public string error_desc { get; set; }
-        public Datas data { get; set; }
 
-      
+        public string token { get; set; }
+        public string role { get; set; }
+        public Datas data { get; set; }
+        public string message { get; set; }
+        public string detail { get; set; }
     }
 
     public class Datas

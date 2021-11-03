@@ -109,6 +109,7 @@ namespace APIConsume.Models
         public virtual DbSet<TblRoleSubmenu> TblRoleSubmenu { get; set; }
         public virtual DbSet<TblSemesterAkademik> TblSemesterAkademik { get; set; }
         public virtual DbSet<TblSiMenu> TblSiMenu { get; set; }
+       // public virtual DbSet<TblUserRole> TblUserRole { get; set; }
         public virtual DbSet<TblSistemInformasi> TblSistemInformasi { get; set; }
         public virtual DbSet<TblSiSubmenu> TblSiSubmenu { get; set; }
         public virtual DbSet<TblStudiLanjut> TblStudiLanjut { get; set; }
@@ -843,6 +844,14 @@ namespace APIConsume.Models
                     .WithMany(p => p.MstKaryawanMstIdUnitAkademikNavigation)
                     .HasForeignKey(d => d.IdUnitAkademik)
                     .HasConstraintName("FK_RELATION_129");
+
+                entity.Property(e => e.PASSWORD_RIPEM)
+                    .HasColumnName("PASSWORD_RIPEM")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UUID_LUPA_PWD)
+                     .HasColumnName("UUID_LUPA_PWD")
+                     .HasMaxLength(100);
             });
 
             modelBuilder.Entity<MstKeluarga>(entity =>

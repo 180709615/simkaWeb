@@ -20,6 +20,13 @@ namespace APIConsume.Models
         public virtual DbSet<TrPublikasi_DATA_SISTER> TrPublikasi_DATA_SISTER { get; set; }
         public virtual DbSet<TblPenulis_DATA_SISTER> TblPenulis_DATA_SISTER { get; set; }
         public virtual DbSet<TblDokumen_DATA_SISTER> TblDokumen_DATA_SISTER { get; set; }
+        public virtual DbSet<TblAnggota_DATA_SISTER> TblAnggota_DATA_SISTER { get; set; }
+        public virtual DbSet<TblMitra_Litabmas_DATA_SISTER> TblMitra_Litabmas_DATA_SISTER { get; set; }
+        public virtual DbSet<ViewPerbandinganPengajaran_SPKP> ViewPerbandinganPengajaran_SPKP { get; set; }
+        public virtual DbSet<RefSemesterSister> RefSemesterSister { get; set; }
+        public virtual DbSet<RefPerguruanTinggiSister> RefPerguruanTinggiSister { get; set; }
+        public virtual DbSet<RefKategoriCapaianLuaranSister> RefKategoriCapaianLuaranSister { get; set; }
+        public virtual DbSet<RefJenisPublikasiSister> RefJenisPublikasiSister { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,11 +41,14 @@ namespace APIConsume.Models
             modelBuilder.Entity<TrPenelitian_DATA_SISTER>(entity =>
             {
                 entity.HasKey(e => e.id_penelitian_pengabdian);
-
+                //entity.HasNoKey();
                 entity.ToTable("PENELITIAN");
 
                 entity.Property(e => e.id_penelitian_pengabdian).HasColumnName("id_penelitian_pengabdian")
                 .HasMaxLength(50);
+
+                entity.Property(e => e.id_kategori_kegiatan).HasColumnName("id_kategori_kegiatan")
+                .HasColumnType("int");
 
 
                 entity.Property(e => e.judul_penelitian_pengabdian).HasColumnName("judul_penelitian_pengabdian")
@@ -67,15 +77,15 @@ namespace APIConsume.Models
 
                 entity.Property(e => e.in_kind)
                     .HasColumnName("in_kind")
-                    .HasMaxLength(50);
+                    .HasMaxLength(200);
 
                 entity.Property(e => e.status_aktif)
                     .HasColumnName("status_aktif")
-                    .HasMaxLength(100);
+                    .HasMaxLength(200);
 
                 entity.Property(e => e.no_sk_tugas)
                     .HasColumnName("no_sk_tugas")
-                    .HasMaxLength(100);
+                    .HasMaxLength(200);
 
                 entity.Property(e => e.tanggal_sk_penugasan)
                     .HasColumnName("tanggal_sk_penugasan")
@@ -83,50 +93,93 @@ namespace APIConsume.Models
 
                 entity.Property(e => e.tempat_kegiatan)
                     .HasColumnName("tempat_kegiatan")
+                    .HasMaxLength(500);                
+
+                entity.Property(e => e.id_jenis_skim)
+                    .HasColumnName("id_jenis_skim")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.nama_tahun_anggaran)
-                    .HasColumnName("nama_tahun_anggaran")
+                entity.Property(e => e.jenis_skim)
+                    .HasColumnName("jenis_skim")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.nama_lembaga)
+                    .HasColumnName("nama_lembaga")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.tahun_usulan)
+                    .HasColumnName("tahun_usulan")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.tahun_kegiatan)
+                    .HasColumnName("tahun_kegiatan")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.tahun_pelaksanaan)
+                    .HasColumnName("tahun_pelaksanaan")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.id_litabmas_sebelumnya)
+                    .HasColumnName("id_litabmas_sebelumnya")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.nama_skim)
-                    .HasColumnName("nama_skim")
+                entity.Property(e => e.litabmas_sebelumnya)
+                    .HasColumnName("litabmas_sebelumnya")
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.id_afiliasi)
+                    .HasColumnName("id_afiliasi")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.parent_judul_litabmas)
-                    .HasColumnName("parent_judul_litabmas")
-                    .HasMaxLength(100);
+                entity.Property(e => e.afiliasi)
+                    .HasColumnName("afiliasi")
+                    .HasMaxLength(200);
 
-                entity.Property(e => e.nama_lembaga)
-                    .HasColumnName("nama_lembaga")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.nama_lembaga)
-                    .HasColumnName("nama_lembaga")
+                entity.Property(e => e.id_kelompok_bidang)
+                    .HasColumnName("id_kelompok_bidang")
                     .HasMaxLength(100);
 
                 entity.Property(e => e.nama_kelompok_bidang)
                     .HasColumnName("nama_kelompok_bidang")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.NPP1)
+                    .HasColumnName("NPP1")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.NPP)
-                    .HasColumnName("NPP")
+                entity.Property(e => e.NPP2)
+                    .HasColumnName("NPP2")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.nama_tahun_ajaran)
-                    .HasColumnName("nama_tahun_ajaran")
-                    .HasMaxLength(50);
+                entity.Property(e => e.NPP3)
+                    .HasColumnName("NPP3")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP4)
+                    .HasColumnName("NPP4")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP5)
+                    .HasColumnName("NPP5")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP6)
+                    .HasColumnName("NPP6")
+                    .HasMaxLength(100);
 
             });
 
             modelBuilder.Entity<TrPengabdian_DATA_SISTER>(entity =>
             {
                 entity.HasKey(e => e.id_penelitian_pengabdian);
-
+                //entity.HasNoKey();
                 entity.ToTable("PENGABDIAN");
 
                 entity.Property(e => e.id_penelitian_pengabdian).HasColumnName("id_penelitian_pengabdian")
                 .HasMaxLength(50);
+
+                entity.Property(e => e.id_kategori_kegiatan).HasColumnName("id_kategori_kegiatan")
+                .HasColumnType("int");
 
 
                 entity.Property(e => e.judul_penelitian_pengabdian).HasColumnName("judul_penelitian_pengabdian")
@@ -155,15 +208,15 @@ namespace APIConsume.Models
 
                 entity.Property(e => e.in_kind)
                     .HasColumnName("in_kind")
-                    .HasMaxLength(50);
+                    .HasMaxLength(200);
 
                 entity.Property(e => e.status_aktif)
                     .HasColumnName("status_aktif")
-                    .HasMaxLength(100);
+                    .HasMaxLength(200);
 
                 entity.Property(e => e.no_sk_tugas)
                     .HasColumnName("no_sk_tugas")
-                    .HasMaxLength(100);
+                    .HasMaxLength(200);
 
                 entity.Property(e => e.tanggal_sk_penugasan)
                     .HasColumnName("tanggal_sk_penugasan")
@@ -171,93 +224,144 @@ namespace APIConsume.Models
 
                 entity.Property(e => e.tempat_kegiatan)
                     .HasColumnName("tempat_kegiatan")
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.id_jenis_skim)
+                    .HasColumnName("id_jenis_skim")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.nama_tahun_anggaran)
-                    .HasColumnName("nama_tahun_anggaran")
+                entity.Property(e => e.jenis_skim)
+                    .HasColumnName("jenis_skim")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.nama_lembaga)
+                    .HasColumnName("nama_lembaga")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.tahun_usulan)
+                    .HasColumnName("tahun_usulan")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.tahun_kegiatan)
+                    .HasColumnName("tahun_kegiatan")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.tahun_pelaksanaan)
+                    .HasColumnName("tahun_pelaksanaan")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.id_litabmas_sebelumnya)
+                    .HasColumnName("id_litabmas_sebelumnya")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.nama_skim)
-                    .HasColumnName("nama_skim")
+                entity.Property(e => e.litabmas_sebelumnya)
+                    .HasColumnName("litabmas_sebelumnya")
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.id_afiliasi)
+                    .HasColumnName("id_afiliasi")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.parent_judul_litabmas)
-                    .HasColumnName("parent_judul_litabmas")
-                    .HasMaxLength(100);
+                entity.Property(e => e.afiliasi)
+                    .HasColumnName("afiliasi")
+                    .HasMaxLength(200);
 
-                entity.Property(e => e.nama_lembaga)
-                    .HasColumnName("nama_lembaga")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.nama_lembaga)
-                    .HasColumnName("nama_lembaga")
+                entity.Property(e => e.id_kelompok_bidang)
+                    .HasColumnName("id_kelompok_bidang")
                     .HasMaxLength(100);
 
                 entity.Property(e => e.nama_kelompok_bidang)
                     .HasColumnName("nama_kelompok_bidang")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.NPP1)
+                    .HasColumnName("NPP1")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.NPP)
-                    .HasColumnName("NPP")
+                entity.Property(e => e.NPP2)
+                    .HasColumnName("NPP2")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.nama_tahun_ajaran)
-                    .HasColumnName("nama_tahun_ajaran")
-                    .HasMaxLength(50);
+                entity.Property(e => e.NPP3)
+                    .HasColumnName("NPP3")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP4)
+                    .HasColumnName("NPP4")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP5)
+                    .HasColumnName("NPP5")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP6)
+                    .HasColumnName("NPP6")
+                    .HasMaxLength(100);
 
             });
 
             modelBuilder.Entity<TrPengajaran_Data_SISTER>(entity =>
             {
-                entity.HasKey(e => e.id_pembelajaran);
+                entity.HasKey(e => e.id);
 
                 entity.ToTable("PENGAJARAN");
 
-                entity.Property(e => e.id_pembelajaran)
-                .HasColumnName("id_pembelajaran")
+                entity.Property(e => e.id)
+                .HasColumnName("id_pengajaran")
                 .HasMaxLength(50);
 
+                entity.Property(e => e.semester)
+                .HasColumnName("semester")
+                .HasMaxLength(50);
 
-                entity.Property(e => e.sks_total_persubstansi)
-                .HasColumnName("sks_total_persubstansi")
+                entity.Property(e => e.mata_kuliah)
+                .HasColumnName("mata_kuliah")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.kelas)
+                .HasColumnName("kelas")
+                .HasMaxLength(50);
+
+                entity.Property(e => e.sks)
+                .HasColumnName("sks")
                 .HasColumnType("numeric");
 
-                entity.Property(e => e.sks_tatap_muka_persubstansi)
-                    .HasColumnName("sks_tatap_muka_persubstansi")
-                    .HasColumnType("numeric");
+                entity.Property(e => e.id_semester)
+                .HasColumnName("id_semester")
+                .HasMaxLength(50);
 
-
-                entity.Property(e => e.sks_praktek_persubstansi)
-                .HasColumnName("sks_praktek_persubstansi")
+                entity.Property(e => e.sks_tatap_muka)
+                .HasColumnName("sks_tatap_muka")
                 .HasColumnType("numeric");
 
-                entity.Property(e => e.sks_praktek_lapangan_persubstansi)
-                    .HasColumnName("sks_praktek_lapangan_persubstansi")
+                entity.Property(e => e.sks_praktik)
+                    .HasColumnName("sks_praktik")
                     .HasColumnType("numeric");
 
-                entity.Property(e => e.sks_simulasi_persubstansi)
-                    .HasColumnName("sks_simulasi_persubstansi")
-                    .HasColumnType("numeric");
 
-                entity.Property(e => e.jumlah_tim_rencana)
-                    .HasColumnName("jumlah_tim_rencana")
+                entity.Property(e => e.sks_praktik_lapangan)
+                .HasColumnName("sks_praktik_lapangan")
+                .HasColumnType("numeric");
+
+                entity.Property(e => e.sks_simulasi)
+                    .HasColumnName("sks_simulasi")
+                    .HasColumnType("numeric");
+                
+                entity.Property(e => e.tatap_muka_rencana)
+                    .HasColumnName("tatap_muka_rencana")
                     .HasColumnType("int");
 
-                entity.Property(e => e.jumlah_tim_real)
-                    .HasColumnName("jumlah_tim_real")
+                entity.Property(e => e.tatap_muka_realisasi)
+                    .HasColumnName("tatap_muka_realisasi")
                     .HasColumnType("int");
 
                 entity.Property(e => e.jumlah_mahasiswa)
                     .HasColumnName("jumlah_mahasiswa")
                     .HasColumnType("int");
 
-                entity.Property(e => e.nama_kelas_kuliah)
-                    .HasColumnName("nama_kelas_kuliah")
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.nama_jenis_evaluasi)
-                    .HasColumnName("nama_jenis_evaluasi")
-                    .HasMaxLength(150);
+                entity.Property(e => e.jenis_evaluasi)
+                    .HasColumnName("jenis_evaluasi")
+                    .HasMaxLength(150);               
 
                 entity.Property(e => e.nama_substansi)
                     .HasColumnName("nama_substansi")
@@ -265,138 +369,189 @@ namespace APIConsume.Models
 
                 entity.Property(e => e.NPP)
                     .HasColumnName("NPP")
-                    .HasMaxLength(100);
+                    .HasMaxLength(50);
 
                 
             });
 
             modelBuilder.Entity<TrPublikasi_DATA_SISTER>(entity =>
             {
-                entity.HasKey(e => e.id_riwayat_publikasi_paten);
+                entity.HasKey(e => e.id);
 
                 entity.ToTable("PUBLIKASI");
 
-                entity.Property(e => e.id_riwayat_publikasi_paten)
+                entity.Property(e => e.id)
                 .HasColumnName("id_riwayat_publikasi_paten")
                 .HasMaxLength(150);
 
 
-                entity.Property(e => e.judul_publikasi_paten)
-                .HasColumnName("judul_publikasi_paten")
+                entity.Property(e => e.kategori_kegiatan)
+                .HasColumnName("kategori_kegiatan")
                 .HasMaxLength(500);
 
-                entity.Property(e => e.judul_asli_tulisan)
-                    .HasColumnName("judul_asli_tulisan")
+                entity.Property(e => e.judul)
+                    .HasColumnName("judul")
                     .HasMaxLength(500);
-
-
-                entity.Property(e => e.tautan_laman_jurnal)
-                .HasColumnName("tautan_laman_jurnal")
-                .HasMaxLength(200);
-
-                entity.Property(e => e.tanggal_terbit)
-                    .HasColumnName("tanggal_terbit")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.volume)
-                    .HasColumnName("volume")
-                    .HasColumnType("int");
-
-                entity.Property(e => e.nomor_hasil_publikasi)
-                    .HasColumnName("nomor_hasil_publikasi")
-                    .HasColumnType("int");
-
-                entity.Property(e => e.halaman)
-                    .HasColumnName("halaman")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.jumlah_halaman)
-                    .HasColumnName("jumlah_halaman")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.nama_penerbit)
-                    .HasColumnName("nama_penerbit")
-                    .HasMaxLength(100); ;
-
-                entity.Property(e => e.DOI_publikasi)
-                    .HasColumnName("DOI_publikasi")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.ISBN_bahan_ajar)
-                    .HasColumnName("ISBN_bahan_ajar")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.ISSN_publikasi)
-                    .HasColumnName("ISSN_publikasi")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.tautan)
-                    .HasColumnName("tautan")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.keterangan)
-                    .HasColumnName("keterangan")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.pengguna_produk_jasa)
-                    .HasColumnName("pengguna_produk_jasa")
-                    .HasMaxLength(100);
-                entity.Property(e => e.a_komersialisasi)
-                    .HasColumnName("a_komersialisasi")
-                    .HasColumnType("int");
-
-                entity.Property(e => e.stat_impor_sinta)
-                    .HasColumnName("stat_impor_sinta")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.tgl_create)
-                    .HasColumnName("tgl_create")
-                    .HasColumnType("date");
 
                 entity.Property(e => e.quartile)
                     .HasColumnName("quartile")
-                    .HasMaxLength(200);
+                    .HasColumnType("int");
 
-                entity.Property(e => e.nama_kategori_kegiatan)
-                    .HasColumnName("nama_kategori_kegiatan")
-                    .HasMaxLength(200);
+                
 
-                entity.Property(e => e.nama_jenis_publikasi)
-                    .HasColumnName("nama_jenis_publikasi")
-                    .HasMaxLength(200);
+                entity.Property(e => e.tanggal)
+                    .HasColumnName("tanggal")
+                    .HasColumnType("date");
 
-                entity.Property(e => e.nama_kategori_pencapaian)
-                    .HasColumnName("nama_kategori_pencapaian")
-                    .HasMaxLength(200);
+                entity.Property(e => e.id_kategori_kegiatan)
+                .HasColumnName("id_kategori_kegiatan")
+                .HasColumnType("int");
 
-                entity.Property(e => e.judul_penelitian_pengabdian)
-                    .HasColumnName("judul_penelitian_pengabdian")
-                    .HasMaxLength(500);
+                entity.Property(e => e.id_jenis_publikasi)
+                .HasColumnName("id_jenis_publikasi")
+                .HasColumnType("int");
 
-                entity.Property(e => e.NPP)
-                    .HasColumnName("NPP")
+                entity.Property(e => e.kategori_capaian_luaran)
+                .HasColumnName("kategori_capaian_luaran")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.id_kategori_capaian_luaran)
+                .HasColumnName("id_kategori_capaian_luaran")
+                .HasColumnType("int");
+
+                entity.Property(e => e.judul_litabmas)
+                .HasColumnName("judul_litabmas")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.id_litabmas)
+                .HasColumnName("id_litabmas")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.nomor_paten)
+                .HasColumnName("nomor_paten")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.pemberi_paten)
+                .HasColumnName("pemberi_paten")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.penerbit)
+                .HasColumnName("penerbit")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.isbn)
+                .HasColumnName("isbn")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.jumlah_halaman)
+                .HasColumnName("jumlah_halaman")
+                .HasColumnType("int");
+
+                entity.Property(e => e.tautan)
+                .HasColumnName("tautan")
+                .HasMaxLength(1000); ;
+               
+
+                entity.Property(e => e.keterangan)
+                .HasColumnName("keterangan")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.judul_artikel)
+                .HasColumnName("judul_artikel")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.judul_asli)
+                .HasColumnName("judul_asli")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.nama_jurnal)
+                .HasColumnName("nama_jurnal")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.halaman)
+                .HasColumnName("halaman")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.edisi)
+                .HasColumnName("edisi")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.nomor)
+                .HasColumnName("nomor")
+                .HasColumnType("int");
+
+                entity.Property(e => e.doi)
+                .HasColumnName("doi")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.issn)
+                .HasColumnName("issn")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.e_issn)
+                .HasColumnName("e_issn")
+                .HasMaxLength(500);
+
+                entity.Property(e => e.seminar)
+                .HasColumnName("seminar")
+                .HasColumnType("int");
+
+                entity.Property(e => e.prosiding)
+                .HasColumnName("prosiding")
+                .HasColumnType("int");
+
+                entity.Property(e => e.asal_data)
+                .HasColumnName("asal_data")
+                .HasMaxLength(500);
+
+
+                entity.Property(e => e.NPP1)
+                    .HasColumnName("NPP1")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP2)
+                    .HasColumnName("NPP2")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP3)
+                    .HasColumnName("NPP3")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP4)
+                    .HasColumnName("NPP4")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP5)
+                    .HasColumnName("NPP5")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.NPP6)
+                    .HasColumnName("NPP6")
                     .HasMaxLength(100);
 
             });
 
             modelBuilder.Entity<TblDokumen_DATA_SISTER>(entity =>
             {
-                entity.HasKey(e => e.id_dokumen);
+                entity.HasKey(e => e.no);
 
                 entity.ToTable("DOKUMEN");
+
+                entity.Property(e => e.no)
+                .HasColumnName("no");
 
                 entity.Property(e => e.id_dokumen)
                 .HasColumnName("id_dokumen")
                 .HasMaxLength(150);
 
 
-                entity.Property(e => e.id_riwayat_publikasi_paten)
-                .HasColumnName("id_riwayat_publikasi_paten")
+                entity.Property(e => e.id_publikasi_atau_penelitian)
+                .HasColumnName("id_publikasi_atau_penelitian")
                 .HasMaxLength(150);
 
                 entity.Property(e => e.nama_dokumen)
                     .HasColumnName("nama_dokumen")
-                    .HasMaxLength(150);
+                    .HasMaxLength(250);
 
 
                 entity.Property(e => e.nama_file)
@@ -428,54 +583,283 @@ namespace APIConsume.Models
 
             modelBuilder.Entity<TblPenulis_DATA_SISTER>(entity =>
             {
-                entity.HasKey(e => e.id_dosen);
+                entity.HasKey(e => e.no);
+                //entity.HasNoKey();
 
                 entity.ToTable("PENULIS");
+
+                entity.Property(e => e.no)
+                .HasColumnName("no")
+                .HasColumnType("int");
+
+
+                entity.Property(e => e.id_riwayat_publikasi_paten)
+                .HasColumnName("id_riwayat_publikasi_paten")
+                .HasMaxLength(150);
 
                 entity.Property(e => e.nama)
                 .HasColumnName("nama")
                 .HasMaxLength(150);
 
 
-                entity.Property(e => e.no_urut)
-                .HasColumnName("no_urut")
+                entity.Property(e => e.id_sdm)
+                .HasColumnName("id_sdm")
                 .HasMaxLength(150);
 
-                entity.Property(e => e.afiliasi_penulis)
-                    .HasColumnName("afiliasi_penulis")
+                entity.Property(e => e.id_peserta_didik)
+                    .HasColumnName("id_peserta_didik")
                     .HasMaxLength(150);
 
 
-                entity.Property(e => e.peran_dalam_kegiatan)
-                .HasColumnName("peran_dalam_kegiatan")
+                entity.Property(e => e.nomor_induk_peserta_didik)
+                .HasColumnName("nomor_induk_peserta_didik")
                 .HasMaxLength(150);
 
-                entity.Property(e => e.jenis_peranan)
-                    .HasColumnName("jenis_peranan")
+                entity.Property(e => e.id_orang)
+                    .HasColumnName("id_orang")
                     .HasMaxLength(150);
 
-                entity.Property(e => e.apakah_corresponding_author)
+                entity.Property(e => e.urutan)
+                    .HasColumnName("urutan")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.afiliasi)
+                    .HasColumnName("afiliasi")
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.corresponding_author)
                     .HasColumnName("apakah_corresponding_author")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.peran)
+                    .HasColumnName("peran")
                     .HasMaxLength(150);
 
-                entity.Property(e => e.id_dosen)
-                    .HasColumnName("id_dosen")
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.id_mahasiswa_anggota_penelitian_pengabdian)
-                    .HasColumnName("id_mahasiswa_anggota_penelitian_pengabdian")
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.id_kolaborator_eksternal)
-                    .HasColumnName("id_kolaborator_eksternal")
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.nim)
-                    .HasColumnName("nim")
-                    .HasMaxLength(150);
 
             });
 
+            modelBuilder.Entity<TblAnggota_DATA_SISTER>(entity =>
+            {
+                entity.HasKey(e => e.no);
+
+                entity.ToTable("ANGGOTA");
+
+                entity.Property(e => e.no)               
+                .HasColumnName("no")
+                .HasColumnType("int");
+
+                entity.Property(e => e.jenis)
+                .HasColumnName("jenis")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.nama)
+                .HasColumnName("nama")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.nipd)
+                .HasColumnName("nipd")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.id_sdm)
+                .HasColumnName("id_sdm")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.id_orang)
+                .HasColumnName("id_orang")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.id_pd)
+                .HasColumnName("id_pd")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.stat_aktif)
+                .HasColumnName("stat_aktif")
+                .HasColumnType("int");
+
+                entity.Property(e => e.id_penelitian_pengabdian)
+                .HasColumnName("id_penelitian_pengabdian")
+                .HasMaxLength(200);
+
+
+            });
+
+            modelBuilder.Entity<TblMitra_Litabmas_DATA_SISTER>(entity =>
+            {
+                entity.HasKey(e => e.no);
+
+                entity.ToTable("MITRA_LITABMAS");
+
+                entity.Property(e => e.no)
+                .HasColumnName("no")
+                .HasColumnType("int");
+
+                entity.Property(e => e.id)
+                .HasColumnName("id")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.nama)
+                .HasColumnName("nama")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.id_penelitian_pengabdian)
+                .HasColumnName("id_penelitian_pengabdian")
+                .HasMaxLength(200);
+
+
+
+
+            });
+
+            modelBuilder.Entity<ViewPerbandinganPengajaran_SPKP>(entity =>
+            {
+                entity.ToTable("perbandingan_pengajaran_spkp");
+                entity.HasNoKey();
+
+                entity.Property(e => e.id_pengajaran)
+                .HasColumnName("id_pengajaran")
+                .HasMaxLength(50);
+
+                entity.Property(e => e.semester)
+                .HasColumnName("semester")
+                .HasMaxLength(50);
+
+                entity.Property(e => e.mata_kuliah)
+                .HasColumnName("mata_kuliah")
+                .HasMaxLength(200);
+
+                entity.Property(e => e.kelas)
+                .HasColumnName("kelas")
+                .HasMaxLength(50);
+
+                entity.Property(e => e.sks)
+                .HasColumnName("sks")
+                .HasColumnType("numeric");
+
+                entity.Property(e => e.id_semester)
+                .HasColumnName("id_semester")
+                .HasMaxLength(50);
+
+                entity.Property(e => e.sks_tatap_muka)
+                .HasColumnName("sks_tatap_muka")
+                .HasColumnType("numeric");
+
+                entity.Property(e => e.sks_praktik)
+                    .HasColumnName("sks_praktik")
+                    .HasColumnType("numeric");
+
+
+                entity.Property(e => e.sks_praktik_lapangan)
+                .HasColumnName("sks_praktik_lapangan")
+                .HasColumnType("numeric");
+
+                entity.Property(e => e.sks_simulasi)
+                    .HasColumnName("sks_simulasi")
+                    .HasColumnType("numeric");
+
+                entity.Property(e => e.tatap_muka_rencana)
+                    .HasColumnName("tatap_muka_rencana")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.tatap_muka_realisasi)
+                    .HasColumnName("tatap_muka_realisasi")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.jumlah_mahasiswa)
+                    .HasColumnName("jumlah_mahasiswa")
+                    .HasColumnType("int");
+
+                entity.Property(e => e.jenis_evaluasi)
+                    .HasColumnName("jenis_evaluasi")
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.nama_substansi)
+                    .HasColumnName("nama_substansi")
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.NPP)
+                    .HasColumnName("NPP")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.NAMA_MK_SPKP)
+                    .HasColumnName("NAMA_MK_SPKP")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.KODE_MK_SPKP)
+                    .HasColumnName("KODE_MK_SPKP")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.KELAS_SPKP)
+                    .HasColumnName("KELAS_SPKP")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.SKS_SPKP)
+                    .HasColumnName("SKS_SPKP")
+                    .HasColumnType("int");
+            });
+
+            modelBuilder.Entity<RefSemesterSister>(entity =>
+            {
+                entity.ToTable("REF_SEMESTER");
+                entity.HasKey(e=> e.id);
+
+                entity.Property(e => e.id)
+               .HasColumnName("id_semester")
+               .HasColumnType("int");
+
+                entity.Property(e => e.nama)
+                .HasColumnName("nama_semester")
+                .HasMaxLength(50);
+
+
+            });
+
+            modelBuilder.Entity<RefPerguruanTinggiSister>(entity =>
+            {
+                entity.ToTable("REF_PERGURUAN_TINGGI");
+                entity.HasKey(e => e.id);
+
+                entity.Property(e => e.id)
+               .HasColumnName("id_perguruan_tinggi")
+               .HasMaxLength(500);
+
+                entity.Property(e => e.nama)
+                .HasColumnName("nama_perguruan_tinggi")
+                .HasMaxLength(500);
+
+
+            });
+
+            modelBuilder.Entity<RefKategoriCapaianLuaranSister>(entity =>
+            {
+                entity.ToTable("REF_KATEGORI_CAPAIAN_LUARAN");
+                entity.HasKey(e => e.id);
+
+                entity.Property(e => e.id)
+               .HasColumnName("id_kategori_capaian_luaran")
+               .HasColumnType("int");
+
+                entity.Property(e => e.nama)
+                .HasColumnName("nama_kategori_capaian_luaran")
+                .HasMaxLength(50);
+
+
+            });
+
+            modelBuilder.Entity<RefJenisPublikasiSister>(entity =>
+            {
+                entity.ToTable("REF_JENIS_PUBLIKASI");
+                entity.HasKey(e => e.id);
+
+                entity.Property(e => e.id)
+               .HasColumnName("id_jenis_publikasi")
+               .HasColumnType("int");
+
+                entity.Property(e => e.nama)
+                .HasColumnName("nama_jenis_publikasi")
+                .HasMaxLength(50);
+
+
+            });
 
         }
     }

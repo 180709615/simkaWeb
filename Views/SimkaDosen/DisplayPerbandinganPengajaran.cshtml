@@ -1,0 +1,214 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutDosen.cshtml";
+    ViewData["Title"] = "DisplayPengajaran";
+}
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+
+    <!-- jQuery library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+
+    <!-- Latest compiled JavaScript -->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+</head>
+
+
+
+<body>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+                <h3> Perbandingan Pengajaran </h3>
+                <div class="card">
+                    <div class="card-body">
+                        <p>
+                            <label>Semester</label>
+                            <select onchange="changeSelect()" class="form-select form-select-md selectSemester" style="margin-left:20px;">
+                                <!--option value="0">-- Pilih Semester --</!--option-->
+                                @foreach (var item in Model.semester)
+                                {
+                                    <option value="@item.id_semester">@item.semester</option>
+                                }
+                            </select>
+                        </p>
+
+
+                        
+                        
+                        <div style="overflow-x:auto;">
+                            <table id="tabelperbandingan" class="table table-sm table-striped table-bordered m-2">
+                                <thead>
+                                    <tr>
+
+                                        <th> No</th>
+                                        <th> Semester</th>
+                                        <th> Mata kuliah SISTER</th>
+                                        <th>Kelas</th>
+                                        <th> SKS SISTER</th>
+                                        <th> Mata kuliah SPKP</th>
+                                        <th> SKS SPKP</th>
+                                        <th> NPP</th>
+                                        <th> Apakah SKS Sama?</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </section>
+    </div>
+</body>
+
+
+
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        var dataTabelPerbandingan, semester;
+        $(document).ready(function () {
+            semester = $(".selectSemester").val("20201");
+            semester = "20201";
+            dataTablePerbandinganSISTER = $("#tabelperbandingan").DataTable({
+                "paging": false,
+                "ordering": false,
+                "paging": true,
+                "processing": true, // for show progress bar
+                // for show progress bar
+
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/SimkaDosen/PerbandinganPengajaran_SPKP",
+                    "type": "POST",
+                    "data": function (d) {
+                        d.id_semester = semester;
+                    },
+                    "datatype": "json"
+                },
+                "language": {
+                    "emptyTable": "Tidak Ada Data Pada Sister"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": true,
+                        "searchable": true
+                    }],
+
+
+                "columns": [
+                    {
+                        "data": null, "sortable": false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    //{ "data": "mata_kuliah", "name": "nama_mata_kuliah", "autoWidth": true },
+                    //{ "data": "semester", "name": "nama_jenis_evaluasi", "autoWidth": true },
+                    //{ "data": "kelas", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    //{ "data": "SKS_SPKP", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    //{ "data": "NPP", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "semester", "name": "nama_jenis_evaluasi", "autoWidth": true },
+                    { "data": "mata_kuliah", "name": "nama_mata_kuliah", "autoWidth": true },
+
+                    { "data": "kelas", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "sks", "name": "nama_kelas_kuliah", "autoWidth": true },
+
+                    { "data": "NAMA_MK_SPKP", "name": "nama_mata_kuliah", "autoWidth": true },
+                    { "data": "SKS_SPKP", "name": "nama_mata_kuliah", "autoWidth": true },
+                    { "data": "NPP", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "apakah_SKS_sama", "name": "nama_kelas_kuliah", "autoWidth": true },
+
+                    //
+                ]
+
+            });
+
+        });
+
+        function changeSelect() {
+            semester = $(".selectSemester").val();
+
+            console.log("ini changeSelect")
+
+            dataTablePerbandinganSISTER.ajax.reload();
+
+            //$.ajax({
+            //    type: "GET",
+            //    url: "/SimkaDosen/PerbandinganPengajaran_SPKP/",
+            //    cache: false,
+            //    data: { "id_semester": semester },
+            //    dataType: "json",
+            //    success: function (result) {
+            //        datamhs = result;
+            //        var str = '';
+                    
+            //        for (var i = 0; i < result.length; i++) {
+            //            str += '<tr><td>' + result[i].mata_kuliah + '</td><td>' + result[i].NAMA_MK_SPKP + '</td></tr > ';
+            //        }
+
+                    
+            //        var table = $('#tabelPerbandingan').DataTable();
+            //        table.clear().draw();
+            //        table.destroy();
+            //        var counter = 0;
+            //        $.each(result.data, function (i, item) {
+            //            counter++;
+            //            var rows = "<tr>"
+            //                + "<td>" + counter + "</td>"
+            //                + "<td>" + item.semester + "</td>"
+            //                + "<td>" + item.mata_kuliah + "</td>"
+            //                + "<td>" + item.sks + "</td>"
+            //                + "<td>" + item.NAMA_MK_SPKP + "</td>"
+            //                + "<td>" + item.SKS_SPKP + "</td>"
+            //                + "<td>" + item.apakah_SKS_sama + "</td>"
+            //                + "</tr>";
+            //            $('#tabelPerbandinganBody').append(rows);
+            //        });
+                    
+
+            //        $("#tabelPerbandingan").DataTable({
+            //            "paging": false,
+            //            "ordering": false,
+            //            "paging": true,
+            //            "processing": true, // for show progress bar
+
+            //        });
+
+            //    },
+            //    error: function (xhr) {
+            //        err_modal("Telah terjadi kesalahan dengan kode : " + xhr.status + ", silahkan menghubungi admin terkait.");
+            //    }
+            //});
+
+
+
+
+        }
+        
+
+
+    </script>
+}

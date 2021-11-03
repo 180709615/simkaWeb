@@ -114,8 +114,12 @@ namespace APIConsume.Models
         public byte[] FileSertifikasiPendidik { get; set; }
         public byte[] FileAsuransi { get; set; }
         public string ID_DOSEN_SISTER { get; set; }
+        public string PASSWORD_RIPEM { get; set; }
 
-    
+        public string UUID_LUPA_PWD { get; set; }
+
+
+
         public RefFungsional IdRefFungsionalNavigation { get; set; }
         public RefGolongan IdRefGolonganNavigation { get; set; }
         public RefJabatanAkademik IdRefJbtnAkademikNavigation { get; set; }

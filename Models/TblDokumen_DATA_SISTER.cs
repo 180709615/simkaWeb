@@ -7,6 +7,7 @@ namespace APIConsume.Models
 {
     public class TblDokumen_DATA_SISTER
     {
+        public int no { get; set; }
         public string? id_dokumen { get; set; }
         public string? nama_dokumen { get; set; }
         public string? nama_file { get; set; }
@@ -15,6 +16,6 @@ namespace APIConsume.Models
         public string? nama_jenis_dokumen { get; set; }
         public string? tautan { get; set; }
         public string? keterangan_dokumen { get; set; }
-        public string? id_riwayat_publikasi_paten { get; set; }
+        public string? id_publikasi_atau_penelitian { get; set; }
     }
 }

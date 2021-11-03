@@ -8,33 +8,50 @@ namespace APIConsume.Models
 {
     public class TrPublikasi_DATA_SISTER
     {
-        public string id_riwayat_publikasi_paten { get; set; }
-        public string? judul_publikasi_paten { get; set; }
-        public string judul_asli_tulisan { get; set; }
-        public string? tautan_laman_jurnal { get; set; }
-
-        [DataType(DataType.Date)]
-        public DateTime tanggal_terbit { get; set; }
-        public int? volume { get; set; }
-        public int? nomor_hasil_publikasi { get; set; }
-        public string? halaman { get; set; }
+        [Key]
+        public string id { get; set; }
+        public string? kategori_kegiatan { get; set; }
+        public string? judul { get; set; }
+        public int? quartile { get; set; }
+        public string? jenis_publikasi { get; set; }
+        public DateTime? tanggal { get; set; }
+        public int? id_kategori_kegiatan { get; set; }
+        public int? id_jenis_publikasi { get; set; }
+        public string? kategori_capaian_luaran { get; set; }
+        public int? id_kategori_capaian_luaran { get; set; }
+        public string? judul_litabmas { get; set; }
+        public string? id_litabmas { get; set; }
+        public string? nomor_paten { get; set; }
+        public string? pemberi_paten { get; set; }
+        public string? penerbit { get; set; }
+        public string? isbn { get; set; }
         public int? jumlah_halaman { get; set; }
-        public string? nama_penerbit { get; set; }
-        public string? DOI_publikasi { get; set; }
-        public string? ISBN_bahan_ajar { get; set; }
-        public string? ISSN_publikasi { get; set; }
         public string? tautan { get; set; }
-        public string? keterangan { get; set; }
-        public string? pengguna_produk_jasa { get; set; }
-        public int? a_komersialisasi { get; set; }
-        public string? stat_impor_sinta { get; set; }
-        public string? quartile { get; set; }
-        public DateTime? tgl_create { get; set; }
-        public string? nama_kategori_kegiatan { get; set; }
-        public string? nama_jenis_publikasi { get; set; }
-        public string? nama_kategori_pencapaian { get; set; }
-        public string? judul_penelitian_pengabdian { get; set; }
-        public string NPP { get; set; }
+        public string? keterangan { get; set; }        
+        public string? judul_artikel { get; set; }
+        public string? judul_asli { get; set; }
+        public string? nama_jurnal { get; set; }
+        public string? halaman { get; set; }
+        public string? edisi { get; set; }
+        public int? volume { get; set; }
+        public int? nomor { get; set; }
+        public string? doi { get; set; }
+        public string? issn { get; set; }
+        public string? e_issn { get; set; }
+        public int seminar { get; set; }
+        public int prosiding { get; set; }
+        public string? asal_data { get; set; }
+        public string NPP1 { get; set; }
+        public string NPP2 { get; set; }
+        public string NPP3 { get; set; }
+        public string NPP4 { get; set; }
+        public string NPP5 { get; set; }
+        public string NPP6 { get; set; }
+
+        // PENULIS
+     
+
+
 
     }
 }

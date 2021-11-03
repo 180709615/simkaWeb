@@ -12,6 +12,9 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Headers;
+using System.Dynamic;
+using APIConsume.DAO;
+using System.Collections.Generic;
 
 namespace APIConsume.Controllers
 {
@@ -19,8 +22,14 @@ namespace APIConsume.Controllers
         SimkaAdminController : Controller
     {
         private readonly SIATMAX_SISTERContext _context;
-        public SimkaAdminController(SIATMAX_SISTERContext context)
+        private readonly DATA_SISTERContext _DATA_SISTERcontext;
+        private string baseUrl = "https://sister.uajy.ac.id/ws.php/1.0";
+
+
+        public SimkaAdminController(SIATMAX_SISTERContext context, DATA_SISTERContext contexData_Sister)
         {
+            _DATA_SISTERcontext = contexData_Sister;
+
             _context = context;
         }
         public IActionResult Index()
@@ -3626,11 +3635,16 @@ namespace APIConsume.Controllers
             //cek apakah login & sesuai dengan role
             {
                 // simka part
-                var balikan = new SimkaDosenPenelitian();
+                dynamic balikan = new ExpandoObject();
 
                 balikan.Akademik = _context.MstUnitAkademik.FirstOrDefault(a => a.IdUnit == _context.MstKaryawan.FirstOrDefault(a => a.Npp == HttpContext.Session.GetString("NPP")).IdUnitAkademik);
                 balikan.Penelitian = _context.TblPenelitian.Where(a => a.Npp == npp).ToList();
                 balikan.Pengabdian = _context.TblPengabdian.Where(a => a.Npp == npp).ToList();
+                //balikan.semester = (new PerbandinganPengajaranDAO()).GetSemester();
+                balikan.semester = await getIdSemesterSister();
+
+
+
                 //  balikan.Pengembangan = _context.TrPengembangan.Where(a => a.Npp == npp).ToList();
 
                 balikan.Karyawan = _context.MstKaryawan
@@ -3657,119 +3671,341 @@ namespace APIConsume.Controllers
 
         }
 
+        //[Route("/SimkaAdmin/LoadDataPengajaranAsync")]
+        //public async Task<IActionResult> LoadDataPengajaranAsync(string npp)
+        //{
+        //    string idDosen = null;
+
+        //    if (HttpContext.Session.GetString("role") == "admin")
+        //    {
+
+        //        using (var httpClient = new HttpClient())
+        //        {
+        //            try
+        //            {
+        //                Sister_Token TokenSister = new Sister_Token();
+        //                var akun = new Sister_Akun();
+        //                akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
+        //                akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
+        //                akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
+        //                var json = JsonConvert.SerializeObject(akun);
+        //                var data = new StringContent(json, Encoding.UTF8, "application/json");
+        //                var url = "https://sister.uajy.ac.id/api.php/0.1/Login";
+        //                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //                var response = await httpClient.PostAsync(url, data);
+        //                string apiResponse = await response.Content.ReadAsStringAsync();
+
+        //                Console.WriteLine("test");
+        //                TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
+        //                PenelitianReq request = new PenelitianReq();
+        //                idDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
+        //                request.id_token = TokenSister.data.id_token;
+        //                request.id_dosen = idDosen;
+        //                request.updated_after = new Updated_After();
+        //                request.updated_after.bulan = "01";
+        //                request.updated_after.tahun = "1990";
+        //                request.updated_after.tanggal = "01";
+        //                json = JsonConvert.SerializeObject(request);
+        //                data = new StringContent(json, Encoding.UTF8, "application/json");
+        //                url = "https://sister.uajy.ac.id/api.php/0.1/Pengajaran";
+
+        //                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //                response = await httpClient.PostAsync(url, data);
+        //                apiResponse = await response.Content.ReadAsStringAsync();
+        //                var ajar = (Pengajaran)JsonConvert.DeserializeObject(apiResponse, typeof(Pengajaran));
+
+
+        //                return Json(new
+        //                {
+        //                    ajar.data
+        //                });
+        //            }
+        //            catch (Exception)
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        TempData["Message"] = "Sesi Berakhir.";
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
+        //[Route("/SimkaAdmin/LoadDataPublikasi")]
+        //public async Task<IActionResult> LoadDataPublikasi(string npp)
+        //{
+        //    string idDosen = null;
+
+        //    if (HttpContext.Session.GetString("role") == "admin")
+        //    {
+
+        //        using (var httpClient = new HttpClient())
+        //        {
+        //            try
+        //            {
+        //                Sister_Token TokenSister = new Sister_Token();
+        //                var akun = new Sister_Akun();
+        //                akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
+        //                akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
+        //                akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
+        //                var json = JsonConvert.SerializeObject(akun);
+        //                var data = new StringContent(json, Encoding.UTF8, "application/json");
+        //                var url = "https://sister.uajy.ac.id/api.php/0.1/Login";
+        //                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //                var response = await httpClient.PostAsync(url, data);
+        //                string apiResponse = await response.Content.ReadAsStringAsync();
+
+        //                Console.WriteLine("test");
+        //                TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
+        //                PenelitianReq request = new PenelitianReq();
+        //                idDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
+        //                request.id_token = TokenSister.data.id_token;
+        //                request.id_dosen = idDosen;
+        //                request.updated_after = new Updated_After();
+        //                request.updated_after.bulan = "01";
+        //                request.updated_after.tahun = "1990";
+        //                request.updated_after.tanggal = "01";
+        //                json = JsonConvert.SerializeObject(request);
+        //                data = new StringContent(json, Encoding.UTF8, "application/json");
+        //                url = "https://sister.uajy.ac.id/api.php/0.1/Publikasi";
+        //                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //                response = await httpClient.PostAsync(url, data);
+        //                apiResponse = await response.Content.ReadAsStringAsync();
+        //                var ajar = (Publikasi)JsonConvert.DeserializeObject(apiResponse, typeof(Publikasi));
+
+        //                return Json(new
+        //                {
+        //                    ajar.data
+        //                });
+        //            }
+        //            catch (Exception)
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        TempData["Message"] = "Sesi Berakhir.";
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
+        //[Route("/SimkaAdmin/LoadDataPengabdian")]
+        //public async Task<IActionResult> LoadDataPengabdian(string npp)
+        //{
+        //    string idDosen = null;
+
+        //    if (HttpContext.Session.GetString("NPP") != null)
+        //    {
+
+        //        using (var httpClient = new HttpClient())
+        //        {
+        //            try
+        //            {
+        //                Sister_Token TokenSister = new Sister_Token();
+        //                var akun = new Sister_Akun();
+        //                akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
+        //                akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
+        //                akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
+        //                var json = JsonConvert.SerializeObject(akun);
+        //                var data = new StringContent(json, Encoding.UTF8, "application/json");
+        //                var url = "https://sister.uajy.ac.id/api.php/0.1/Login";
+        //                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //                var response = await httpClient.PostAsync(url, data);
+        //                string apiResponse = await response.Content.ReadAsStringAsync();
+
+        //                Console.WriteLine("test");
+        //                TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
+        //                PenelitianReq request = new PenelitianReq();
+        //                idDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
+        //                request.id_token = TokenSister.data.id_token;
+        //                request.id_dosen = idDosen;
+        //                request.updated_after = new Updated_After();
+        //                request.updated_after.bulan = "01";
+        //                request.updated_after.tahun = "1990";
+        //                request.updated_after.tanggal = "01";
+        //                json = JsonConvert.SerializeObject(request);
+        //                data = new StringContent(json, Encoding.UTF8, "application/json");
+        //                url = "https://sister.uajy.ac.id/api.php/0.1/Pengabdian";
+        //                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //                response = await httpClient.PostAsync(url, data);
+        //                apiResponse = await response.Content.ReadAsStringAsync();
+        //                var ajar = (Pengabdian)JsonConvert.DeserializeObject(apiResponse, typeof(Pengabdian));
+
+        //                return Json(new
+        //                {
+        //                    ajar.data
+        //                });
+        //            }
+        //            catch (Exception)
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        TempData["Message"] = "Sesi Berakhir.";
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
+        //[Route("/SimkaAdmin/LoadDataPenelitian")]
+        //public async Task<IActionResult> LoadDataPenelitian(string npp)
+        //{
+        //    string idDosen = null;
+
+        //    if (HttpContext.Session.GetString("role") == "admin")
+        //    {
+
+        //        using (var httpClient = new HttpClient())
+        //        {
+        //            try
+        //            {
+        //                Sister_Token TokenSister = new Sister_Token();
+        //                var akun = new Sister_Akun();
+        //                akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
+        //                akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
+        //                akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
+        //                var json = JsonConvert.SerializeObject(akun);
+        //                var data = new StringContent(json, Encoding.UTF8, "application/json");
+        //                var url = "https://sister.uajy.ac.id/api.php/0.1/Login";
+        //                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //                var response = await httpClient.PostAsync(url, data);
+        //                string apiResponse = await response.Content.ReadAsStringAsync();
+
+        //                Console.WriteLine("test");
+        //                TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
+        //                PenelitianReq request = new PenelitianReq();
+        //                idDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
+        //                request.id_token = TokenSister.data.id_token;
+        //                request.id_dosen = idDosen;
+        //                request.updated_after = new Updated_After();
+        //                request.updated_after.bulan = "01";
+        //                request.updated_after.tahun = "1990";
+        //                request.updated_after.tanggal = "01";
+        //                json = JsonConvert.SerializeObject(request);
+        //                data = new StringContent(json, Encoding.UTF8, "application/json");
+        //                url = "https://sister.uajy.ac.id/api.php/0.1/Penelitian";
+        //                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //                response = await httpClient.PostAsync(url, data);
+        //                apiResponse = await response.Content.ReadAsStringAsync();
+        //                var ajar = (Penelitian)JsonConvert.DeserializeObject(apiResponse, typeof(Penelitian));
+
+        //                return Json(new
+        //                {
+        //                    ajar.data
+        //                });
+        //            }
+        //            catch (Exception)
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        TempData["Message"] = "Sesi Berakhir.";
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
+
+        public async Task<List<SemesterSister>> getIdSemesterSister()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    Sister_Token TokenSister = new Sister_Token();
+                    var akun = new Sister_Akun();
+                    akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
+                    akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
+                    akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
+                    var json = JsonConvert.SerializeObject(akun);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+                    var url = baseUrl + "/authorize";
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = await httpClient.PostAsync(url, data);
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    Console.WriteLine("test");
+                    TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
+                    PenelitianReq request = new PenelitianReq();
+                    url = baseUrl + "/referensi/semester";
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + TokenSister.token);
+                    response = await httpClient.GetAsync(url);
+                    apiResponse = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        List<SemesterSister> ajar = JsonConvert.DeserializeObject<List<SemesterSister>>(apiResponse);
+                        return ajar;
+                    }
+                    else
+                    {
+                        var ajar = JsonConvert.DeserializeObject<SemesterSister>(apiResponse);
+                        return null;
+                    }
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+
+        }
+        public class SemesterSister
+        {
+            public int id { get; set; }
+            public string nama { get; set; }
+            public string message { get; set; }
+            public string detail { get; set; }
+
+        }
+
+
         [Route("/SimkaAdmin/LoadDataPengajaranAsync")]
-        public async Task<IActionResult> LoadDataPengajaranAsync(string npp)
+        public async Task<IActionResult> LoadDataPengajaranAsync(string id_semester, string npp)
         {
             string idDosen = null;
 
-            if (HttpContext.Session.GetString("role") == "admin")
+            if (HttpContext.Session.GetString("NPP") != null)
             {
-
-                using (var httpClient = new HttpClient())
+                var data = _DATA_SISTERcontext.TrPengajaran_DATA_SISTER.Where(a => a.NPP == npp && a.id_semester == id_semester).ToList();
+                return Json(new
                 {
-                    try
-                    {
-                        Sister_Token TokenSister = new Sister_Token();
-                        var akun = new Sister_Akun();
-                        akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
-                        akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
-                        akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
-                        var json = JsonConvert.SerializeObject(akun);
-                        var data = new StringContent(json, Encoding.UTF8, "application/json");
-                        var url = "https://sister.uajy.ac.id/api.php/0.1/Login";
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var response = await httpClient.PostAsync(url, data);
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-
-                        Console.WriteLine("test");
-                        TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
-                        PenelitianReq request = new PenelitianReq();
-                        idDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
-                        request.id_token = TokenSister.data.id_token;
-                        request.id_dosen = idDosen;
-                        request.updated_after = new Updated_After();
-                        request.updated_after.bulan = "01";
-                        request.updated_after.tahun = "1990";
-                        request.updated_after.tanggal = "01";
-                        json = JsonConvert.SerializeObject(request);
-                        data = new StringContent(json, Encoding.UTF8, "application/json");
-                        url = "https://sister.uajy.ac.id/api.php/0.1/Pengajaran";
-
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        response = await httpClient.PostAsync(url, data);
-                        apiResponse = await response.Content.ReadAsStringAsync();
-                        var ajar = (Pengajaran)JsonConvert.DeserializeObject(apiResponse, typeof(Pengajaran));
-
-
-                        return Json(new
-                        {
-                            ajar.data
-                        });
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                }
+                    data
+                });
             }
             else
             {
                 TempData["Message"] = "Sesi Berakhir.";
+
                 return RedirectToAction("Index", "Home");
             }
         }
         [Route("/SimkaAdmin/LoadDataPublikasi")]
-        public async Task<IActionResult> LoadDataPublikasi(string npp)
+        public async Task<IActionResult> LoadDataPublikasi()
         {
-            string idDosen = null;
 
-            if (HttpContext.Session.GetString("role") == "admin")
+            if (HttpContext.Session.GetString("NPP") != null)
             {
+                string npp = HttpContext.Session.GetString("NPP");
+                string id_dosen = _context.MstKaryawan.AsNoTracking().FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
 
-                using (var httpClient = new HttpClient())
+                //var data = _DATA_SISTERcontext.TrPublikasi_DATA_SISTER.AsNoTracking().Where(a => a.NPP1 == npp || a.NPP2 == npp || a.NPP3 == npp || a.NPP4 == npp || a.NPP5 == npp || a.NPP6 == npp).ToList();
+                //var data = (from publikasi in _DATA_SISTERcontext.TrPublikasi_DATA_SISTER
+                //            join penulis in _DATA_SISTERcontext.TblPenulis_DATA_SISTER on publikasi.id equals penulis.id_riwayat_publikasi_paten
+                //            where penulis.id_sdm == id_dosen
+                //            select publikasi
+                //        ).ToList();
+                var data = (new PublikasiSisterDAO()).GetPublikasiSister(id_dosen);
+                return Json(new
                 {
-                    try
-                    {
-                        Sister_Token TokenSister = new Sister_Token();
-                        var akun = new Sister_Akun();
-                        akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
-                        akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
-                        akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
-                        var json = JsonConvert.SerializeObject(akun);
-                        var data = new StringContent(json, Encoding.UTF8, "application/json");
-                        var url = "https://sister.uajy.ac.id/api.php/0.1/Login";
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var response = await httpClient.PostAsync(url, data);
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-
-                        Console.WriteLine("test");
-                        TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
-                        PenelitianReq request = new PenelitianReq();
-                        idDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
-                        request.id_token = TokenSister.data.id_token;
-                        request.id_dosen = idDosen;
-                        request.updated_after = new Updated_After();
-                        request.updated_after.bulan = "01";
-                        request.updated_after.tahun = "1990";
-                        request.updated_after.tanggal = "01";
-                        json = JsonConvert.SerializeObject(request);
-                        data = new StringContent(json, Encoding.UTF8, "application/json");
-                        url = "https://sister.uajy.ac.id/api.php/0.1/Publikasi";
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        response = await httpClient.PostAsync(url, data);
-                        apiResponse = await response.Content.ReadAsStringAsync();
-                        var ajar = (Publikasi)JsonConvert.DeserializeObject(apiResponse, typeof(Publikasi));
-
-                        return Json(new
-                        {
-                            ajar.data
-                        });
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                }
+                    data
+                });
             }
             else
             {
@@ -3784,117 +4020,69 @@ namespace APIConsume.Controllers
 
             if (HttpContext.Session.GetString("NPP") != null)
             {
+                //string npp = HttpContext.Session.GetString("NPP");
+                
+                string id_dosen = _context.MstKaryawan.AsNoTracking().FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
+                //var data = (from penelitian in _DATA_SISTERcontext.TrPengabdian_DATA_SISTER
+                //            join anggota in _DATA_SISTERcontext.TblAnggota_DATA_SISTER on penelitian.id_penelitian_pengabdian equals anggota.id_penelitian_pengabdian
+                //            where anggota.id_sdm == id_dosen
+                //            select penelitian
+                //        ).ToList();
 
-                using (var httpClient = new HttpClient())
+                var data = (new PengabdianSisterDAO()).GetPengabdianSister(id_dosen);
+                return Json(new
                 {
-                    try
-                    {
-                        Sister_Token TokenSister = new Sister_Token();
-                        var akun = new Sister_Akun();
-                        akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
-                        akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
-                        akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
-                        var json = JsonConvert.SerializeObject(akun);
-                        var data = new StringContent(json, Encoding.UTF8, "application/json");
-                        var url = "https://sister.uajy.ac.id/api.php/0.1/Login";
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var response = await httpClient.PostAsync(url, data);
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-
-                        Console.WriteLine("test");
-                        TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
-                        PenelitianReq request = new PenelitianReq();
-                        idDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
-                        request.id_token = TokenSister.data.id_token;
-                        request.id_dosen = idDosen;
-                        request.updated_after = new Updated_After();
-                        request.updated_after.bulan = "01";
-                        request.updated_after.tahun = "1990";
-                        request.updated_after.tanggal = "01";
-                        json = JsonConvert.SerializeObject(request);
-                        data = new StringContent(json, Encoding.UTF8, "application/json");
-                        url = "https://sister.uajy.ac.id/api.php/0.1/Pengabdian";
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        response = await httpClient.PostAsync(url, data);
-                        apiResponse = await response.Content.ReadAsStringAsync();
-                        var ajar = (Pengabdian)JsonConvert.DeserializeObject(apiResponse, typeof(Pengabdian));
-
-                        return Json(new
-                        {
-                            ajar.data
-                        });
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                }
+                    data
+                });
             }
             else
             {
                 TempData["Message"] = "Sesi Berakhir.";
+
                 return RedirectToAction("Index", "Home");
             }
         }
+
         [Route("/SimkaAdmin/LoadDataPenelitian")]
         public async Task<IActionResult> LoadDataPenelitian(string npp)
         {
-            string idDosen = null;
 
-            if (HttpContext.Session.GetString("role") == "admin")
+            if (HttpContext.Session.GetString("NPP") != null)
             {
+                
+                //string npp = "02.11.817";
+                string id_dosen = _context.MstKaryawan.AsNoTracking().FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
+                //var data = _DATA_SISTERcontext.TrPenelitian_DATA_SISTER.AsNoTracking().Where(a => a.NPP1 == npp || a.NPP2 == npp || a.NPP3 == npp || a.NPP4 == npp || a.NPP5 == npp || a.NPP6 == npp).ToList();
+                //data = _DATA_SISTERcontext.TrPenelitian_DATA_SISTER.AsNoTracking()
+                //    .Join(
+                //        _DATA_SISTERcontext.TblAnggota_DATA_SISTER.Where(a=> a.id_sdm == npp).ToList(),
+                //        penelitian => penelitian.id_penelitian_pengabdian,
+                //        anggota => anggota.id_penelitian_pengabdian,
+                //        (penelitian, anggota )=> penelitian
 
-                using (var httpClient = new HttpClient())
+                //    ).ToList();
+
+
+                //var data = (from penelitian in _DATA_SISTERcontext.TrPenelitian_DATA_SISTER
+                //            join anggota in _DATA_SISTERcontext.TblAnggota_DATA_SISTER on penelitian.id_penelitian_pengabdian equals anggota.id_penelitian_pengabdian
+                //            where anggota.id_sdm == id_dosen
+                //            select penelitian
+                //           // select new { penelitian.judul_penelitian_pengabdian, penelitian.durasi_kegiatan, penelitian.jenis_skim, penelitian.tahun_kegiatan , anggota.peran, anggota.no }
+                //        ).ToList();
+                var data = (new PenelitianSisterDAO()).GetPenelitianSister(id_dosen);
+                return Json(new
                 {
-                    try
-                    {
-                        Sister_Token TokenSister = new Sister_Token();
-                        var akun = new Sister_Akun();
-                        akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
-                        akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
-                        akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
-                        var json = JsonConvert.SerializeObject(akun);
-                        var data = new StringContent(json, Encoding.UTF8, "application/json");
-                        var url = "https://sister.uajy.ac.id/api.php/0.1/Login";
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var response = await httpClient.PostAsync(url, data);
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-
-                        Console.WriteLine("test");
-                        TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
-                        PenelitianReq request = new PenelitianReq();
-                        idDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp).ID_DOSEN_SISTER;
-                        request.id_token = TokenSister.data.id_token;
-                        request.id_dosen = idDosen;
-                        request.updated_after = new Updated_After();
-                        request.updated_after.bulan = "01";
-                        request.updated_after.tahun = "1990";
-                        request.updated_after.tanggal = "01";
-                        json = JsonConvert.SerializeObject(request);
-                        data = new StringContent(json, Encoding.UTF8, "application/json");
-                        url = "https://sister.uajy.ac.id/api.php/0.1/Penelitian";
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        response = await httpClient.PostAsync(url, data);
-                        apiResponse = await response.Content.ReadAsStringAsync();
-                        var ajar = (Penelitian)JsonConvert.DeserializeObject(apiResponse, typeof(Penelitian));
-
-                        return Json(new
-                        {
-                            ajar.data
-                        });
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                }
+                    data
+                });
             }
             else
             {
                 TempData["Message"] = "Sesi Berakhir.";
+
                 return RedirectToAction("Index", "Home");
             }
         }
+
 
         public IActionResult LoadDataRiwayatPendidikans(string npp)
         {

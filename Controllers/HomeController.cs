@@ -9,12 +9,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
-using System.Net.Mail;
+//using System.Net.Mail;
 using MimeKit;
 using Microsoft.EntityFrameworkCore;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
+using System.Security.Cryptography;
+using APIConsume.DAO;
+using MailKit.Net.Smtp;
+using MimeKit.Text;
+using MailKit.Security;
+
 namespace APIControllers.Controllers
 {
 
@@ -47,25 +53,27 @@ namespace APIControllers.Controllers
             Console.WriteLine(message.Body);
             return await Task.FromResult("Email Sent Successfully!");
         }
-        public async Task<string> SendEmail(string Name, string Email, string Message)
+        public async Task<string> SendEmail(string Name, string Email, string Message) 
         {
 
             //try
             //{
             //    // Credentials  
             //    //  var credentials = new NetworkCredential("sskkpuajy@gmail.com", "bersamasskkp");
-            //    var credentials = new NetworkCredential("testMhs@uajy.ac.id", "MhsCoba868");
+            //    //var credentials = new NetworkCredential("testMhs@uajy.ac.id", "MhsCoba868");
+            //    var credentials = new NetworkCredential("180709615@students.uajy.ac.id", "Deemust130600");
+
             //    // Mail message
 
 
             //    var mail = new MailMessage()
             //    {
-            //        From = new MailAddress("testMhs@uajy.ac.id"),
+            //        From = new MailAddress("180709615@students.uajy.ac.id"),
             //        Subject = "Informasi Login",
             //        Body = Message
             //    };
             //    mail.IsBodyHtml = true;
-            //    mail.To.Add(new MailAddress(Email));
+            //    mail.To.Add(new MailAddress("dimasprayoga2@gmail.com"));
             //    // Smtp client
             //    var client = new SmtpClient()
             //    {
@@ -112,7 +120,7 @@ namespace APIControllers.Controllers
                             var mstKaryawan = _context.MstKaryawan.FirstOrDefault(a => a.Npp == username);
                             if (mstKaryawan != null)// npp cocok
                             {
-                                if (mstKaryawan.Password == password)//password sesusai dengan npp
+                                if (mstKaryawan.PASSWORD_RIPEM == getHash(password))//password sesusai dengan npp
                                 {
                                     var informasilogin = "  <br><br><br> TESTING SIMKA 2 DEV <br> Berikut informasi login Bapak Ibu <br><br>" +
                                  "Waktu Dan Tanggal:  " + DateTime.Now + "<br> IP Adress: "
@@ -613,7 +621,300 @@ namespace APIControllers.Controllers
 
 
         }
+        public static string getHash(string password)
+        {
+
+            Encoding enc = Encoding.GetEncoding(1252);
+            RIPEMD160 ripemdHasher = RIPEMD160.Create();
+            byte[] data = ripemdHasher.ComputeHash(Encoding.Default.GetBytes(password));
+            string str = enc.GetString(data);
+
+            return str;
+        }
+        public async Task<string> SendEmailLupaPassword(string Email, string Message)
+        {
+
+            try
+            {
+                // Credentials  
+                //  var credentials = new NetworkCredential("sskkpuajy@gmail.com", "bersamasskkp");
+                //var credentials = new NetworkCredential("testMhs@uajy.ac.id", "MhsCoba868");
+                var credentials = new NetworkCredential("180709615@students.uajy.ac.id", "Deemust130600");
+
+                // Mail message
+
+
+                //var mail = new MailMessage()
+                //{
+                //    From = new MailAddress("180709615@students.uajy.ac.id"),
+                //    Subject = "Informasi Login",
+                //    Body = Message
+                //};
+                //mail.IsBodyHtml = true;
+                //mail.To.Add(new MailAddress("dimasprayoga2@gmail.com"));
+                //// Smtp client
+                //var client = new SmtpClient()
+                //{
+                //    Port = 587,
+                //    DeliveryMethod = SmtpDeliveryMethod.Network,
+                //    UseDefaultCredentials = false,
+                //    Host = "SMTP.Office365.com",
+                //    EnableSsl = true,
+                //    Credentials = credentials
+                //};
+                // create email message
+                
+                // create email message
+
+                return await Task.FromResult("Email Sent Successfully!");
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine("aaaaa");
+                Console.WriteLine(e.Message);
+                return e.Message;
+            }
+            return ("emailsender");
+
+        }
+
+        public async Task<IActionResult> ResetPasswordView (string uuid)
+        {
+            if(uuid != null)
+            {
+                var dataDosen = _context.MstKaryawan.FirstOrDefault(a => a.UUID_LUPA_PWD == uuid);
+
+                if (dataDosen != null)
+                {
+                    TempData["isLinkValid"] = true;
+                    HttpContext.Session.SetString("NPPResetPassword", dataDosen.Npp);
+                    return View();
+                }
+                else
+                {
+                    TempData["isLinkValid"] = false;
+                    TempData["Message"] = "Data karyawan tidak ditemukan";
+                    TempData["alert"] = "<script>alert('Data Karyawan tidak ditemukan');window.location.replace('/Home')</script>";
+
+                    return View();
+
+                    //return RedirectToAction("Index", "Home");
+                }
+
+
+            }
+            else
+            {
+                TempData["isLinkValid"] = false;
+                TempData["Message"] = "Link tidak valid.";
+                TempData["alert"] = "<script>alert('Link tidak valid');location.href='/Home'</script>";
+                return View();
+                //return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public async Task<IActionResult> ResetPassword (string passwordBaru)
+        {
+            
+            var npp = HttpContext.Session.GetString("NPPResetPassword");
+            var data = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp);
+            if(data != null)
+            {
+                try
+                {
+                    var result = (new MstKaryawanDAO()).UbahPassword(npp, passwordBaru, getHash(passwordBaru));
+                    var update = (new MstKaryawanDAO()).UbahUUID_Reset_Pswd(npp, null);
+
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Password berhasil diperbarui"
+                    });
+                }
+                catch(Exception ex)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = ex.Message
+                    });
+                }
+            }
+            else
+            {
+                return Json(new
+                {
+                    success=false,
+                    message = "Data dosen tidak ditemukan"
+                });
+            }
+
+        }
+
+        public async Task<IActionResult> LupaPassword(string npp)
+        {
+            if (npp != null)
+            {
+                var dataDosen = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp);
+
+                if (dataDosen != null)
+                {
+                    var uuid = Guid.NewGuid().ToString();
+                    var informasilogin = "  <br><br><br> TESTING SIMKA 2 DEV <br><br>" +
+                                    "Waktu Dan Tanggal:  " + DateTime.Now +
+                                    
+                                    "<br> Silahkan klik link di bawah ini untuk memperbarui password Anda " +
+                                     "<br><a href='https://localhost:44393/Home/ResetPasswordForm?uuid="+uuid+"' class='btn btn-info' target='_blank'>https://localhost:44393/Home/ResetPasswordForm?uuid="+uuid+" </a>" +
+                                    "<br>Apabila Bapak/ Ibu tidak mengenali aktivitas ini agar segera menghubungi KSI melalui " +
+                                    "<a href='http://ksi.uajy.ac.id/helpdesk/open.php' target='_blank'> http://ksi.uajy.ac.id/helpdesk</a>" +
+                                    "<br>Terimakasih ";
+
+                    try
+                    {
+                        //Update uuid npp tersebut biar nanti bisa di get data npp nya
+
+                        var result = (new MstKaryawanDAO()).UbahUUID_Reset_Pswd(npp, uuid);
+                        // Credentials  
+                        //  var credentials = new NetworkCredential("sskkpuajy@gmail.com", "bersamasskkp");
+                        //var credentials = new NetworkCredential("testMhs@uajy.ac.id", "MhsCoba868");
+                        var credentials = new NetworkCredential("180709615@students.uajy.ac.id", "Deemust130600");
+
+                        // Mail message
+
+
+                        var email = new MimeMessage();
+                        email.From.Add(MailboxAddress.Parse("180709615@students.uajy.ac.id"));
+                        //email.To.Add(MailboxAddress.Parse("180709615@students.uajy.ac.id"));
+                        email.To.Add(MailboxAddress.Parse("dimasprayoga2@gmail.com"));
+
+                        email.Subject = "Lupa password";
+
+                        var bodyBuilder = new BodyBuilder();
+                        bodyBuilder.HtmlBody = informasilogin;
+                        email.Body = bodyBuilder.ToMessageBody();
+
+                        // send email
+                        using var smtp = new SmtpClient();
+                        smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                        smtp.Connect("SMTP.Office365.com", 587, SecureSocketOptions.StartTls);
+                        smtp.Authenticate("180709615@students.uajy.ac.id", "Deemust130600");
+                        smtp.Send(email);
+                        smtp.Disconnect(true);
+
+                        TempData["Message"] = "Silahkan cek email Anda ";
+                        TempData["success"] = true;
+                        TempData["alertLupaPassword"] = "<script>alert('Silahkan cek email Anda');window.location.replace('/Home')</script>";
+
+                        return await Task.FromResult(View());
+                    }
+                    catch (System.Exception e)
+                    {
+                        Console.WriteLine("aaaaa");
+                        Console.WriteLine(e.Message);
+
+                        TempData["Message"] = e.Message;
+                        TempData["success"] = false;
+                        return await Task.FromResult(View());
+                    }
+
+
+                }
+                else
+                {
+                    TempData["success"] = false;
+                    TempData["Message"] = "Data tidak ditemukan";
+
+                    return await Task.FromResult(View());
+                }
+            }
+            else
+            {
+                TempData["Message"] = "";
+                return await Task.FromResult(View());
+            }
+            
+        }
+
+        public IActionResult ResetPasswordForm(string uuid)
+        {
+            if (uuid != null)
+            {
+                var dataDosen = _context.MstKaryawan.FirstOrDefault(a => a.UUID_LUPA_PWD == uuid);
+
+                if (dataDosen != null)
+                {
+                    TempData["isLinkValid"] = true;
+
+                    HttpContext.Session.SetString("NPPResetPassword", dataDosen.Npp);
+                    var model = new ResetPasswordForm();
+                    return View(model);
+
+                }
+                else
+                {
+                    TempData["isLinkValid"] = false;
+                    TempData["Message"] = "Data karyawan tidak ditemukan";
+                    TempData["alert"] = "<script>alert('Data Karyawan tidak ditemukan');window.location.replace('/Home')</script>";
+
+                    return View();
+
+                    //return RedirectToAction("Index", "Home");
+                }
+
+
+            }
+            else
+            {
+                TempData["isLinkValid"] = false;
+                TempData["Message"] = "Link tidak valid.";
+                TempData["alert"] = "<script>alert('Link tidak valid');location.href='/Home'</script>";
+                return View();
+                //return RedirectToAction("Index", "Home");
+            }
+            //var model = new ResetPasswordForm();
+            //return View(model);
+
+
+        }
+
+        [HttpPost]
+        public IActionResult ResetPasswordForm(ResetPasswordForm model)
+        {
+            TempData["isLinkValid"] = true; // Kasih tau kalau uuid udah valid jadi NPP yang mau reset password udah masuk di session
+
+            if (ModelState.IsValid)
+            {
+
+                var npp = HttpContext.Session.GetString("NPPResetPassword");
+                var data = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp);
+                if (data != null)
+                {
+                    try
+                    {
+                        var result =  (new MstKaryawanDAO()).UbahPassword(npp, model.passwordBaru, getHash(model.passwordBaru));
+                        var update = (new MstKaryawanDAO()).UbahUUID_Reset_Pswd(npp, null);
+
+                        TempData["isLinkValid"] = true;
+
+                        TempData["SuccessMessage"] = "Berhasil";
+                        TempData["alert"] = "<script>alert('Reset Password Berhasil');window.location.replace('/Home')</script>";
+                        return View();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["alert"] = "<script>alert('"+ex.Message+"');</script>";
+                        return View();
+                    }
+                }
+
+            }
+            //var a = model;
+            return View();
+        }
+
     }
+
 }
 
        

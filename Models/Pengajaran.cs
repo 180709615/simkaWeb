@@ -11,6 +11,16 @@ namespace APIConsume.Models
         public int error_code { get; set; }
         public string error_desc { get; set; }
         public Pengajarans[] data { get; set; }
+
+        public string? id { get; set; }
+        public string? semester { get; set; }
+        public string? mata_kuliah { get; set; }
+        public string? kelas { get; set; }
+        public int? jumlah_mahasiswa { get; set; }
+        public decimal? sks { get; set; }
+
+        public string? message { get; set; }
+        public string? detail { get; set; }
     }
 
     public class Pengajarans

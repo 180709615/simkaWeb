@@ -1,4 +1,4 @@
-﻿@model SimkaDosenPenelitian
+﻿@*@model SimkaDosenPenelitian*@
 @using  Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{ ViewData["Title"] = "View";
@@ -32,10 +32,33 @@
             </div><!-- /.container-fluid -->
 
         </section>
-
+       
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                @if (TempData["SuccessMessage"] != null && TempData["SuccessMessage"] != "")
+                {
+                    <div class="alert alert-success alert-dismissible">
+
+
+                        <h4>
+                            Pemberitahuan
+                        </h4>
+
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x </button>
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+                @if (TempData["ErrorMessage"] != null && TempData["ErrorMessage"] != "")
+                {
+                    <div class="alert alert-danger alert-dismissible">
+
+                        <h5>Pemberitahuan</h5>
+
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x </button>
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
                 <div class="row">
                     <div class="col-md-3">
 
@@ -51,9 +74,9 @@
 
                                     @if (Model.Karyawan.FileFoto != null)
                                     {
-                        <img class="profile-user-img img-fluid img-circle"
-                             src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.Karyawan.FileFoto)"
-                             alt="User profile picture">}
+                                        <img class="profile-user-img img-fluid img-circle"
+                                             src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.Karyawan.FileFoto)"
+                                             alt="User profile picture">}
                                 </div>
                                 <br>
                                 <h4 class=" text-center"><b>@Model.Karyawan.Npp </b></h4>
@@ -64,13 +87,13 @@
 
                                         @if (Model.Karyawan.IdUnitNavigation != null)
                                         {
-                            @Model.Karyawan.IdUnitNavigation.NamaUnit
+                                            @Model.Karyawan.IdUnitNavigation.NamaUnit
                                             <br>
-                                                            @if (@Model.Karyawan.MstIdUnitNavigation != null)
-                                                            {
-                                            @if (@Model.Karyawan.IdUnitNavigation.NamaUnit != @Model.Karyawan.MstIdUnitNavigation.NamaUnit)
+                                            @if (@Model.Karyawan.MstIdUnitNavigation != null)
                                             {
-                        @Model.Karyawan.MstIdUnitNavigation.NamaUnit}}}
+                                                @if (@Model.Karyawan.IdUnitNavigation.NamaUnit != @Model.Karyawan.MstIdUnitNavigation.NamaUnit)
+                                                {
+                                                    @Model.Karyawan.MstIdUnitNavigation.NamaUnit}}}
 
 
                                     </b>
@@ -81,7 +104,7 @@
                                     <li class="list-group-item">
                                         @if (Model.Akademik != null)
                                         {
-                            <b>Program Sudi:</b> <a class="float-right">@Model.Akademik.NamaUnitAkademik </a>}
+                                            <b>Program Sudi:</b> <a class="float-right">@Model.Akademik.NamaUnitAkademik </a>}
 
                                     </li>
                                     <li class="list-group-item">
@@ -133,6 +156,8 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+                        <button type="button" class="btn btn-success btn-block" style="width:100%;" onclick="goToUbahPassword()">Ubah Password</button>
+                        @*<a href="/Home/UbahPasswordView"><button>Ubah Password</button></a>*@
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -168,6 +193,18 @@
                                         <b> Pengajaran dari SISTER </b>
                                         <a class=" text-light btn btn-success" style="margin-bottom:10px"
                                            onclick="SinkronPengajaranSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                        <p>
+                                            <label>Semester</label>
+                                            <select onchange="changeSelect()" class="form-select form-select-md selectSemester" style="margin-left:20px;">
+                                                <!--option value="0">-- Pilih Semester --</!--option-->
+                                                @foreach (var item in Model.semester)
+                                                {
+                                                    @*<option value="@item.id_semester">@item.semester</option>*@
+                                                    <option value="@item.id">@item.nama</option>
+
+                                                }
+                                            </select>
+                                        </p>
                                         <div style="overflow-x:auto;">
                                             <table id="tabelpengajaran" class="table table-sm table-striped table-bordered m-2">
                                                 <thead>
@@ -175,8 +212,8 @@
 
                                                         <th> No</th>
                                                         <th> Nama mata Kuliah</th>
-                                                        <th>Nama jenis Evaluasi</th>
-                                                        <th> nama kelas Kuliah</th>
+                                                        <th>Semester</th>
+                                                        <th> Kelas</th>
 
                                                     </tr>
                                                 </thead>
@@ -263,6 +300,8 @@
                                                     <th> Durasi Kegiatan</th>
                                                     <th> Skim Penelitan</th>
                                                     <th> Tahun Ajaran</th>
+                                                    <th> Peran</th>
+
 
 
                                                 </tr>
@@ -280,6 +319,8 @@
                                         <b>Publikasi dari SISTER</b>
                                         <a class=" text-light btn btn-success" style="margin-bottom:10px"
                                            onclick="SinkronPublikasiSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                        <a class=" text-light btn btn-primary" style="margin-bottom:10px"
+                                           onclick="clickexport()"><i class="fa fa-refresh"></i> Export Excel </a>
                                         <div style="overflow-x:auto;">
                                             <table id="tabelpublikasi" class="table table-sm table-striped table-bordered m-2">
                                                 <thead>
@@ -287,8 +328,11 @@
 
                                                         <th>NO</th>
                                                         <th> Judul Penelitian</th>
-                                                        <th> Jenis Publikasi</th>
-                                                        <th> Tanggal Terbit</th>
+                                                        <th> Kategori Kegiatan</th>
+                                                        <th> Tanggal </th>
+                                                        <th> Peran </th>
+                                                        <th> Urutan </th>
+
 
                                                     </tr>
                                                 </thead>
@@ -299,7 +343,7 @@
 
                                         <!--- / Publikasi-->
                                     </div>
-                                    
+
 
                                     <div class="tab-pane" id="pengabdian">
                                         <b>Pengabdian dari Simka</b>
@@ -360,10 +404,11 @@
                                                 <tr>
                                                     <th>NO</th>
                                                     <th> Judul Penelitian</th>
-                                                   
-                                                    <th> Durasi</th>
-                                                    <th> SKIM</th>
+                                                    <th> Durasi Kegiatan</th>
+                                                    <th> Skim Penelitan</th>
                                                     <th> Tahun Ajaran</th>
+                                                    <th> Peran</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -448,8 +493,10 @@
 
         var dataTablePublikasiSISTER, dataTablePenelitianSISTER, dataTablePengabdianSISTER, dataTablePengajaranSISTER;
         var sweet_loader = '<div class="sweet_loader"><svg viewBox="0 0 140 140" width="140" height="140"><g class="outline"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="rgba(0,0,0,0.1)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></g><g class="circle"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="#71BBFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="200" stroke-dasharray="300"></path></g></svg></div>';
-
+        var semester;
         $(document).ready(function () {
+            semester = $(".selectSemester").val("20201");
+            semester = "20201";
 
             dataTablePengajaranSISTER = $("#tabelpengajaran").DataTable({
                 "paging": false,
@@ -462,6 +509,9 @@
                 "ajax": {
                     "url": "/SimkaDosen/LoadDataPengajaranAsync",
                     "type": "POST",
+                    "data": function (d) {
+                        d.id_semester = semester
+                    },
                     "datatype": "json"
                 },
                 "language": {
@@ -482,17 +532,15 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { "data": "nama_mata_kuliah", "name": "nama_mata_kuliah", "autoWidth": true },
-                    { "data": "nama_jenis_evaluasi", "name": "nama_jenis_evaluasi", "autoWidth": true },
-                    { "data": "nama_kelas_kuliah", "name": "nama_kelas_kuliah", "autoWidth": true },
-
+                    { "data": "mata_kuliah", "name": "nama_mata_kuliah", "autoWidth": true },
+                    { "data": "semester", "name": "nama_jenis_evaluasi", "autoWidth": true },
+                    { "data": "kelas", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    
 
                     //
                 ]
 
             });
-
-
 
             dataTablePublikasiSISTER = $("#tabelpublikasi").DataTable({
                 "paging": false,
@@ -525,18 +573,17 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { "data": "judul_publikasi_paten", "name": "nama_mata_kuliah", "autoWidth": true },
-                    { "data": "nama_jenis_publikasi", "name": "nama_jenis_evaluasi", "autoWidth": true },
-                    { "data": "tanggal_terbit", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "judul", "name": "nama_mata_kuliah", "autoWidth": true },
+                    { "data": "kategori_kegiatan", "name": "nama_jenis_evaluasi", "autoWidth": true },
+                    { "data": "tanggal", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "peran", "name": "nama_jenis_evaluasi", "autoWidth": true },
+                    { "data": "urutan", "name": "nama_kelas_kuliah", "autoWidth": true },
 
 
                     //
                 ]
 
             });
-
-
-           
 
             dataTablePengabdianSISTER = $("#tabelpengabdian").DataTable({
                 "paging": false,
@@ -571,10 +618,11 @@
                         }
                     },
                     { "data": "judul_penelitian_pengabdian", "name": "nama_mata_kuliah", "autoWidth": true },
-                    
+
                     { "data": "durasi_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
-                    { "data": "nama_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
-                    { "data": "nama_tahun_ajaran", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "jenis_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "tahun_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "peran", "name": "nama_kelas_kuliah", "autowidth": true },
 
                 ]
 
@@ -614,8 +662,9 @@
                     { "data": "judul_penelitian_pengabdian", "name": "nama_mata_kuliah", "autoWidth": true },
 
                     { "data": "durasi_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
-                    { "data": "nama_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
-                    { "data": "nama_tahun_ajaran", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "jenis_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "tahun_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "peran", "name": "nama_kelas_kuliah", "autowidth": true },
 
                 ]
 
@@ -699,7 +748,14 @@
 
         });
 
-        
+        function changeSelect() {
+            semester = $(".selectSemester").val();
+
+            console.log("ini changeSelect")
+
+            dataTablePengajaranSISTER.ajax.reload();
+        }
+
         function SinkronPengabdianSISTER() {
             swal.fire({
                 icon: 'info',
@@ -726,12 +782,22 @@
                             icon: 'success',
                             html: '<h5>Sinkronisasi Berhasil</h5>'
                         });
+                    } else {
+                        swal.fire({
+                            icon: 'warning',
+                            title: '<h5>Sinkronisasi gagal</h5>',
+                            text: data.message
+                        });
                     }
                 },
                 error: function (data) {
 
                     console.log("ini gagal")
                     toastr.error("Sinkronisasi Pengabdian Gagal");
+                    swal.fire({
+                        icon: 'warning',
+                        html: '<h5>Sinkronisasi Gagal</h5>'
+                    });
                 }
             });
 
@@ -762,10 +828,16 @@
                     if (data.success) {
                         console.log(data.message)
                         toastr.success("Sinkronisasi Penelitian Berhasil");
-                        dataTablePenelitianSISTER.ajax.reload();
+                        //dataTablePenelitianSISTER.ajax.reload();
                         swal.fire({
                             icon: 'success',
                             html: '<h5>Sinkronisasi Berhasil</h5>'
+                        });
+                    } else {
+                        swal.fire({
+                            icon: 'warning',
+                            title: '<h5>Sinkronisasi gagal</h5>',
+                            text: data.message
                         });
                     }
                 },
@@ -773,6 +845,10 @@
 
                     console.log("ini gagal")
                     toastr.error("sinkronisasi penelitian gagal");
+                    swal.fire({
+                        icon: 'warning',
+                        html: '<h5>Sinkronisasi Gagal</h5>'
+                    });
                 }
             });
             
@@ -783,9 +859,18 @@
         }
 
         function SinkronPengajaranSISTER() {
+            var nama_semester = semester.substring(0, 4);
+            if (semester.substring(4, 5) == "1")
+                nama_semester += " Ganjil"
+            else if (semester.substring(4, 5) == "2")
+                nama_semester += " Genap"
+            else if (semester.substring(4, 5) == "3")
+                nama_semester += " Pendek"
+            
             swal.fire({
                 icon: 'info',
-                html: '<h5>Loading...</h5>',
+                title: "Loading...",
+               text: "Sedang Sinkronisasi Pengajaran Semester " + nama_semester,
                 showCancelButton: false,
                 showConfirmButton: false,
                 allowOutsideClick: false
@@ -794,8 +879,11 @@
             console.log("btn Pengajaran sister clicked")
             $.ajax({
                 type: 'get',
-                // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                 url: 'https://jsonplaceholder.typicode.com/todos/1',
                 url: '/SimkaDosen/SinkronDataPengajaranSISTER',
+                data:{
+                    "id_semester" : semester
+                },
 
 
                 datatype: 'json',
@@ -808,19 +896,27 @@
                             icon: 'success',
                             html: '<h5>Sinkronisasi Berhasil</h5>'
                         });
+                    } else {
+                        swal.fire({
+                            icon: 'warning',
+                            title: '<h5>Sinkronisasi gagal</h5>',
+                            text: data.message
+                        });
+
                     }
                 },
                 error: function (data) {
 
                     console.log("ini gagal")
                     toastr.error("Sinkronisasi Pengajaran Gagal");
+                    swal.fire({
+                        icon: 'warning',
+                        html: '<h5>Sinkronisasi Gagal</h5>'
+                    });
                 }
-            });
+            },);
 
-            //swal.close();
-            //setTimeout(function () {
-            //    swal.close();
-            //}, 3000);
+           
         }
 
         function SinkronPublikasiSISTER() {
@@ -839,6 +935,7 @@
                 url: '/SimkaDosen/SinkronDataPublikasiSISTER',
 
 
+
                 datatype: 'json',
                 success: function (data) {
                     if (data.success) {
@@ -849,12 +946,23 @@
                             icon: 'success',
                             html: '<h5>Sinkronisasi Berhasil</h5>'
                         });
+                    } else{
+                        swal.fire({
+                            icon: 'warning',
+                            title: '<h5>Sinkronisasi gagal</h5>',
+                            text: data.message
+                        });
+                        console.log(data.message)
                     }
                 },
                 error: function (data) {
 
                     console.log("ini gagal")
                     toastr.error("Sinkronisasi Publikasi Gagal");
+                    swal.fire({
+                        icon: 'warning',
+                        html: '<h5>Sinkronisasi Gagal</h5>'
+                    });
                 }
             });
 
@@ -862,6 +970,37 @@
             //setTimeout(function () {
             //    swal.close();
             //}, 3000);
+        }
+
+        function clickexport() {
+            window.location.href = "/SimkaDosen/ExportPublikasi";
+        }
+
+        function tesLoadPenelitian() {
+            $.ajax({
+                type: 'get',
+                // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                url: '/SimkaDosen/LoadDataPenelitian',
+                
+
+                datatype: 'json',
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (data) {
+
+                    console.log("ini gagal")
+                    toastr.error("Sinkronisasi Publikasi Gagal");
+                    swal.fire({
+                        icon: 'warning',
+                        html: '<h5>Sinkronisasi Gagal</h5>'
+                    });
+                }
+            });
+        }
+
+        function goToUbahPassword() {
+            window.location.replace("/SimkaDosen/UbahPasswordFormDosen")
         }
     </script>
 

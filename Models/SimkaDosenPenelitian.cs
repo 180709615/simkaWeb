@@ -18,5 +18,7 @@ namespace APIConsume.Models
 
         public ICollection<TrPenelitian_DATA_SISTER> Penelitian_Sister { get; set; }
 
+        public List<object> semester { get; set; }
+
     }
 }

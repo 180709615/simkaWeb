@@ -29,9 +29,11 @@ namespace APIConsume
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddDbContext<SIATMAX_SISTERContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
             services.AddDbContext<DATA_SISTERContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DataSisterConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DataSisterConnection")).EnableSensitiveDataLogging());
+            services.AddDbContext<DATA_SISTERContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("SIATMA_UAJYConnection")).EnableSensitiveDataLogging());
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddProgressiveWebApp();
             services.AddControllers().AddNewtonsoftJson();
