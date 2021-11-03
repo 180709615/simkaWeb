@@ -1754,7 +1754,7 @@ namespace APIConsume.Controllers
             
             //string npp = "02.11.817"; 
             //string npp = "03.17.953";
-            List<TrPublikasi_DATA_SISTER> masterList = new List<TrPublikasi_DATA_SISTER>(); // buat cari data yang NPP nya sama dengan Npp dosen saat ini
+            List<TrPublikasi_DATA_SISTER> masterList = new List<TrPublikasi_DATA_SISTER>(); 
 
             List<TrPublikasi_DATA_SISTER> compareList = new List<TrPublikasi_DATA_SISTER>(); // nanti dibandingin sama masterlist
 
@@ -1804,201 +1804,198 @@ namespace APIConsume.Controllers
                                         int noIncrementDokumen = _DATA_SISTERcontext.TblDokumen_DATA_SISTER.Max(a => (int?)a.no) ?? 0;
 
                                         foreach (Publikasi itemPublikasi in ajar)
-                                        { 
-                                           
-                                                url = baseUrl + "/publikasi/" + itemPublikasi.id;
-                                                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                                                //httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + TokenSister.token);
-                                                response = await httpClient.GetAsync(url);
-                                                apiResponse = await response.Content.ReadAsStringAsync();
-                                                if (response.IsSuccessStatusCode)
+                                        {
+
+                                            url = baseUrl + "/publikasi/" + itemPublikasi.id;
+                                            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                                            //httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + TokenSister.token);
+                                            response = await httpClient.GetAsync(url);
+                                            apiResponse = await response.Content.ReadAsStringAsync();
+                                            if (response.IsSuccessStatusCode)
+                                            {
+                                                var detail = JsonConvert.DeserializeObject<Publikasi_detail>(apiResponse);
+
+                                                TrPublikasi_DATA_SISTER entrydata = new TrPublikasi_DATA_SISTER();
+                                                entrydata.id = detail.id;
+                                                entrydata.kategori_kegiatan = detail.kategori_kegiatan;
+                                                entrydata.judul = detail.judul;
+                                                entrydata.quartile = detail.quartile;
+                                                entrydata.jenis_publikasi = detail.jenis_publikasi;
+                                                entrydata.tanggal = Convert.ToDateTime(detail.tanggal);
+                                                entrydata.id_kategori_kegiatan = detail.id_kategori_kegiatan;
+                                                entrydata.id_jenis_publikasi = detail.id_jenis_publikasi;
+                                                entrydata.kategori_capaian_luaran = detail.kategori_capaian_luaran;
+                                                entrydata.id_kategori_capaian_luaran = detail.id_kategori_capaian_luaran;
+                                                entrydata.judul_litabmas = detail.judul_litabmas;
+                                                entrydata.id_litabmas = detail.id_litabmas;
+                                                entrydata.nomor_paten = detail.nomor_paten;
+                                                entrydata.pemberi_paten = detail.pemberi_paten;
+                                                entrydata.penerbit = detail.penerbit;
+                                                entrydata.isbn = detail.isbn;
+                                                entrydata.jumlah_halaman = detail.jumlah_halaman;
+                                                entrydata.tautan = detail.tautan;
+                                                entrydata.keterangan = detail.keterangan;
+                                                entrydata.judul_artikel = detail.judul_artikel;
+                                                entrydata.judul_asli = detail.judul_asli;
+                                                entrydata.nama_jurnal = detail.nama_jurnal;
+                                                entrydata.halaman = detail.halaman;
+                                                entrydata.edisi = detail.edisi;
+                                                entrydata.volume = detail.volume;
+                                                entrydata.nomor = detail.nomor;
+                                                entrydata.doi = detail.doi;
+                                                entrydata.issn = detail.issn;
+                                                entrydata.e_issn = detail.e_issn;
+                                                entrydata.seminar = detail.seminar == true ? 1 : 0;
+                                                entrydata.prosiding = detail.prosiding == true ? 1 : 0;
+                                                entrydata.asal_data = detail.asal_data;
+                                                entrydata.NPP1 = npp;
+
+
+                                                if (_DATA_SISTERcontext.TrPublikasi_DATA_SISTER.Any(a => a.id == detail.id)) // Kalau ada id yg sama dari api dan di database maka masuk masterlist
                                                 {
-                                                    var detail = JsonConvert.DeserializeObject<Publikasi_detail>(apiResponse);
-
-                                                    TrPublikasi_DATA_SISTER entrydata = new TrPublikasi_DATA_SISTER();
-                                                    entrydata.id = detail.id;
-                                                    entrydata.kategori_kegiatan = detail.kategori_kegiatan;
-                                                    entrydata.judul = detail.judul;
-                                                    entrydata.quartile = detail.quartile;
-                                                    entrydata.jenis_publikasi = detail.jenis_publikasi;
-                                                    entrydata.tanggal = Convert.ToDateTime(detail.tanggal);
-                                                    entrydata.id_kategori_kegiatan = detail.id_kategori_kegiatan;
-                                                    entrydata.id_jenis_publikasi = detail.id_jenis_publikasi;
-                                                    entrydata.kategori_capaian_luaran = detail.kategori_capaian_luaran;
-                                                    entrydata.id_kategori_capaian_luaran = detail.id_kategori_capaian_luaran;
-                                                    entrydata.judul_litabmas = detail.judul_litabmas;
-                                                    entrydata.id_litabmas = detail.id_litabmas;
-                                                    entrydata.nomor_paten = detail.nomor_paten;
-                                                    entrydata.pemberi_paten = detail.pemberi_paten;
-                                                    entrydata.penerbit = detail.penerbit;
-                                                    entrydata.isbn = detail.isbn;
-                                                    entrydata.jumlah_halaman = detail.jumlah_halaman;
-                                                    entrydata.tautan = detail.tautan;
-                                                    entrydata.keterangan = detail.keterangan;
-                                                    entrydata.judul_artikel = detail.judul_artikel;
-                                                    entrydata.judul_asli = detail.judul_asli;
-                                                    entrydata.nama_jurnal = detail.nama_jurnal;
-                                                    entrydata.halaman = detail.halaman;
-                                                    entrydata.edisi = detail.edisi;
-                                                    entrydata.volume = detail.volume;
-                                                    entrydata.nomor = detail.nomor;
-                                                    entrydata.doi = detail.doi;
-                                                    entrydata.issn = detail.issn;
-                                                    entrydata.e_issn = detail.e_issn;
-                                                    entrydata.seminar = detail.seminar == true ? 1 : 0;
-                                                    entrydata.prosiding = detail.prosiding == true ? 1 : 0;
-                                                    entrydata.asal_data = detail.asal_data;
-                                                    entrydata.NPP1 = npp;
-
-
-                                                    if (_DATA_SISTERcontext.TrPublikasi_DATA_SISTER.Any(a => a.id == detail.id) &&
-                                                            !masterList.Any(a => a.id == detail.id)) // cek apakah ada data di tabel yang                                                                                               // kalau returnya true berarti harus dinegasi kan                                                                                   
-                                                                                                        // karena list ini bakal dimasukkin ke masterlist juga jadi nanti bisa ke dobel
-                                                    {
-                                                        masterList.Add(_DATA_SISTERcontext.TrPublikasi_DATA_SISTER.AsNoTracking().FirstOrDefault(a => a.id == detail.id)); // untuk dosen yang punya id_penelitian yg sudah tersimpan di database,
-                                                        compareList.Add(entrydata);                                                                                                              // jadi jatuhnya cuma mengupdate row, nambahin dosen ke NPP2 dst
-                                                    }
-                                                    else
-                                                        compareList.Add(entrydata);
-
-                                                    List<TblPenulis_DATA_SISTER> masterListPenulis = _DATA_SISTERcontext.TblPenulis_DATA_SISTER.Where(a => a.id_riwayat_publikasi_paten == detail.id).ToList();
-                                                    List<TblPenulis_DATA_SISTER> compareListPenulis = new List<TblPenulis_DATA_SISTER>();
-
-                                                    if (detail.penulis != null && detail.penulis.Length > 0) // ============== Sinkron Penulis ================
-                                                    {
-                                                        foreach (Penulis itemPenulis in detail.penulis)
-                                                        {
-                                                            TblPenulis_DATA_SISTER entryPenulis = new TblPenulis_DATA_SISTER();
-                                                            entryPenulis.nama = itemPenulis.nama;
-                                                            entryPenulis.id_riwayat_publikasi_paten = detail.id;
-                                                            entryPenulis.urutan = itemPenulis.urutan;
-                                                            entryPenulis.afiliasi = itemPenulis.afiliasi;
-                                                            entryPenulis.peran = itemPenulis.peran;
-                                                            entryPenulis.jenis = itemPenulis.jenis;
-                                                            entryPenulis.corresponding_author = itemPenulis.corresponding_author == true ? 1 : 0;
-                                                            entryPenulis.id_sdm = itemPenulis.id_sdm;
-                                                            entryPenulis.id_peserta_didik = itemPenulis.id_peserta_didik;
-                                                            entryPenulis.id_orang = itemPenulis.id_orang;
-                                                            entryPenulis.nomor_induk_peserta_didik = itemPenulis.nomor_induk_peserta_didik;
-
-
-
-
-                                                            compareListPenulis.Add(entryPenulis);
-
-                                                        }
-
-                                                        List<TblPenulis_DATA_SISTER> toBeAddedPenulis = new List<TblPenulis_DATA_SISTER>();
-                                                        List<TblPenulis_DATA_SISTER> toBeDeletedPenulis = new List<TblPenulis_DATA_SISTER>();
-                                                        List<TblPenulis_DATA_SISTER> toBeUpdatedPenulis = new List<TblPenulis_DATA_SISTER>();
-
-                                                        toBeAddedPenulis = compareListPenulis.Where(a => !masterListPenulis.Any(b => a.id_riwayat_publikasi_paten == b.id_riwayat_publikasi_paten)).ToList();
-
-                                                        foreach (var itemtobeaddedPenulis in toBeAddedPenulis)
-                                                        {
-                                                            noIncrementPenulis++;
-                                                            itemtobeaddedPenulis.no = noIncrementPenulis;
-                                                        }
-                                                        toBeDeletedPenulis = masterListPenulis.Where(a => !compareListPenulis.Any(b => a.id_riwayat_publikasi_paten == b.id_riwayat_publikasi_paten)).ToList();
-                                                        toBeUpdatedPenulis = compareListPenulis.Where(a => masterListPenulis.Any(b => a.id_riwayat_publikasi_paten == b.id_riwayat_publikasi_paten)).ToList();
-
-                                                        _DATA_SISTERcontext.TblPenulis_DATA_SISTER.AddRange(toBeAddedPenulis);
-                                                        _DATA_SISTERcontext.TblPenulis_DATA_SISTER.RemoveRange(toBeDeletedPenulis);
-                                                        int counterAnggota = 0;
-                                                        foreach (var item in toBeUpdatedPenulis)
-                                                        {
-                                                            counterAnggota++;
-                                                            var itemToUpdate = _DATA_SISTERcontext.TblPenulis_DATA_SISTER
-                                                                .FirstOrDefault(a => a.id_riwayat_publikasi_paten == item.id_riwayat_publikasi_paten && a.id_sdm == item.id_sdm);
-
-                                                            itemToUpdate = item;
-                                                        }
-                                                    }
-
-                                                    await _DATA_SISTERcontext.SaveChangesAsync(); 
-
-
-
-                                                    List<TblDokumen_DATA_SISTER> masterListDokumen = _DATA_SISTERcontext.TblDokumen_DATA_SISTER.Where(a => a.id_publikasi_atau_penelitian == detail.id).ToList();
-                                                    List<TblDokumen_DATA_SISTER> compareListDokumen = new List<TblDokumen_DATA_SISTER>();
-
-                                                    if (detail.dokumen != null && detail.dokumen.Length > 0) // ============== Sinkron Dokumen ================
-                                                    {
-                                                        foreach (Dokumen itemDokumen in detail.dokumen)
-                                                        {
-                                                            TblDokumen_DATA_SISTER entryDokumen = new TblDokumen_DATA_SISTER();
-                                                            entryDokumen.id_dokumen = itemDokumen.id;
-                                                            entryDokumen.id_publikasi_atau_penelitian = detail.id;
-                                                            entryDokumen.nama_dokumen = itemDokumen.nama;
-                                                            entryDokumen.nama_file = itemDokumen.nama_file;
-                                                            entryDokumen.jenis_file = itemDokumen.jenis_file;
-                                                            entryDokumen.tanggal_upload = Convert.ToDateTime(itemDokumen.tanggal_upload);
-                                                            //entryDokumen.nama_jenis_dokumen = itemDokumen.nama;
-                                                            entryDokumen.tautan = itemDokumen.tautan;
-                                                            entryDokumen.keterangan_dokumen = itemDokumen.keterangan;
-
-
-
-
-                                                            compareListDokumen.Add(entryDokumen);
-
-                                                        }
-
-
-                                                        List<TblDokumen_DATA_SISTER> toBeAddedDokumen = new List<TblDokumen_DATA_SISTER>();
-                                                        List<TblDokumen_DATA_SISTER> toBeDeletedDokumen = new List<TblDokumen_DATA_SISTER>();
-                                                        List<TblDokumen_DATA_SISTER> toBeUpdatedDokumen = new List<TblDokumen_DATA_SISTER>();
-
-                                                        toBeAddedDokumen = compareListDokumen.Where(a => !masterListDokumen.Any(b => a.id_dokumen == b.id_dokumen)).ToList();
-
-                                                        foreach (var itemtobeaddeddokumen in toBeAddedDokumen)
-                                                        {
-                                                            noIncrementDokumen++;
-                                                            itemtobeaddeddokumen.no = noIncrementDokumen;
-                                                        }
-                                                        toBeDeletedDokumen = masterListDokumen.Where(a => !compareListDokumen.Any(b => a.id_dokumen == b.id_dokumen)).ToList();
-                                                        toBeUpdatedDokumen = compareListDokumen.Where(a => masterListDokumen.Any(b => a.id_dokumen == b.id_dokumen)).ToList();
-
-                                                        _DATA_SISTERcontext.TblDokumen_DATA_SISTER.AddRange(toBeAddedDokumen);
-                                                        _DATA_SISTERcontext.TblDokumen_DATA_SISTER.RemoveRange(toBeDeletedDokumen);
-                                                        int counterAnggota = 0;
-                                                        foreach (var item in toBeUpdatedDokumen)
-                                                        {
-                                                            counterAnggota++;
-                                                            var itemToUpdate = _DATA_SISTERcontext.TblDokumen_DATA_SISTER
-                                                                .FirstOrDefault(a => a.id_dokumen == item.id_dokumen);
-                                                            itemToUpdate = item;
-                                                        }
-                                                        await _DATA_SISTERcontext.SaveChangesAsync();
-
-                                                    }
-
+                                                    masterList.Add(_DATA_SISTERcontext.TrPublikasi_DATA_SISTER.AsNoTracking().FirstOrDefault(a => a.id == detail.id));
+                                                    compareList.Add(entrydata);
                                                 }
                                                 else
+                                                    compareList.Add(entrydata);
+
+                                                List<TblPenulis_DATA_SISTER> masterListPenulis = _DATA_SISTERcontext.TblPenulis_DATA_SISTER.Where(a => a.id_riwayat_publikasi_paten == detail.id).ToList();
+                                                List<TblPenulis_DATA_SISTER> compareListPenulis = new List<TblPenulis_DATA_SISTER>();
+
+                                                if (detail.penulis != null && detail.penulis.Length > 0) // ============== Sinkron Penulis ================
                                                 {
-                                                    TrPublikasi_DATA_SISTER entrydata = new TrPublikasi_DATA_SISTER();
-                                                    entrydata.id = itemPublikasi.id;
-                                                    entrydata.kategori_kegiatan = itemPublikasi.kategori_kegiatan;
-                                                    entrydata.judul = itemPublikasi.judul;
-                                                    entrydata.quartile = itemPublikasi.quartile;
-                                                    entrydata.jenis_publikasi = itemPublikasi.jenis_publikasi;
-                                                    entrydata.tanggal = Convert.ToDateTime(itemPublikasi.tanggal);
-                                                    entrydata.asal_data = itemPublikasi.asal_data;
-                                                    entrydata.NPP1 = npp;
-
-
-                                                    if (_DATA_SISTERcontext.TrPublikasi_DATA_SISTER.Any(a => a.id == itemPublikasi.id) &&
-                                                            !masterList.Any(a => a.id == itemPublikasi.id)) // cek apakah ada data di tabel yang                                                                                               // kalau returnya true berarti harus dinegasi kan                                                                                   
-                                                                                                            // karena list ini bakal dimasukkin ke masterlist juga jadi nanti bisa ke dobel
+                                                    foreach (Penulis itemPenulis in detail.penulis)
                                                     {
-                                                        masterList.Add(_DATA_SISTERcontext.TrPublikasi_DATA_SISTER.AsNoTracking().FirstOrDefault(a => a.id == itemPublikasi.id)); // untuk dosen yang punya id_penelitian yg sudah tersimpan di database,
-                                                        compareList.Add(entrydata);                                                                                                              // jadi jatuhnya cuma mengupdate row, nambahin dosen ke NPP2 dst
+                                                        TblPenulis_DATA_SISTER entryPenulis = new TblPenulis_DATA_SISTER();
+                                                        entryPenulis.nama = itemPenulis.nama;
+                                                        entryPenulis.id_riwayat_publikasi_paten = detail.id;
+                                                        entryPenulis.urutan = itemPenulis.urutan;
+                                                        entryPenulis.afiliasi = itemPenulis.afiliasi;
+                                                        entryPenulis.peran = itemPenulis.peran;
+                                                        entryPenulis.jenis = itemPenulis.jenis;
+                                                        entryPenulis.corresponding_author = itemPenulis.corresponding_author == true ? 1 : 0;
+                                                        entryPenulis.id_sdm = itemPenulis.id_sdm;
+                                                        entryPenulis.id_peserta_didik = itemPenulis.id_peserta_didik;
+                                                        entryPenulis.id_orang = itemPenulis.id_orang;
+                                                        entryPenulis.nomor_induk_peserta_didik = itemPenulis.nomor_induk_peserta_didik;
+
+
+
+
+                                                        compareListPenulis.Add(entryPenulis);
+
                                                     }
-                                                    else
-                                                        compareList.Add(entrydata);
+
+                                                    List<TblPenulis_DATA_SISTER> toBeAddedPenulis = new List<TblPenulis_DATA_SISTER>();
+                                                    List<TblPenulis_DATA_SISTER> toBeDeletedPenulis = new List<TblPenulis_DATA_SISTER>();
+                                                    List<TblPenulis_DATA_SISTER> toBeUpdatedPenulis = new List<TblPenulis_DATA_SISTER>();
+
+                                                    toBeAddedPenulis = compareListPenulis.Where(a => !masterListPenulis.Any(b => a.id_riwayat_publikasi_paten == b.id_riwayat_publikasi_paten)).ToList();
+
+                                                    foreach (var itemtobeaddedPenulis in toBeAddedPenulis)
+                                                    {
+                                                        noIncrementPenulis++;
+                                                        itemtobeaddedPenulis.no = noIncrementPenulis;
+                                                    }
+                                                    toBeDeletedPenulis = masterListPenulis.Where(a => !compareListPenulis.Any(b => a.id_riwayat_publikasi_paten == b.id_riwayat_publikasi_paten)).ToList();
+                                                    toBeUpdatedPenulis = compareListPenulis.Where(a => masterListPenulis.Any(b => a.id_riwayat_publikasi_paten == b.id_riwayat_publikasi_paten)).ToList();
+
+                                                    _DATA_SISTERcontext.TblPenulis_DATA_SISTER.AddRange(toBeAddedPenulis);
+                                                    _DATA_SISTERcontext.TblPenulis_DATA_SISTER.RemoveRange(toBeDeletedPenulis);
+                                                    int counterAnggota = 0;
+                                                    foreach (var item in toBeUpdatedPenulis)
+                                                    {
+                                                        counterAnggota++;
+                                                        var itemToUpdate = _DATA_SISTERcontext.TblPenulis_DATA_SISTER
+                                                            .FirstOrDefault(a => a.id_riwayat_publikasi_paten == item.id_riwayat_publikasi_paten && a.id_sdm == item.id_sdm);
+
+                                                        itemToUpdate = item;
+                                                    }
                                                 }
-                                            
-                                            
+
+                                                await _DATA_SISTERcontext.SaveChangesAsync();
+
+
+
+                                                List<TblDokumen_DATA_SISTER> masterListDokumen = _DATA_SISTERcontext.TblDokumen_DATA_SISTER.Where(a => a.id_publikasi_atau_penelitian == detail.id).ToList();
+                                                List<TblDokumen_DATA_SISTER> compareListDokumen = new List<TblDokumen_DATA_SISTER>();
+
+                                                if (detail.dokumen != null && detail.dokumen.Length > 0) // ============== Sinkron Dokumen ================
+                                                {
+                                                    foreach (Dokumen itemDokumen in detail.dokumen)
+                                                    {
+                                                        TblDokumen_DATA_SISTER entryDokumen = new TblDokumen_DATA_SISTER();
+                                                        entryDokumen.id_dokumen = itemDokumen.id;
+                                                        entryDokumen.id_publikasi_atau_penelitian = detail.id;
+                                                        entryDokumen.nama_dokumen = itemDokumen.nama;
+                                                        entryDokumen.nama_file = itemDokumen.nama_file;
+                                                        entryDokumen.jenis_file = itemDokumen.jenis_file;
+                                                        entryDokumen.tanggal_upload = Convert.ToDateTime(itemDokumen.tanggal_upload);
+                                                        //entryDokumen.nama_jenis_dokumen = itemDokumen.nama;
+                                                        entryDokumen.tautan = itemDokumen.tautan;
+                                                        entryDokumen.keterangan_dokumen = itemDokumen.keterangan;
+
+
+
+
+                                                        compareListDokumen.Add(entryDokumen);
+
+                                                    }
+
+
+                                                    List<TblDokumen_DATA_SISTER> toBeAddedDokumen = new List<TblDokumen_DATA_SISTER>();
+                                                    List<TblDokumen_DATA_SISTER> toBeDeletedDokumen = new List<TblDokumen_DATA_SISTER>();
+                                                    List<TblDokumen_DATA_SISTER> toBeUpdatedDokumen = new List<TblDokumen_DATA_SISTER>();
+
+                                                    toBeAddedDokumen = compareListDokumen.Where(a => !masterListDokumen.Any(b => a.id_dokumen == b.id_dokumen)).ToList();
+
+                                                    foreach (var itemtobeaddeddokumen in toBeAddedDokumen)
+                                                    {
+                                                        noIncrementDokumen++;
+                                                        itemtobeaddeddokumen.no = noIncrementDokumen;
+                                                    }
+                                                    toBeDeletedDokumen = masterListDokumen.Where(a => !compareListDokumen.Any(b => a.id_dokumen == b.id_dokumen)).ToList();
+                                                    toBeUpdatedDokumen = compareListDokumen.Where(a => masterListDokumen.Any(b => a.id_dokumen == b.id_dokumen)).ToList();
+
+                                                    _DATA_SISTERcontext.TblDokumen_DATA_SISTER.AddRange(toBeAddedDokumen);
+                                                    _DATA_SISTERcontext.TblDokumen_DATA_SISTER.RemoveRange(toBeDeletedDokumen);
+                                                    int counterAnggota = 0;
+                                                    foreach (var item in toBeUpdatedDokumen)
+                                                    {
+                                                        counterAnggota++;
+                                                        var itemToUpdate = _DATA_SISTERcontext.TblDokumen_DATA_SISTER
+                                                            .FirstOrDefault(a => a.id_dokumen == item.id_dokumen);
+                                                        itemToUpdate = item;
+                                                    }
+                                                    await _DATA_SISTERcontext.SaveChangesAsync();
+
+                                                }
+
+                                            }
+                                            else // kadang ada id yang ga bisa dicari detail nya, maka bakal masuk sini, tapi ya jadi gatau penulis, dokumen dll
+                                            {
+                                                TrPublikasi_DATA_SISTER entrydata = new TrPublikasi_DATA_SISTER();
+                                                entrydata.id = itemPublikasi.id;
+                                                entrydata.kategori_kegiatan = itemPublikasi.kategori_kegiatan;
+                                                entrydata.judul = itemPublikasi.judul;
+                                                entrydata.quartile = itemPublikasi.quartile;
+                                                entrydata.jenis_publikasi = itemPublikasi.jenis_publikasi;
+                                                entrydata.tanggal = Convert.ToDateTime(itemPublikasi.tanggal);
+                                                entrydata.asal_data = itemPublikasi.asal_data;
+                                                entrydata.NPP1 = npp;
+
+
+                                                if (_DATA_SISTERcontext.TrPublikasi_DATA_SISTER.Any(a => a.id == itemPublikasi.id)) // cek apakah ada data di tabel yang sama dengan id tersebut                                                                                            // kalau returnya true berarti harus dinegasi kan                                                                                   
+
+                                                {
+                                                    masterList.Add(_DATA_SISTERcontext.TrPublikasi_DATA_SISTER.AsNoTracking().FirstOrDefault(a => a.id == itemPublikasi.id));
+                                                    compareList.Add(entrydata);
+                                                }
+                                                else
+                                                    compareList.Add(entrydata);
+                                            }
+
+
                                             index++;
 
                                         }
@@ -2021,8 +2018,6 @@ namespace APIConsume.Controllers
                                             itemToUpdate.id = item.id;
 
                                             // dikasih exception kalau null, karena ada ada id yang detail nya ga bisa diambil
-
-
 
                                             itemToUpdate.kategori_kegiatan = item.kategori_kegiatan != null ? item.kategori_kegiatan : itemToUpdate.kategori_kegiatan;
                                             itemToUpdate.judul = item.judul != null ? item.judul : itemToUpdate.judul;
@@ -2076,7 +2071,7 @@ namespace APIConsume.Controllers
                                 }
                                 catch (Exception ex)
                                 {
-                                    return Json(new { success = false, message = ajar[index] });
+                                    return Json(new { success = false, message = ex.Message + " ====> \n ID =" + ajar[index].id +"\n Judul =" +ajar[index].judul});
 
                                 }
 
