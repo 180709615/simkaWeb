@@ -15,6 +15,8 @@ using System.Net.Http.Headers;
 using System.Dynamic;
 using APIConsume.DAO;
 using System.Collections.Generic;
+using System.Data;
+using System.Security.Cryptography;
 
 namespace APIConsume.Controllers
 {
@@ -4966,6 +4968,8 @@ namespace APIConsume.Controllers
                     return Json(new { success = true, message = "Edit data success." });
                 }
 
+                DataTable dt;
+                
 
             }
 
@@ -4976,7 +4980,60 @@ namespace APIConsume.Controllers
             }
         }
 
+        public static string getHash(string password)
+        {
+
+            Encoding enc = Encoding.GetEncoding(1252);
+            RIPEMD160 ripemdHasher = RIPEMD160.Create();
+            byte[] data = ripemdHasher.ComputeHash(Encoding.Default.GetBytes(password));
+            string str = enc.GetString(data);
+
+            return str;
+        }
+
+        
+        public JsonResult UbahPasswordAdmin(string npp)
+        {    
+            var data = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp);
+            if (data != null)
+            {                
+                try
+                {
+                    var result = (new MstKaryawanDAO()).UbahPassword(npp, "1234567", getHash("1234567"));
+                    var update = (new MstKaryawanDAO()).UbahUUID_Reset_Pswd(npp, null);
+
+                    return Json(new {
+                        success = true,
+                        message = "Berhasil reset password"
+                    }) ;
+
+                }
+                catch (Exception ex)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = ex.Message
+                    });
+                }
+
+
+            }
+            else
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Data Karyawan tidak ditemukan"
+                });
+            }
+
+
+            //var a = model;
+            
+        }
 
     }
+
 
 }

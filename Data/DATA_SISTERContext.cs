@@ -505,29 +505,7 @@ namespace APIConsume.Models
                 .HasMaxLength(500);
 
 
-                entity.Property(e => e.NPP1)
-                    .HasColumnName("NPP1")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.NPP2)
-                    .HasColumnName("NPP2")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.NPP3)
-                    .HasColumnName("NPP3")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.NPP4)
-                    .HasColumnName("NPP4")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.NPP5)
-                    .HasColumnName("NPP5")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.NPP6)
-                    .HasColumnName("NPP6")
-                    .HasMaxLength(100);
+                
 
             });
 

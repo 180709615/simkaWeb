@@ -20,6 +20,7 @@ using APIConsume.DAO;
 using MailKit.Net.Smtp;
 using MimeKit.Text;
 using MailKit.Security;
+using System.Text.RegularExpressions;
 
 namespace APIControllers.Controllers
 {
@@ -693,8 +694,8 @@ namespace APIControllers.Controllers
                 else
                 {
                     TempData["isLinkValid"] = false;
-                    TempData["Message"] = "Data karyawan tidak ditemukan";
-                    TempData["alert"] = "<script>alert('Data Karyawan tidak ditemukan');window.location.replace('/Home')</script>";
+                    TempData["Message"] = "Link tidak valid";
+                    TempData["alert"] = "<script>alert('Link tidak valid');window.location.replace('/Home')</script>";
 
                     return View();
 
@@ -801,9 +802,13 @@ namespace APIControllers.Controllers
                         smtp.Send(email);
                         smtp.Disconnect(true);
 
+                        string emailDosen = dataDosen.Email;                       
+                        string pattern = @"(?<=[\w]{2})[\w-\._\+%]*(?=[\w]{1}@)";
+                        string hideEmail = Regex.Replace(emailDosen, pattern, m => new string('*', m.Length));
+
                         TempData["Message"] = "Silahkan cek email Anda ";
                         TempData["success"] = true;
-                        TempData["alertLupaPassword"] = "<script>alert('Silahkan cek email Anda');window.location.replace('/Home')</script>";
+                        TempData["alertLupaPassword"] = "<script>alert('Silahkan cek email Anda " + hideEmail + "');window.location.replace('/Home')</script>";
 
                         return await Task.FromResult(View());
                     }

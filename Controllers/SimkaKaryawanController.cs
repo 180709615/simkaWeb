@@ -39,7 +39,7 @@ namespace APIConsume.Controllers
         }
         public IActionResult GantiPassword()
         {
-            return RedirectToAction("GantiPassword", "Administrasi");
+            return RedirectToAction("UbahPassword", "Administrasi");
         }
         public IActionResult EditBiografi()
         {
@@ -313,75 +313,7 @@ namespace APIConsume.Controllers
             }
 
         }
-        public IActionResult UbahPasswordFormKaryawan()
-        {
-
-            var model = new UbahPasswordForm();
-            return View(model);
-
-
-        }
-
-        [HttpPost]
-        public IActionResult UbahPasswordFormKaryawan(UbahPasswordForm model)
-        {
-
-            if (ModelState.IsValid)
-            {
-
-                var npp = HttpContext.Session.GetString("NPP");
-                var data = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp);
-                if (data != null)
-                {
-                    if (data.PASSWORD_RIPEM != getHash(model.passwordLama))
-                    {
-                        TempData["ErrorMessage"] = "Password Lama Salah";
-                        return View();
-
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var result = (new MstKaryawanDAO()).UbahPassword(npp, model.passwordBaru, getHash(model.passwordBaru));
-
-                            //string swal = @"Swal.fire({
-                            //              title: 'Ubah Password Berhasil',
-                            //              text: 'You won't be able to revert this!',
-                            //              icon: 'success',
-                            //              allowOutsideClick:false,
-                            //              confirmButtonColor: '#3085d6',
-                            //              cancelButtonColor: '#d33',
-                            //              confirmButtonText: 'Kembali ke halaman profile'
-                            //            }).then((result) => {
-                            //                if (result.isConfirmed)
-                            //                {
-                            //                    window.location.replace('/SimkaDosen/SimkaProfile');
-                            //                }
-                            //            }); ";
-
-                            TempData["SuccessMessage"] = "Ubah Password Berhasil";
-                            //TempData["alert"] = "<script>alert('Ubah Password Berhasil');</script>";
-                            //TempData["href"] = "<script>setTimeout(function(){window.location.replace('/SimkaDosen/SimkaProfile');},2000)</script>";
-                            //TempData["swal"] = "<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script><script>" + swal+"</script>";
-
-
-                            return RedirectToAction("SimkaProfile");
-
-                        }
-                        catch (Exception ex)
-                        {
-                            TempData["ErrorMessage"] = "<script>alert('" + ex.Message + "');</script>";
-                            return View();
-                        }
-                    }
-
-                }
-
-            }
-            //var a = model;
-            return View();
-        }
+        
 
     }
     }

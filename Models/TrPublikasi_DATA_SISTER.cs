@@ -41,12 +41,7 @@ namespace APIConsume.Models
         public int seminar { get; set; }
         public int prosiding { get; set; }
         public string? asal_data { get; set; }
-        public string NPP1 { get; set; }
-        public string NPP2 { get; set; }
-        public string NPP3 { get; set; }
-        public string NPP4 { get; set; }
-        public string NPP5 { get; set; }
-        public string NPP6 { get; set; }
+        
 
         // PENULIS
      

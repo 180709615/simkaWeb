@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using APIConsume.DAO;
 using APIConsume.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -100,6 +103,75 @@ namespace SimkaUAJY.Controllers
 
         }
 
+        public IActionResult UbahPassword()
+        {
+            var npp = HttpContext.Session.GetString("NPP");
+            if (npp != null)
+            {
+                var model = new UbahPasswordForm();
+                return View(model);
+            }
+            else
+            {
+                ViewData["Message"] = "Sesi Berakhir.";
+                return RedirectToAction("Index", "Home");
+            }
+            
+
+
+        }
+
+        [HttpPost]
+        public IActionResult UbahPassword(UbahPasswordForm model)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                var npp = HttpContext.Session.GetString("NPP");
+                var data = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp);
+                if (data != null)
+                {
+                    if (data.PASSWORD_RIPEM != getHash(model.passwordLama))
+                    {
+                        TempData["ErrorMessage"] = "Password Lama Salah";
+                        return View();
+
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var result = (new MstKaryawanDAO()).UbahPassword(npp, model.passwordBaru, getHash(model.passwordBaru));                          
+                            TempData["SuccessMessage"] = "Ubah Password Berhasil";                            
+
+                            return RedirectToAction("SimkaProfile");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            TempData["ErrorMessage"] = "<script>alert('" + ex.Message + "');</script>";
+                            return View();
+                        }
+                    }
+
+                }
+
+            }
+            //var a = model;
+            return View();
+        }
+
+        public static string getHash(string password)
+        {
+
+            Encoding enc = Encoding.GetEncoding(1252);
+            RIPEMD160 ripemdHasher = RIPEMD160.Create();
+            byte[] data = ripemdHasher.ComputeHash(Encoding.Default.GetBytes(password));
+            string str = enc.GetString(data);
+
+            return str;
+        }
         public async Task<IActionResult> PostEditBiografi([FromBody]biografi biografi)
         {
 
