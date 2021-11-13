@@ -120,6 +120,16 @@ namespace APIConsume.Models
 
 
 
+        public int? MASA_KERJA_GOLONGAN { get; set; }
+        public DateTime? TMT_GOLONGAN { get; set; }
+        public Boolean? STATUS_YADAPEN { get; set; }
+        public int? ID_UNIT_ENTRYPASS { get; set; }
+        public string? NIDK { get; set; }
+
+
+
+
+
         public RefFungsional IdRefFungsionalNavigation { get; set; }
         public RefGolongan IdRefGolonganNavigation { get; set; }
         public RefJabatanAkademik IdRefJbtnAkademikNavigation { get; set; }

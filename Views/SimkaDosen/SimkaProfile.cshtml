@@ -232,7 +232,7 @@
 
                                         <b> Penelitan LPPM</b>
                                         <div style="overflow-x:auto;">
-                                            <table id="penelitian"  style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
+                                            <table id="penelitian" style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
                                                 <thead>
                                                     <tr>
 
@@ -282,16 +282,17 @@
                                                 </tbody>
                                             </table>
                                         </div>
-
+                                        <br />
                                         <b>Penelitian dari Pengembangan </b>
                                         <div style="overflow-x:auto;">
-                                            <table id="tabelpengembangansimka"  style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
+                                            <table id="tabelpengembangansimka" style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
                                             </table>
                                         </div>
+                                        <br />
                                         <b>Penelitian dari Sister</b>
                                         <a class=" text-light btn btn-success" style="margin-bottom:10px"
                                            onclick="SinkronPenelitianSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
-                                        <table id="penelitiansister"  style="width: 100% !important; " class="table table-md table-striped table-bordered m-2">
+                                        <table id="penelitiansister" style="width: 100% !important; " class="table table-md table-striped table-bordered m-2">
                                             <thead>
                                                 <tr>
                                                     <th> NO </th>
@@ -346,7 +347,7 @@
 
                                     <div class="tab-pane" id="pengabdian">
                                         <b>Pengabdian dari Simka</b>
-                                        <table  style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
+                                        <table style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
                                             <thead>
                                                 <tr>
 
@@ -395,10 +396,11 @@
 
                                             </tbody>
                                         </table>
+                                        <br />
                                         <b>Pengabdian dari Sister</b>
                                         <a class=" text-light btn btn-success" style="margin-bottom:10px"
                                            onclick="SinkronPengabdianSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
-                                        <table id="tabelpengabdian"  style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
+                                        <table id="tabelpengabdian" style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
                                             <thead>
                                                 <tr>
                                                     <th>NO</th>
@@ -819,7 +821,7 @@
             $.ajax({
                 type: 'get',
                // url: 'https://jsonplaceholder.typicode.com/todos/1',
-                url: '/SimkaDosen/SinkronDataPenelitianSISTER',
+                url: '/SimkaDosen/SinkronDataPenelitianSISTERbyNPP',
                 
 
                 datatype: 'json',
@@ -931,7 +933,7 @@
             $.ajax({
                 type: 'get',
                 // url: 'https://jsonplaceholder.typicode.com/todos/1',
-                url: '/SimkaDosen/SinkronDataPublikasiSISTER',
+                url: '/SimkaDosen/SinkronDataPublikasiProdiSISTERbyNPP',
 
 
 

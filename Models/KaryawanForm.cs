@@ -8,8 +8,9 @@ namespace APIConsume.Models
 {
     public class KaryawanForm
     {
-        [Required]
+        public string? NIDK { get; set; }
 
+        [Required]
         public string Npp { get; set; }
         [Required]
         public string Nama { get; set; }
@@ -28,8 +29,7 @@ namespace APIConsume.Models
         public string EmailInstitusi { get; set; }
         public int? IdRefFungsional { get; set; }
         public int? IdUnit { get; set; }
-        public int? MstIdUnit { get; set; }
-       
+        public int? MstIdUnit { get; set; }    
         public int? IdUnitAkademik { get; set; }
         public int? IdUnitAkademikEpsbed { get; set; }
         public string IdRefGolongan { get; set; }
@@ -63,7 +63,6 @@ namespace APIConsume.Models
         public DateTime? TglAkhirPaspor { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-
         public string BiografiSingkat { get; set; }
         public string Nupn { get; set; }
         public string NppManager { get; set; }
@@ -93,6 +92,10 @@ namespace APIConsume.Models
         public byte[] FileSertifikasiPendidikm { get; set; }
         public byte[] FileAsuransim { get; set; }
         public string ID_DOSEN_SISTER { get; set; }
+        public int? MASA_KERJA_GOLONGAN { get; set; }
+        public DateTime? TMT_GOLONGAN { get; set; }
+        public Boolean? STATUS_YADAPEN { get; set; }
+        public int? ID_UNIT_ENTRYPASS { get; set; }
 
 
         public List<MstRekening> rekening { get; set; }
@@ -101,6 +104,8 @@ namespace APIConsume.Models
         public List<RefJabatanStruktural> struktural { get; set; }
         public List<RefFungsional> fungsional { get; set; }
         public List<MstUnit> unit { get; set; }
+        public List<MstUnit> unitEPSBED { get; set; }
+
         public List<RefKeluarga> refkeluarga { get; set; }
         public List<MstUnitAkademik> prodi { get; set; }
         public List<MstAsuransi> asuransi { get; set; }

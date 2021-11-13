@@ -319,8 +319,18 @@ namespace APIConsume.Controllers
         public IActionResult KelolaKaryawan()
         {
             if (HttpContext.Session.GetString("role") == "admin")
+            {
+                dynamic balikan = new ExpandoObject();
+                balikan.refJabatanAkademik = _context.RefJabatanAkademik.ToList();
+                balikan.refFungsional = _context.RefFungsional.ToList();
+                balikan.refJenjang = _context.RefJenjang.ToList();
+                balikan.refUnit = _context.MstUnit.ToList();
+                balikan.refStatus = _context.RefStatusKepegawaian.ToList();
+
+                return View(balikan);
+            }
                 // memeriksa apakah admin yg login jika ya return view jika tidak forbidden
-                return View();
+                
             else
                 return RedirectToAction("Index", "Home");
         }
@@ -357,7 +367,7 @@ namespace APIConsume.Controllers
 
             return View(balikan);
         }
-        public IActionResult LoadDataKaryawan()
+        public IActionResult  LoadDataKaryawan()
         {
             try
             {
@@ -367,7 +377,31 @@ namespace APIConsume.Controllers
                 .Include(m => m.MstIdUnitAkademikNavigation)
                  .Select(p => new { p.Npp, p.NamaLengkapGelar, p.IdRefFungsionalNavigation.Deskripsi, p.IdUnitNavigation.NamaUnit, p.EmailInstitusi, p.MstIdUnitAkademikNavigation.NamaUnitAkademik, penempatan = p.MstIdUnitNavigation.NamaUnit });
 
-                return Json(new { data = customerData });
+
+                
+                return Json(new { data = customerData});
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public async Task<IActionResult> LoadDataKaryawanbyCriteria(int idJabatanAkademik, int idFungsional, int idUnit, int idSubUnit, int idJenjang, string statusKepegawaian, string npp, string nama)
+        {
+            try
+            {
+                var customerData = _context.MstKaryawan
+                .Include(m => m.IdUnitNavigation)
+                .Include(m => m.MstIdUnitNavigation)
+                .Include(m => m.MstIdUnitAkademikNavigation)
+                 .Select(p => new { p.Npp, p.NamaLengkapGelar, p.IdRefFungsionalNavigation.Deskripsi, p.IdUnitNavigation.NamaUnit, p.EmailInstitusi, p.MstIdUnitAkademikNavigation.NamaUnitAkademik, penempatan = p.MstIdUnitNavigation.NamaUnit });
+
+                DBOutput data = await (new MstKaryawanDAO()).GetDataKaryawanByCriteria(idJabatanAkademik, idFungsional, idUnit, idSubUnit, idJenjang, statusKepegawaian, npp, nama);
+
+                return Json(new { data = data.data });
 
             }
             catch (Exception)
@@ -387,7 +421,8 @@ namespace APIConsume.Controllers
 
                     fungsional = _context.RefFungsional.ToList(),
                     unit = _context.MstUnit.OrderBy(c => c.NamaUnit).ToList(),
-                    prodi=_context.MstUnitAkademik.OrderBy(c=>c.NamaUnitAkademik).ToList(),
+                    unitEPSBED = _context.MstUnit.Where(c => c.NamaUnit.Contains("Program Studi")).ToList(),
+                    prodi =_context.MstUnitAkademik.OrderBy(c=>c.NamaUnitAkademik).ToList(),
                     golongan = _context.RefGolongan
                     .Select(c => new RefGolongan
                     {
@@ -471,7 +506,12 @@ namespace APIConsume.Controllers
                     FileNpwpm = karyawan.FileNpwp,
                     FileSertifikasiPendidikm = karyawan.FileSertifikasiPendidik,
                     ID_DOSEN_SISTER = karyawan.ID_DOSEN_SISTER,
-
+                    TmtPurnakarya = karyawan.TmtPurnakarya,
+                    TMT_GOLONGAN = karyawan.TMT_GOLONGAN,
+                    MASA_KERJA_GOLONGAN = karyawan.MASA_KERJA_GOLONGAN,
+                    STATUS_YADAPEN = karyawan.STATUS_YADAPEN,
+                    ID_UNIT_ENTRYPASS = karyawan.ID_UNIT_ENTRYPASS,
+                    NIDK = karyawan.NIDK
 
 
                 };
@@ -540,6 +580,12 @@ namespace APIConsume.Controllers
                 Password = "1234567",// password default\
                 CurrentStatus = karyawan.CurrentStatus,
                 ID_DOSEN_SISTER = karyawan.ID_DOSEN_SISTER,
+                TmtPurnakarya = karyawan.TmtPurnakarya,
+                TMT_GOLONGAN = karyawan.TMT_GOLONGAN,
+                MASA_KERJA_GOLONGAN = karyawan.MASA_KERJA_GOLONGAN,
+                STATUS_YADAPEN = karyawan.STATUS_YADAPEN,
+                ID_UNIT_ENTRYPASS = karyawan.ID_UNIT_ENTRYPASS,
+                NIDK = karyawan.NIDK
 
 
 
@@ -653,6 +699,25 @@ namespace APIConsume.Controllers
                 return Json(new { success = true, message = "Edit data success." });
             }
         }
+
+        public JsonResult getStatusKepegawaian(string status)
+        {
+            var data = _context.RefStatusKepegawaian.Where(a => a.StatusAktifitas == status).ToList();
+
+            return Json( data );
+
+        }
+
+        public JsonResult getSubUnit(int id_unit)
+        {
+            var data = _context.MstUnit.Where(a => a.MstIdUnit == id_unit).ToList();
+            return Json(data);
+
+        }
+        
+
+
+
 
         //start rekening
         public IActionResult LoadDataRekening(string npp)
@@ -899,6 +964,72 @@ namespace APIConsume.Controllers
                 throw;
             }
 
+        }
+
+        public JsonResult getRestitusiKaryawan(string npp)
+        {
+            
+            var result = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp);
+
+            if(result!= null)
+            {
+                return Json(new
+                {
+                    success = true,
+                    status = result.StatusRestitusi
+                }) ;
+            }
+            else
+            {
+                return Json(new
+                {
+                    success = false,
+                    status = "Restitusi tidak ditemukan"
+                });
+            }
+            
+        }
+
+        public JsonResult ubahRestitusiKaryawan(string npp, string restitusi)
+        {
+            try
+            {
+                var result = _context.MstKaryawan.FirstOrDefault(a => a.Npp == npp);
+
+                if(result != null)
+                {
+                    result.StatusRestitusi = restitusi;
+                    _context.SaveChanges();
+
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Restitusi berhasil diubah"
+                    });
+
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Restitusi gagal diubah"
+                    });
+                }
+                
+
+
+            }
+            catch(Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Terjadi Kesalahan"
+                });
+            }
+            
+            
         }
         public IActionResult AddEditKeluarga(int id = 0)
         {
@@ -4419,8 +4550,13 @@ namespace APIConsume.Controllers
                 {
 
                     _context.Update(data);
-                    karyawandb.IdRefJbtnAkademik = karirfungsional.IdRefJbtnAkademik;
-                    _context.Update(karyawandb);
+                    var tglSekarang = DateTime.Now;
+                    if(data.TglBerikut >= tglSekarang)
+                    {
+                        karyawandb.IdRefJbtnAkademik = karirfungsional.IdRefJbtnAkademik;
+                        _context.Update(karyawandb);
+                    }
+                    
                     await _context.SaveChangesAsync();
 
                     return Json(new { success = true, message = "Edit data success." });
@@ -4782,10 +4918,17 @@ namespace APIConsume.Controllers
                 }
                 else
                 {
-
+                    var tglSekarang = DateTime.Now;
+                    
                     _context.Update(data);
-                    karyawandb.IdRefGolongan = karirfungsional.IdRefGolonganBaru;
-                    _context.Update(karyawandb);
+
+                    if (data.TglBerikut >= tglSekarang)  // Kalau Tgl Berikut lebih besar dari TglSekarang maka ref Golongan di MST_KARYAWAN baru boleh diubah
+                    {
+                        karyawandb.IdRefGolongan = karirfungsional.IdRefGolonganBaru;
+                        _context.Update(karyawandb);
+
+                    }
+                        
                     await _context.SaveChangesAsync();
 
                     return Json(new { success = true, message = "Edit data success." });
@@ -4941,7 +5084,7 @@ namespace APIConsume.Controllers
                     IsLast = 1,
                     MstIdUnit = un.IdUnit,
 
-
+                    
                 };
 
                 var karyawandb = _context.MstKaryawan.AsNoTracking().FirstOrDefault(x => x.Npp == karir.Npp);
@@ -4952,7 +5095,8 @@ namespace APIConsume.Controllers
                 {
                     // mstrekanan.IdMstRekanan = _context.MstRekanan.Max(p => p.IdMstRekanan) + 1;
                     _context.TrKarirStruktural.Add(data);
-                   
+                    var updateMstUnit = _context.MstUnit.FirstOrDefault(a=>a.IdUnit == karir.IdUnit);
+                    updateMstUnit.Npp = karir.Npp;
                     await _context.SaveChangesAsync();
 
 
@@ -4960,7 +5104,12 @@ namespace APIConsume.Controllers
                 }
                 else
                 {
-
+                    var date = DateTime.Now;
+                    if(date > karir.TglAwal && date < karir.TglAkhir)
+                    {
+                        var updateMstUnit = _context.MstUnit.FirstOrDefault(a => a.IdUnit == karir.IdUnit);
+                        updateMstUnit.Npp = karir.Npp;
+                    }
                     _context.Update(data);
                    
                     await _context.SaveChangesAsync();

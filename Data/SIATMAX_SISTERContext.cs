@@ -852,6 +852,25 @@ namespace APIConsume.Models
                 entity.Property(e => e.UUID_LUPA_PWD)
                      .HasColumnName("UUID_LUPA_PWD")
                      .HasMaxLength(100);
+                //entity.Property(e => e.MASA_KERJA_GOLONGAN)
+                //     .HasColumnName("MASA_KERJA_GOLONGAN")
+                //     .HasColumnType("int");
+
+                //entity.Property(e => e.TMT_GOLONGAN)
+                //     .HasColumnName("TMT_GOLONGAN")
+                //     .HasColumnType("date");
+
+                //entity.Property(e => e.STATUS_YADAPEN)
+                //     .HasColumnName("STATUS_YADAPEN")
+                //     .HasColumnType("bool");
+
+                //entity.Property(e => e.ID_UNIT_ENTRYPASS)
+                //     .HasColumnName("ID_UNIT_ENTRYPASS")
+                //     .HasColumnType("int");
+
+                //entity.Property(e => e.NIDK)
+                //     .HasColumnName("NIDK")
+                //     .HasMaxLength(15);
             });
 
             modelBuilder.Entity<MstKeluarga>(entity =>

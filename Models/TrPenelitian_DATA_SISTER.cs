@@ -35,12 +35,7 @@ namespace APIConsume.Models
         public string? afiliasi { get; set; }
         public string? id_kelompok_bidang { get; set; }
         public string? nama_kelompok_bidang { get; set; }        
-        public string NPP1 { get; set; }
-        public string? NPP2 { get; set; }
-        public string? NPP3 { get; set; }
-        public string? NPP4 { get; set; }
-        public string? NPP5 { get; set; }
-        public string? NPP6 { get; set; }
+        
 
         
     }

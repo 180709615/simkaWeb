@@ -38,14 +38,22 @@
 
     <section class="content">
 
-        <p>Pilih Karyawan </p>
+        <label>Pilih Karyawan </label>
         <div style="width:100%; margin:0" class="tab-pane">
-            <select class="selectpicker" data-live-search="true" asp-for="karyawan"
-                    asp-items="@(new SelectList(Model.karyawan,"Npp","Nama"))" data-max-options="1">
-                
+            <select class="selectpicker" data-live-search="true" asp-for="karyawan" id="karyawan"
+                    asp-items="@(new SelectList(Model.karyawan,"Npp","Nama"))" data-max-options="1" onchange="changeRestitusi()">
             </select>
+            <div class="form-group" style="margin-top:1%; margin-bottom:0;">
+                <label style="margin-right:1%;">Restitusi</label>
+                
+            </div>
             <div class="form-group">
-             
+                
+                <input type="radio" value="Restitusi Bujang" name="restitusi" id="restitusiBujang">
+                <span for="restitusiBujang">Restitusi Bujang</span>
+                <input type="radio" value="Restitusi Keluarga" name="restitusi" id="restitusiKeluarga"  style="margin-left:1%;">
+                <span for="restitusiKeluarga">Restitusi Keluarga</span>
+                <button class="btn btn-primary btn-sm" onclick="ubahRestitusiKaryawan()" style="margin-left:1%;">Ubah Restitusi</button>
             </div>
             <div class="row">
                 <div class="col-md-10">
@@ -102,10 +110,10 @@
 </script>
     <script>
         var popup, dataTable;
+        var selectedVal = $("#karyawan option:selected").val();
 
        $("#karyawan").change(function(){      
-           var selectedVal = $("#karyawan option:selected").val();        
-
+                    selectedVal = $("#karyawan option:selected").val();
                   dataTable = $('#example').DataTable({
                    "oSearch": { "sSearch": localStorage.getItem("myTextBox") },
                    "responsive": true,
@@ -159,7 +167,7 @@
                            title: "Aksi",
                            "data": "idKeluarga", // diganti sama id
                            "render": function (data) {
-                               return "<a class='btn btn-default btn-sm' onclick=ShowPopup('/SimkaAdmin/AddEditKeluarga?id=" + data + "')><i class='fa fa-pencil'></i> Detail / Edit</a><a class=' text-light btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete(" + data + ")><i class='fa fa-trash'></i> Delete</a>     ";
+                               return "<a class='btn btn-default btn-sm' onclick=ShowPopup('/SimkaAdmin/AddEditKeluarga?id=" + data + "')><i class='fa fa-pencil'></i> Detail / Edit</a> ";
 
                            }
                        }
@@ -173,6 +181,57 @@
             localStorage.setItem('myTextBox', "");
         });
 
+        function changeRestitusi() {
+            selectedVal = $("#karyawan option:selected").val();
+            $.ajax({
+                type: 'get',
+                // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                url: "/SimkaAdmin/getRestitusiKaryawan?npp=" + selectedVal,
+                
+                datatype: 'json',
+                success: function (data) {
+                    if(data.status == "Restitusi Bujang")
+                        $("input[name='restitusi'][value='Restitusi Bujang']").prop('checked', true);
+                    else
+                        $("input[name='restitusi'][value='Restitusi Keluarga']").prop('checked', true);                    
+
+                },
+                error: function (data) {
+
+                    alert(data.message);
+                }
+            });
+        }
+
+        function ubahRestitusiKaryawan() {
+            selectedVal = $("#karyawan option:selected").val();
+            var restitusi = $("input[name='restitusi']:checked").val()
+            $.ajax({
+                type: 'get',
+                // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                url: '/SimkaAdmin/ubahRestitusiKaryawan?npp=' + selectedVal + "&restitusi=" + restitusi,
+                data: function (d) {
+                   
+                },
+                datatype: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        if (data.status == "Restitusi Bujang")
+                            $("input[name='restitusi'][value='Restitusi Bujang']").prop('checked', true);
+                        else
+                            $("input[name='restitusi'][value='Restitusi Keluarga']").prop('checked', true);
+                    }
+                    
+                    alert(data.message);
+
+
+            },
+                error: function (data) {
+
+                    alert(data.message);
+                }
+            });
+        }
 
         function ShowPopup(url) {
             if ($('#karyawan').val() == null)

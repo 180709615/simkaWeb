@@ -47,7 +47,112 @@
                        onclick="ShowPopup('@Url.Action("AddEditKaryawan","SimkaAdmin")')"><i class="fa fa-plus"></i> Tambah Karyawan </a>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    Pencarian
+                </div>
+                <div class="card-body">
+                    @*<h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>*@
+                    <div class="form-group row">
+                        <label for="inputJabAkademik" class="col-sm-2 col-form-labelf">Jabatan Akademik</label>
+                        <div class="col-sm-5">
+                            <select class="form-control form-control-sm" id="inputJabAkademik">
+                                <option value="">-All-</option>
+
+                                @foreach (var item in Model.refJabatanAkademik)
+                                {
+                                    <option value="@item.IdRefJbtnAkademik">@item.Deskripsi</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputFungsional" class="col-sm-2 col-form-label">Jabatan Fungsional</label>
+                        <div class="col-sm-5">
+                            <select class="form-control form-control-sm" id="inputFungsional">
+                                <option value="">-All-</option>
+
+                                @foreach (var item in Model.refFungsional)
+                                {
+                                    <option value="@item.IdRefFungsional">@item.Deskripsi</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputJenjang" class="col-sm-2 col-form-label">Jenjang</label>
+                        <div class="col-sm-5">
+                            <select class="form-control form-control-sm" id="inputJenjang">
+                                <option value="">-All-</option>
+                                @foreach (var item in Model.refJenjang)
+                                {
+                                    <option value="@item.IdRefJenjang">@item.Deskripsi</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputUnit" class="col-sm-2 col-form-label">Unit</label>
+                        <div class="col-sm-5">
+                            <select class="form-control form-control-sm" id="inputUnit" onchange="getSubUnit()">
+                                <option value="">-All-</option>
+                                @foreach (var item in Model.refUnit)
+                                {
+                                    <option value="@item.IdUnit">@item.NamaUnit</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputSubUnit" class="col-sm-2 col-form-label">Sub Unit</label>
+                        <div class="col-sm-5">
+                            <select class="form-control form-control-sm" id="inputSubUnit">
+                                <option value="">-All-</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputStatus" class="col-sm-2 col-form-label">Status</label>
+                        <div class="col-sm-5">
+                            <select class="form-control form-control-sm" id="inputStatus">
+                                <option value="">-All-</option>
+                                @foreach (var item in Model.refStatus)
+                                {
+                                    <option value="@item.StatusKepegawaian">@item.StatusKepegawaian</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputNPP" class="col-sm-2 col-form-label">NPP</label>
+                        <div class="col-sm-2">
+                            <input class="form-control form-control-sm" id="inputNPP" placeholder="00.000.001"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputNama" class="col-sm-2 col-form-label">Nama</label>
+                        <div class="col-sm-3">
+                            <input class="form-control form-control-sm" id="inputNama" placeholder="Nama"></input>
+                        </div>
+                    </div>
+                    <button style="margin-right: 1%; padding: 0.3rem 2rem;" class="btn  btn-danger" onclick="resetPencarian()">Reset Filter</button>
+
+                    <button style="padding:0.3rem 2rem;" class="btn  btn-primary" onclick="getDataKaryawanByCriteria()">Cari</button>
+
+                </div>
+
+
+
+            </div>
+            
             <table id="example" class="  table-hover table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                
                 <thead class="bg-primary"></thead>
             </table>
         </div>
@@ -97,23 +202,70 @@
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
 
+
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+
+
     <script>
         var popup, dataTable;
+        var idJabatanAkademik = "", idFungsional = "", idJenjang = "", idUnit = "", idSubUnit = "", statusKepegawaian = "", npp = "", nama = "";
 
         $(document).ready(function () {
 
             dataTable = $('#example').DataTable({
+                dom: "<'row justify-content-between'<'col-sm-9 'l><'justify-content-between col-sm-3 mx-0 px-0'B>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                buttons: [{
+                    extend: 'pdf',
+                    text: 'Export to PDF',
+                    className: 'btn btn-secondary',
+                    title: 'Daftar karyawan ',
+                    filename: 'Karyawan',
 
+                }, {
+                    extend: 'excel',
+                    className:'btn btn-secondary',
+                    text: 'Export to Excel',
+                    title: 'Daftar karyawan',
+                    filename: 'Karyawan'
+                    ,
+
+                }
+                ],
                 "responsive": true,
                 "deferRender": true,
                 "ajax": {
-                    "url": "/SimkaAdmin/LoadDataKaryawan",
-                    "type": "GET",
-                    "datatype": "json"
+                    "url": "/SimkaAdmin/LoadDataKaryawanbyCriteria",
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.idJabatanAkademik = idJabatanAkademik,
+                            d.idFungsional = idFungsional,
+                            d.idJenjang = idJenjang,
+                            d.idUnit = idUnit,
+                            d.statusKepegawaian = statusKepegawaian,
+                            d.npp = npp,
+                            d.nama = nama
+                    },
+
                 },
                 "columns": [
                     {
-                        data: "npp",
+                        data: "NPP",
                         title: "NPP",
                         name: "NPP",
                         type: "readonly",
@@ -121,33 +273,33 @@
 
                     },
                     {
-                        data: "namaLengkapGelar",
+                        data: "NAMA",
                         title: "Nama Karyawan",
 
                     },
                     {
-                        data: "deskripsi",
+                        data: "FUNGSIONAL",
                         title: "Fungsional",
 
                     },
                     {
-                        data: "namaUnit",
+                        data: "NAMA_UNIT",
                         title: "Unit",
 
                     },
                     {
-                        data: "penempatan",
+                        data: "PENEMPATAN",
                         title: "Penempatan",
 
                     },
                     {
-                        data: "namaUnitAkademik",
+                        data: "NAMA_UNIT_AKADEMIK",
                         title: "Prodi",
 
                     },
 
                     {
-                        "data": "npp", // diganti sama id
+                        "data": "NPP", // diganti sama id
                         "render": function (data) {
                             return "<a class='btn btn-default btn-sm' onclick=ShowPopup('/SimkaAdmin/AddEditKaryawan?npp=" + data + "')><i class='fa fa-pencil'></i> Detail / Edit</a> ";
 
@@ -158,13 +310,13 @@
                     "emptyTable": "no data found."
                 }
             });
-           
+
         });
 
 
         function ShowPopup(url) {
             toastr.info('Memuat Data')
-           var formDiv = $('<div/>');
+            var formDiv = $('<div/>');
             $.get(url)
                 .done(function (response) {
                     formDiv.html(response);
@@ -186,12 +338,12 @@
         function SubmitAddEdit(form) {
             toastr.info('Menyimpan  Data')
             $.validator.unobtrusive.parse(form);
-                   if ($(form).valid) {
-                        var form = $('#formsimka')[0];
-                        var data = new FormData(form);
-                       var data = new FormData(document.getElementById("formsimka"));
-            
-                       console.log(data);
+            if ($(form).valid) {
+                var form = $('#formsimka')[0];
+                var data = new FormData(form);
+                var data = new FormData(document.getElementById("formsimka"));
+
+                console.log(data);
                 $.ajax({
                     type: 'POST',
                     url: '/SimkaAdmin/PostKaryawan',
@@ -218,8 +370,76 @@
             toastr.success(msg);
         }
 
+        function getSubUnit() {
+            var IdUnit = $("#inputUnit option:selected").val();
+            $('#inputSubUnit')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="">-All-</option>')
+                .val('')
+                ;
+            $.ajax({
+                type: 'get',
+                // url: 'https://jsonplaceholder.typicode.com/todos/1',
+                url: '/SimkaAdmin/getSubUnit?id_unit=' + IdUnit,
+
+
+                datatype: 'json',
+                success: function (data) {
+
+                    var select = document.getElementById("inputSubUnit");
+                    var options = document.getElementById("inputSubUnit").options;
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        var index = data[i];
+                        options.add(new Option(index["namaUnit"], index["idUnit"]))
+                        console.log(index["namaUnit"]);
+
+                    }
+
+                },
+                error: function (data) {
+
+                    alert("Gagal mendapatkan sub unit");
+                }
+            });
+
+
+        }
+        function getDataKaryawanByCriteria() {
+            idJabatanAkademik = $("#inputJabAkademik").val()
+            idFungsional = $("#inputFungsional").val();
+            idJenjang = $("#inputJenjang").val();
+            idUnit = $("#inputUnit").val();
+            idSubUnit = $("#inputSubUnit").val();
+            statusKepegawaian = $("#inputStatus").val();
+            npp = $("#inputNPP").val();
+            nama = $("#inputNama").val();
+            console.log("npp =" + npp)
+
+            dataTable.ajax.reload();
+
+        }
+
+        function resetPencarian() {
+            $("#inputJabAkademik").val("");
+            $("#inputFungsional").val("");
+            $("#inputJenjang").val("");
+            $("#inputUnit").val("");
+            $("#inputSubUnit").val("");
+            $("#inputStatus").val("");
+            $("#inputNPP").val("");
+            $("#inputNama").val("");
+        }
+
     </script>
 
 
-
+    <style>
+        label {
+            font-weight: normal !important;
+        }
+    </style>
 }

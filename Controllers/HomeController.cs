@@ -21,6 +21,7 @@ using MailKit.Net.Smtp;
 using MimeKit.Text;
 using MailKit.Security;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace APIControllers.Controllers
 {
@@ -102,123 +103,123 @@ namespace APIControllers.Controllers
 
             if (HttpContext.Session.GetString("role") == "admin")
                 return await Task.FromResult(RedirectToAction("SimkaAdmin"));
-            else 
+            else
             if (HttpContext.Session.GetString("role") == "dosen")
                 return await Task.FromResult(RedirectToAction("Simkadosen"));
             else
 
             if (HttpContext.Session.GetString("role") == "karyawan")
-                        return await Task.FromResult(RedirectToAction("SimkaKaryawan"));
-                    else {
-                        var balikan = new FungsionalLogin();
-                        balikan.fungsional = _context.RefFungsional.ToList();
-                        string[] npp_admin = new String[5];// daftar anggota role ksdm
-                        npp_admin[0] = "00.00.001";
-                        npp_admin[1] = "03.96.582";
+                return await Task.FromResult(RedirectToAction("SimkaKaryawan"));
+            else
+            {
+                var balikan = new FungsionalLogin();
+                balikan.fungsional = _context.RefFungsional.ToList();
+                string[] npp_admin = new String[5];// daftar anggota role ksdm
+                npp_admin[0] = "00.00.001";
+                npp_admin[1] = "03.96.582";
 
-                        if (username != null && password != null)
+                if (username != null && password != null)
+                {
+                    var mstKaryawan = _context.MstKaryawan.FirstOrDefault(a => a.Npp == username);
+                    if (mstKaryawan != null)// npp cocok
+                    {
+                        if (mstKaryawan.PASSWORD_RIPEM == getHash(password))//password sesusai dengan npp
                         {
-                            var mstKaryawan = _context.MstKaryawan.FirstOrDefault(a => a.Npp == username);
-                            if (mstKaryawan != null)// npp cocok
+                            var informasilogin = "  <br><br><br> TESTING SIMKA 2 DEV <br> Berikut informasi login Bapak Ibu <br><br>" +
+                            "Waktu Dan Tanggal:  " + DateTime.Now + "<br> IP Adress: "
+                            + HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString() + "<br>" +
+                            "Apabila Bapak/ Ibu tidak mengenali aktivitas ini agar segera menghubungi KSI melalui " +
+                            "<a href='http://ksi.uajy.ac.id/helpdesk/open.php' target='_blank'> http://ksi.uajy.ac.id/helpdesk</a>" +
+                            "<br>Terimakasih ";
+                            //kirim email notifikasi login
+                            var emails = mstKaryawan.Email; // ambil email 
+                            if (emails != null || emails != "") //memastikan email tidak null
                             {
-                                if (mstKaryawan.PASSWORD_RIPEM == getHash(password))//password sesusai dengan npp
+
+                                _ = await (SendEmail("test", emails, informasilogin));
+                            }
+                            else
+                            if (emails == null || emails == "") // bila email ternyata null /kosong
+                            {
+                                emails = mstKaryawan.EmailInstitusi;
+                                if (emails != null || emails != "")
                                 {
-                                    var informasilogin = "  <br><br><br> TESTING SIMKA 2 DEV <br> Berikut informasi login Bapak Ibu <br><br>" +
-                                 "Waktu Dan Tanggal:  " + DateTime.Now + "<br> IP Adress: "
-                                 + HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString() + "<br>" +
-                                 "Apabila Bapak/ Ibu tidak mengenali aktivitas ini agar segera menghubungi KSI melalui " +
-                                 "<a href='http://ksi.uajy.ac.id/helpdesk/open.php' target='_blank'> http://ksi.uajy.ac.id/helpdesk</a>" +
-                                 "<br>Terimakasih ";
-                                    //kirim email notifikasi login
-                                    var emails = mstKaryawan.Email; // ambil email 
-                                    if (emails != null || emails != "") //memastikan email tidak null
+
+                                    _ = await SendEmail("test", emails, informasilogin);
+                                }
+                            }
+
+
+
+                            //akhir kirim email notifikasi login
+                            //SendWa();
+                            HttpContext.Session.SetString("NPP", username);
+                            HttpContext.Session.SetString("Nama", mstKaryawan.NamaLengkapGelar);
+                            if (fungsional == 1 && mstKaryawan.IdRefFungsional == 1)// user merupakan dosen dan memilih sebagai dosen
+                            {
+                                HttpContext.Session.SetString("role", "dosen");
+                                return await Task.FromResult(RedirectToAction("Simkadosen"));
+                            }
+                            else if (fungsional == 1 && mstKaryawan.IdRefFungsional != 1)// user bukan dosen (karyawan)
+                            {
+                                HttpContext.Session.SetString("role", "karyawan");
+                                return await Task.FromResult(RedirectToAction("SimkaKaryawan"));
+                            }
+                            else if (fungsional == 7)//cek role ksdm
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    if (npp_admin[i] == mstKaryawan.Npp)
                                     {
-
-                                        _ = await (SendEmail("test", emails, informasilogin));
-                                    }
-                                    else
-                                    if (emails == null || emails == "") // bila email ternyata null /kosong
-                                    {
-                                        emails = mstKaryawan.EmailInstitusi;
-                                        if (emails != null || emails != "")
-                                        {
-
-                                             _ = await SendEmail("test", emails, informasilogin);
-                                        }
-                                    }
-
-
-
-                                    //akhir kirim email notifikasi login
-                                    //SendWa();
-                                    HttpContext.Session.SetString("NPP", username);
-                                    HttpContext.Session.SetString("Nama", mstKaryawan.NamaLengkapGelar);
-                                    if (fungsional == 1 && mstKaryawan.IdRefFungsional == 1)// user merupakan dosen dan memilih sebagai dosen
-                                    {
-                                        HttpContext.Session.SetString("role", "dosen");
-                                        return await Task.FromResult(RedirectToAction("Simkadosen"));
-                                    }
-                                    else if (fungsional == 1 && mstKaryawan.IdRefFungsional != 1)// user bukan dosen (karyawan)
-                                    {
-                                        HttpContext.Session.SetString("role", "karyawan");
-                                        return await Task.FromResult(RedirectToAction("SimkaKaryawan"));
-                                    }
-                                    else if (fungsional == 7)//cek role ksdm
-                                    {
-                                        for (int i = 0; i < 5; i++)
-                                        {
-                                            if (npp_admin[i] == mstKaryawan.Npp)
-                                            {
-                                                HttpContext.Session.SetString("role", "admin");
-                                                return await Task.FromResult(RedirectToAction("SimkaAdmin"));
-
-                                            }
-                                        }
-                                        if (mstKaryawan.IdRefFungsional == 1) //dosen mencoba akses role ksdm tapi gagal
-                                        {
-                                            HttpContext.Session.SetString("role", "dosen");
-                                            return await Task.FromResult(RedirectToAction("Simkadosen"));
-                                        }
-                                        else
-                                        {
-                                            HttpContext.Session.SetString("role", "karyawan"); //karyawan mencoba akses role ksdm tapi gagal
-                                            return await Task.FromResult(RedirectToAction("SimkaKaryawan"));
-                                        }
+                                        HttpContext.Session.SetString("role", "admin");
+                                        return await Task.FromResult(RedirectToAction("SimkaAdmin"));
 
                                     }
-                                    else
-                                    {
-                                        HttpContext.Session.SetString("role", "karyawan");
-                                        return await Task.FromResult(RedirectToAction("SimkaKaryawan"));
-                                    }
-
+                                }
+                                if (mstKaryawan.IdRefFungsional == 1) //dosen mencoba akses role ksdm tapi gagal
+                                {
+                                    HttpContext.Session.SetString("role", "dosen");
+                                    return await Task.FromResult(RedirectToAction("Simkadosen"));
                                 }
                                 else
                                 {
-                                    TempData["Message"] = "password salah.";
-
-                                    return await Task.FromResult(View(balikan));
+                                    HttpContext.Session.SetString("role", "karyawan"); //karyawan mencoba akses role ksdm tapi gagal
+                                    return await Task.FromResult(RedirectToAction("SimkaKaryawan"));
                                 }
+
                             }
                             else
                             {
-                                TempData["Message"] = "User Id Tidak Ditemukan.";
-                                return await Task.FromResult(View(balikan));
+                                HttpContext.Session.SetString("role", "karyawan");
+                                return await Task.FromResult(RedirectToAction("SimkaKaryawan"));
                             }
 
                         }
                         else
                         {
+                            TempData["Message"] = "password salah.";
 
-                            TempData["Message"] = "";
                             return await Task.FromResult(View(balikan));
+                        }
+                    }
+                    else
+                    {
+                        TempData["Message"] = "User Id Tidak Ditemukan.";
+                        return await Task.FromResult(View(balikan));
+                    }
 
-                        } }
+                }
+                else
+                {
 
+                    TempData["Message"] = "";
+                    return await Task.FromResult(View(balikan));
 
-                
+                }
+            }
+           // return RedirectToAction("_LayoutSidebar");
             
- }
+        }
         public IActionResult Simkadosen()
         {
 
@@ -918,7 +919,72 @@ namespace APIControllers.Controllers
             return View();
         }
 
+        public JsonResult getSidebarMenu()
+        {
+            var menu = "";
+            DBOutput data = (new SidebarMenuDAO()).getSidebarMenu("");
+            List<SidebarMenu> listMenu = new List<SidebarMenu>();
+            //foreach (SidebarMenu row in data.data)
+            //{
+            //    if(row.parentid == 0)
+            //    menu += $"<li class='nav-item'><a href = '#' class='nav-link'><i class='nav-icon fas fa-circle'></i><p>{row.menuname}<i class='fas fa-angle-left right'></i></p></a><ul class='nav nav-treeview'>";
+
+
+            //    foreach (SidebarMenu submenu in data.data)
+            //    {
+            //        if(submenu.parentid == row.menuid)
+            //        menu += $"<li class='nav-item'><a href='{submenu.menulocation}' class='nav-link'><i class='far fa-circle nav-icon'></i><p>{submenu.menuname}</p></a></li>";
+            //        //menu += $"<li><a href='{submenu.LINK}'><i class='fa fa-circle-o'></i> {submenu.DESKRIPSI}</a></li>";
+            //    }
+
+            //    menu += "</ul></li> ";
+            //}
+
+            List<SidebarMenu> menuTree = GetMenuTree(data.data, 0);
+            var append = "";
+            foreach(var menus in menuTree)
+            {
+                if(menus.parentid == 0)
+                {
+                    append += "<li class='nav-item'><a href = '#' class='nav-link'><i class='nav-icon fas fa-circle'></i><p>" + menus.menuname + "<i class='fas fa-angle-left right'></i></p></a><ul class='nav nav-treeview'>";
+
+                     if(menus.ListMenu != null && menus.ListMenu.Count > 0)
+                    {
+                        foreach(var submenu in menus.ListMenu)
+                        {
+                            append += "<li class='nav-item'><a href=# class='nav-link'><i class='far fa-circle nav-icon'></i><p>" + submenu.menuname + "</p></a></li>";
+                        }
+                    }
+                    append += "</ul></li>";
+                }
+                
+
+            }
+            return Json(append);
+
+        }
+
+        private List<SidebarMenu> GetMenuTree(List<SidebarMenu> list, int? parent)
+        {
+            return list.Where(x => x.parentid == parent).Select(x => new SidebarMenu
+            {
+                urut = x.urut,
+                NO_URUT = x.NO_URUT,
+                menuid = x.menuid,
+                menuname = x.menuname,
+                menulocation = x.menulocation,
+                ListMenu = GetMenuTree(list,x.menuid)
+
+            }).ToList();
+        }
+
+        public IActionResult _LayoutSidebar()
+        {
+            return View();
+        }
     }
+
+
 
 }
 

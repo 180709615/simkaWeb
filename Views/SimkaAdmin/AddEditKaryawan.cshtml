@@ -50,7 +50,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">ID dosen sister ( bila ada)</label>
+                                                <label class="col-sm-2 col-form-label">ID dosen sister (bila ada)</label>
                                                 <div class="col-sm-5">
                                                     <input type="text" asp-for="ID_DOSEN_SISTER" class="form-control" placeholder="Nama">
                                                     <span asp-validation-for="ID_DOSEN_SISTER" class="text-danger"></span>
@@ -89,12 +89,12 @@
                                                     <label asp-for="TempatLahir" class="col-sm-2 col-form-label"> Tempat Tanggal Lahir</label>
                                                     <div class="form-group col-md-5">
 
-                                                        <input type="text" asp-for="TempatLahir" class="form-control" placeholder="Tempat Lahir">
+                                                        <input type="text" asp-for="TempatLahir" class="form-control" placeholder="Tempat Lahir"  >
                                                         <span asp-validation-for="TempatLahir" c lass="text-danger"></span>
 
                                                     </div>
                                                     <div class="form-group col-md-5">
-                                                        <input type="datesp-for="TglLahir" class="form-control" placeholder="dd/mm/yyyy">
+                                                        <input type="date" asp-for="TglLahir" class="form-control" placeholder="dd/mm/yyyy" id="tglLahir" onchange="changeTmtPurnakarya()">
                                                         <span asp-validation-for="TglLahir" class="text-danger"></span>
                                                     </div>
 
@@ -102,7 +102,7 @@
 
 
                                                 <div class="form-group row">
-                                                    <label asp-for="TglMasuk" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="TglMasuk" class="col-sm-2 col-form-label">Tanggal Masuk</label>
                                                     <div class="col-sm-10">
                                                         <input type="date" asp-for="TglMasuk" class="form-control" placeholder="">
                                                         <span asp-validation-for="TglMasuk" class="text-danger"></span>
@@ -116,7 +116,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="AlamatKota" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="AlamatKota" class="col-sm-2 col-form-label">Kota</label>
                                                     <div class="col-sm-5">
                                                         <select asp-for="AlamatKota">
 
@@ -995,7 +995,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="AlamatProvinsi" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="AlamatProvinsi" class="col-sm-2 col-form-label">Provinsi</label>
                                                     <div class="col-sm-5">
                                                         <select asp-for="AlamatProvinsi">
                                                             <option selected="selected" value="">-</option>
@@ -1048,7 +1048,7 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label asp-for="AlamatKodepos" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="AlamatKodepos" class="col-sm-2 col-form-label">Kode Pos</label>
                                                     <div class="col-sm-10">
                                                         <input type="number" asp-for="AlamatKodepos" class="form-control" placeholder="Kode Post Misal 53212">
                                                         <span asp-validation-for="AlamatKodepos" class="text-danger"></span>
@@ -1082,7 +1082,7 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label asp-for="NoKtp" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="NoKtp" class="col-sm-2 col-form-label">No. KTP</label>
                                                     <div class="col-sm-10">
                                                         <input type="number" asp-for="NoKtp" class="form-control" placeholder="Nomor KTP">
                                                         <span asp-validation-for="NoKtp" class="text-danger"></span>
@@ -1090,14 +1090,14 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label asp-for="TglAkhirBerlakuKtp" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="TglAkhirBerlakuKtp" class="col-sm-2 col-form-label">Tgl. Akhir Berlaku KTP</label>
                                                     <div class="col-sm-10">
                                                         <input type="date" asp-for="TglAkhirBerlakuKtp" class="form-control" placeholder="dd/mm/yyyy">
                                                         <span asp-validation-for="TglAkhirBerlakuKtp" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="Npwp" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="Npwp" class="col-sm-2 col-form-label">NPWP</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" asp-for="Npwp" class="form-control" placeholder=" Nomor NPWP">
                                                         <span asp-validation-for="Npwp" class="text-danger"></span>
@@ -1105,7 +1105,7 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label asp-for="StatusPtkp" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="StatusPtkp" class="col-sm-2 col-form-label">Status PTKP</label>
                                                     <div class="col-sm-5">
                                                         <select asp-for="StatusPtkp">
                                                             <option selected="selected" value="">-</option>
@@ -1163,14 +1163,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="NoPaspor" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="NoPaspor" class="col-sm-2 col-form-label">No. Paspor</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" asp-for="NoPaspor" class="form-control" placeholder=" Nomor Paspor">
                                                         <span asp-validation-for="NoPaspor" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="NipPns" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="NipPns" class="col-sm-2 col-form-label">NIP PNS</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" asp-for="NipPns" class="form-control" placeholder=" NIP PNS">
                                                         <span asp-validation-for="NipPns" class="text-danger"></span>
@@ -1178,43 +1178,34 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label asp-for="StatusAktifitas" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="StatusAktifitas" class="col-sm-2 col-form-label">Status Aktivitas</label>
                                                     <div class="col-sm-5">
-                                                        <select asp-for="StatusAktifitas">
+                                                        <select asp-for="StatusAktifitas" id="StatusAktifitas" onchange="getStatusKepegawaian()">
+                                                            <option value="">-</option>
                                                             <option value="Aktif">Aktif</option>
                                                             <option value="Non Aktif">Non Aktif</option>
-                                                            <option value="Meninggal">Meninggal</option>
-                                                            <option value="Pensiun">Pensiun</option>
-                                                            <option value="Mengundurkan Diri">Mengundurkan Diri</option>
-                                                            <option value="Tugas Belajar">Tugas Belajar</option>
-                                                            <option value="Ijin Belajar">Ijin Belajar</option>
+
                                                         </select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label asp-for="CurrentStatus" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="CurrentStatus" class="col-sm-2 col-form-label">Status Sekarang</label>
                                                     <div class="col-sm-5">
-                                                        <select asp-for="CurrentStatus">
-                                                            <option value="Aktif">Aktif</option>
-                                                            <option value="Non Aktif">Non Aktif</option>
-                                                            <option value="Meninggal">Meninggal</option>
-                                                            <option value="Pensiun">Pensiun</option>
-                                                            <option value="Mengundurkan Diri">Mengundurkan Diri</option>
-                                                            <option value="Tugas Belajar">Tugas Belajar</option>
-                                                            <option value="Ijin Belajar">Ijin Belajar</option>
+                                                        <select asp-for="CurrentStatus" id="statusSekarang">
+                                                            
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="Nidn" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="Nidn" class="col-sm-2 col-form-label">NIDN</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" asp-for="Nidn" class="form-control" placeholder=" NIDN">
                                                         <span asp-validation-for="Nidn" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="PendidikanTerakhir" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="PendidikanTerakhir" class="col-sm-2 col-form-label">Pendidikan Terakhir</label>
                                                     <div class="col-sm-5">
                                                         <select asp-for="PendidikanTerakhir">
                                                             <option selected="selected" value="">-</option>
@@ -1234,7 +1225,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="PendidikanDiakui" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="PendidikanDiakui" class="col-sm-2 col-form-label">Pendidikan Diakui</label>
                                                     <div class="col-sm-5">
                                                         <select asp-for="PendidikanDiakui">
                                                             <option selected="selected" value="">-</option>
@@ -1254,7 +1245,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label asp-for="NoSertifikatPendidik" class="col-sm-2 col-form-label"></label>
+                                                    <label asp-for="NoSertifikatPendidik" class="col-sm-2 col-form-label">No. Sertifikat Pendidik</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" asp-for="NoSertifikatPendidik" class="form-control" placeholder=" Nomor NPWP">
                                                         <span asp-validation-for="NoSertifikatPendidik" class="text-danger"></span>
@@ -1271,6 +1262,50 @@
 
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="TmtPurnakarya" class="col-sm-2 col-form-label">Tmt Purnakarya</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" asp-for="TmtPurnakarya" class="form-control" placeholder="" disabled id="TmtPurnakarya" >
+                                                        <span asp-validation-for="TmtPurnakarya" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+                                                
+
+                                                <div class="form-group row">
+                                                    <label asp-for="TMT_GOLONGAN" class="col-sm-2 col-form-label">Tmt Golongan</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" asp-for="TMT_GOLONGAN" class="form-control" placeholder="">
+                                                        <span asp-validation-for="TMT_GOLONGAN" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="STATUS_YADAPEN" class="col-sm-2 col-form-label">Status Yadapen</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="radio" asp-for="STATUS_YADAPEN" id="true" value="true" checked>
+                                                        <label>True</label>
+                                                        <input type="radio" asp-for="STATUS_YADAPEN" id="false" value="false">
+                                                        <label>False</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label asp-for="ID_UNIT_ENTRYPASS" class="col-sm-2 col-form-label">ID Unit Entrypass</label>
+                                                    <div class="col-sm-10">
+                                                        <select asp-for="ID_UNIT_ENTRYPASS"
+                                                                asp-items="@(new SelectList(Model.prodi,"IdUnit","NamaUnitAkademik"))">
+                                                            <option value="">-</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="NIDK" class="col-sm-2 col-form-label"></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="NIDK" class="form-control" placeholder="">
+                                                        <span asp-validation-for="NIDK" class="text-danger"></span>
+                                                    </div>
+                                                </div>
                                             </div>
 
 
@@ -1281,34 +1316,38 @@
 
                                         <div class="tab-pane" id="kontak">
                                             <div class="card-body card card-primary card-outline ">
-                                                <label asp-for="EmailInstitusi" class="col-sm-2 col-form-label"> Email Insitusi</label>
-                                                <div class="form-group col-md-5">
+                                                
+                                                <div class="form-group row">
+                                                    <label asp-for="EmailInstitusi" class="col-sm-3 col-form-label"> Email Insitusi</label>
+                                                    <div class="form-group col-md-5">
 
-                                                    <input type="email" asp-for="EmailInstitusi" class="form-control" placeholder="Tempat Lahir">
-                                                    <span asp-validation-for="EmailInstitusi" class="text-danger"></span>
+                                                        <input type="email" asp-for="EmailInstitusi" class="form-control" placeholder="Email Institusi">
+                                                        <span asp-validation-for="EmailInstitusi" class="text-danger"></span>
 
+                                                    </div>
                                                 </div>
-                                                <label asp-for="Email" class="col-sm-2 col-form-label"></label>
-                                                <div class="form-group col-md-5">
+                                                <div class="form-group row">
+                                                    <label asp-for="Email" class="col-sm-3 col-form-label"></label>
+                                                    <div class="form-group col-md-5">
 
-                                                    <input type="email" asp-for="Email" class="form-control" placeholder="Email">
-                                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                                        <input type="email" asp-for="Email" class="form-control" placeholder="Email">
+                                                        <span asp-validation-for="Email" class="text-danger"></span>
 
+                                                    </div>
                                                 </div>
-                                                <label asp-for="NoTelponRumah" class="col-sm-2 col-form-label">Telepon Rumah</label>
-                                                <div class="form-group col-md-5">
+                                                <div class="form-group row">
+                                                    <label asp-for="NoTelponHp" class="col-sm-3 col-form-label"> Nomor HP</label>
+                                                    <div class="form-group col-md-5">
 
-                                                    <input type="number" asp-for="NoTelponRumah" class="form-control" placeholder="telpon rumah">
-                                                    <span asp-validation-for="NoTelponRumah" class="text-danger"></span>
+                                                        <input type="number" asp-for="NoTelponHp" class="form-control" placeholder="Nomor HP">
+                                                        <span asp-validation-for="NoTelponHp" class="text-danger"></span>
 
+                                                    </div>
                                                 </div>
-                                                <label asp-for="NoTelponHp" class="col-sm-2 col-form-label"> Nomor HP</label>
-                                                <div class="form-group col-md-5">
-
-                                                    <input type="number" asp-for="NoTelponHp" class="form-control" placeholder="Nomor HP">
-                                                    <span asp-validation-for="NoTelponHp" class="text-danger"></span>
-
-                                                </div>
+                                                
+                                                
+                                                
+                                                
 
                                             </div>
                                         </div>
@@ -1401,7 +1440,7 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Fungsional</label>
                                                     <select id="fungsional" asp-for="IdRefFungsional"
                                                             asp-items="@(new SelectList(Model.fungsional,"IdRefFungsional","Deskripsi"))">
@@ -1409,68 +1448,75 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Unit</label>
-                                                    <select asp-for="IdUnit"
+                                                    <select asp-for="IdUnit" id="IdUnit" onchange="getSubUnit()"
                                                             asp-items="@(new SelectList(Model.unit,"IdUnit","NamaUnit"))">
                                                         <option value="">-</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="" class="col-sm-2 col-form-label">Unit Penempatan</label>
-                                                    <select asp-for="MstIdUnit"
-                                                            asp-items="@(new SelectList(Model.unit,"IdUnit","NamaUnit"))">
-                                                        <option value="">-</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
+
+                                                <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Sub Unit/Prodi</label>
-                                                    <select asp-for="IdUnitAkademik"
-                                                            asp-items="@(new SelectList(Model.prodi,"IdUnit","NamaUnitAkademik"))">
-                                                        <option>Please select one</option>
+                                                    <select asp-for="IdUnitAkademik" id="SubUnit" >
+                                                        <option value="">-</option>
                                                     </select>
 
-                                                
+                                                    <div class="form-group ">
+                                                        <label for="" class="col-sm-2 col-form-label">Unit Penempatan</label>
+                                                        <select asp-for="MstIdUnit"
+                                                                asp-items="@(new SelectList(Model.unit,"IdUnit","NamaUnit"))">
+                                                            <option value="">-</option>
+                                                        </select>
+                                                    </div>
 
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Prodi EPSBED	</label>
                                                     <select asp-for="IdUnitAkademikEpsbed"
-                                                            asp-items="@(new SelectList(Model.prodi,"IdUnit","NamaUnitAkademik"))">
-                                                        <option>Please select one</option>
+                                                           asp-items="@(new SelectList(Model.unitEPSBED,"IdUnit","NamaUnit"))">
+                                                        <option value="">-</option>
                                                     </select>
-                                                 
+
 
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Golongan Negri</label>
                                                     <select asp-for="IdRefGolongan"
                                                             asp-items="@(new SelectList(Model.golongan,"IdRefGolongan","Deskripsi"))">
                                                         <option value="">-</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Golongan Lokal</label>
                                                     <select asp-for="IdRefGolonganLokal"
                                                             asp-items="@(new SelectList(Model.golongan,"IdRefGolongan","Deskripsi"))">
                                                         <option value="">-</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Jabatan Akademik Negri</label>
                                                     <select asp-for="IdRefJbtnAkademik"
                                                             asp-items="@(new SelectList(Model.akademik,"IdRefJbtnAkademik","Deskripsi"))">
                                                         <option value="">-</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Jabatan Akademik Lokal</label>
                                                     <select asp-for="IdRefJbtnAkademikLokal"
                                                             asp-items="@(new SelectList(Model.akademik,"IdRefJbtnAkademik","Deskripsi"))">
                                                         <option value="">-</option>
                                                     </select>
                                                 </div>
-                                               
+
+                                                <div class="form-group row">
+                                                    <label asp-for="MASA_KERJA_GOLONGAN" class="col-sm-2 col-form-label"> Masa Kerja Golongan</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="number" asp-for="MASA_KERJA_GOLONGAN" class="form-control" placeholder="">
+                                                        <span asp-validation-for="MASA_KERJA_GOLONGAN" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
 
@@ -1775,9 +1821,98 @@
         
     });
 
+    function changeTmtPurnakarya() {
+        var tglLahir = $("#tglLahir").val();
+
+        var year = new Date(tglLahir).getFullYear();
+        var month = new Date(tglLahir).getMonth();
+        var day = new Date(tglLahir).getDate();
+        var date = new Date(year + 58, month, day)
+        date = date.toLocaleString('sv-SE', {
+           
+            day: 'numeric', // numeric, 2-digit
+            year: 'numeric', // numeric, 2-digit
+            month: 'numeric', // numeric, 2-digit, long, short, narrow
+             // numeric, 2-digit
+        });
+        $("#TmtPurnakarya").val(date);
+
+        alert(tglLahir + "-" + date);
+    }
+
     //Bind dropdownlist
 
+    function getStatusKepegawaian() {
+        $('#statusSekarang')
+            .find('option')
+            .remove()
+            .end()
+            
+            ;
 
+        var status = $("#StatusAktifitas option:selected").val();
+        $.ajax({
+            type: 'get',
+            // url: 'https://jsonplaceholder.typicode.com/todos/1',
+            url: '/SimkaAdmin/getStatusKepegawaian?status='+status,
+
+
+            datatype: 'json',
+            success: function (data) {
+                
+                var select = document.getElementById("statusSekarang");
+                var options = document.getElementById("statusSekarang").options;
+
+                for (var i = 0; i < data.length;i++) {
+                    var index = data[i];
+                    options.add(new Option(index["statusKepegawaian"], index["statusKepegawaian"]))                  
+                    console.log(index["statusKepegawaian"]);
+                   
+                }
+
+            },
+            error: function (data) {
+
+                alert("Gagal mendapatkan list status kepegawaian");
+            }
+        });
+    }
+
+    function getSubUnit() {
+        var IdUnit = $("#IdUnit option:selected").val();
+        $('#SubUnit')
+            .find('option')
+            .remove()
+            .end()
+
+            ;
+        $.ajax({
+            type: 'get',
+            // url: 'https://jsonplaceholder.typicode.com/todos/1',
+            url: '/SimkaAdmin/getSubUnit?id_unit=' + IdUnit,
+
+
+            datatype: 'json',
+            success: function (data) {
+
+                var select = document.getElementById("SubUnit");
+                var options = document.getElementById("SubUnit").options;
+
+                for (var i = 0; i < data.length; i++) {
+                   
+                    var index = data[i];
+                    options.add(new Option(index["namaUnit"], index["idUnit"]))
+                    console.log(index["namaUnit"]);
+
+                }
+
+            },
+            error: function (data) {
+
+                alert("Gagal mendapatkan sub unit");
+            }
+        });
+    }
         var Tridharma = $("#fungsional").val(); // mengambil opsi terpilih saat ini
         $.ajax({
             datatype: "text",
