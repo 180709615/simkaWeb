@@ -65,6 +65,7 @@ namespace APIConsume.Models
         public virtual DbSet<RefSmuSmk> RefSmuSmk { get; set; }
         public virtual DbSet<RefStatusHutang> RefStatusHutang { get; set; }
         public virtual DbSet<RefStatusKepegawaian> RefStatusKepegawaian { get; set; }
+        public virtual DbSet<RefStatusIkatanKerja> RefStatusIkatanKerja { get; set; }
         public virtual DbSet<RefStatusPenelitianPengabdian> RefStatusPenelitianPengabdian { get; set; }
         public virtual DbSet<RefStatusStudi> RefStatusStudi { get; set; }
         public virtual DbSet<RefSumberBiaya> RefSumberBiaya { get; set; }
@@ -540,10 +541,10 @@ namespace APIConsume.Models
                     .HasColumnName("BIOGRAFI_SINGKAT")
                     .HasColumnType("text");
 
-                entity.Property(e => e.CurrentStatus)
-                    .HasColumnName("CURRENT_STATUS")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                //entity.Property(e => e.CurrentStatus)
+                //    .HasColumnName("CURRENT_STATUS")
+                //    .HasMaxLength(20)
+                //    .IsUnicode(false);
 
                 entity.Property(e => e.Email)
                     .HasColumnName("EMAIL")
@@ -733,17 +734,22 @@ namespace APIConsume.Models
 
                 entity.Property(e => e.Ptkp).HasColumnName("PTKP");
 
-                entity.Property(e => e.StatusAktifitas)
-                    .HasColumnName("STATUS_AKTIFITAS")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.StatusFungsional)
                     .HasColumnName("STATUS_FUNGSIONAL")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.StatusAktifitas)
+                   .HasColumnName("CURRENT_STATUS")
+                   .HasMaxLength(50)
+                   .IsUnicode(false);
+
                 entity.Property(e => e.StatusKepegawaian)
+                    .HasColumnName("STATUS_AKTIFITAS")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StatusIkatanKerja)
                     .HasColumnName("STATUS_KEPEGAWAIAN")
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -852,25 +858,25 @@ namespace APIConsume.Models
                 entity.Property(e => e.UUID_LUPA_PWD)
                      .HasColumnName("UUID_LUPA_PWD")
                      .HasMaxLength(100);
-                //entity.Property(e => e.MASA_KERJA_GOLONGAN)
-                //     .HasColumnName("MASA_KERJA_GOLONGAN")
-                //     .HasColumnType("int");
+                entity.Property(e => e.MASA_KERJA_GOLONGAN)
+                     .HasColumnName("MASA_KERJA_GOLONGAN")
+                     .HasColumnType("int");
 
-                //entity.Property(e => e.TMT_GOLONGAN)
-                //     .HasColumnName("TMT_GOLONGAN")
-                //     .HasColumnType("date");
+                entity.Property(e => e.TMT_GOLONGAN)
+                     .HasColumnName("TMT_GOLONGAN")
+                     .HasColumnType("date");
 
-                //entity.Property(e => e.STATUS_YADAPEN)
-                //     .HasColumnName("STATUS_YADAPEN")
-                //     .HasColumnType("bool");
+                entity.Property(e => e.STATUS_YADAPEN)
+                     .HasColumnName("STATUS_YADAPEN")
+                     .HasColumnType("bool");
 
-                //entity.Property(e => e.ID_UNIT_ENTRYPASS)
-                //     .HasColumnName("ID_UNIT_ENTRYPASS")
-                //     .HasColumnType("int");
+                entity.Property(e => e.ID_UNIT_ENTRYPASS)
+                     .HasColumnName("ID_UNIT_ENTRYPASS")
+                     .HasColumnType("int");
 
-                //entity.Property(e => e.NIDK)
-                //     .HasColumnName("NIDK")
-                //     .HasMaxLength(15);
+                entity.Property(e => e.NIDK)
+                     .HasColumnName("NIDK")
+                     .HasMaxLength(15);
             });
 
             modelBuilder.Entity<MstKeluarga>(entity =>
@@ -1556,6 +1562,20 @@ namespace APIConsume.Models
 
                 entity.Property(e => e.Deskripsi)
                     .HasColumnName("DESKRIPSI")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<RefStatusIkatanKerja>(entity =>
+            {
+                entity.HasKey(e => e.ID_REF_STATUS_IKATAN_KRJ);
+
+                entity.ToTable("REF_STATUS_IKATAN_KRJ", "simka");
+
+                entity.Property(e => e.ID_REF_STATUS_IKATAN_KRJ).HasColumnName("ID_REF_STATUS_IKATAN_KRJ");
+
+                entity.Property(e => e.STATUS_IKATAN_KRJ)
+                    .HasColumnName("STATUS_IKATAN_KRJ")
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });

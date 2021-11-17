@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace APIConsume.Models
 {
@@ -7,6 +8,7 @@ namespace APIConsume.Models
     {
         
         public string Npp { get; set; }
+        [Required]
         public string NoSk { get; set; }
         public int? IdUnit { get; set; }
         public int? MstIdUnit { get; set; }

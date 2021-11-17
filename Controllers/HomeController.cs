@@ -217,7 +217,7 @@ namespace APIControllers.Controllers
 
                 }
             }
-           // return RedirectToAction("_LayoutSidebar");
+            //return RedirectToAction("Index","MenuDynamic");
             
         }
         public IActionResult Simkadosen()

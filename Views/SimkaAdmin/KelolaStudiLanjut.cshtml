@@ -1,15 +1,12 @@
 ﻿
 @{ ViewData["Title"] = "KelolaRekanan";
-                Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
-
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
 <head>
-    <title>Kelola Karir Fungsional- SIMKA UAJY </title>
+    <title>Kelola Studi Lanjut - SIMKA UAJY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <!--sweetalert-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
 
 </head>
@@ -23,7 +20,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Kelola Karir Fungsional</h1>
+                    <h1>Kelola Studi Lanjut </h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -40,9 +37,34 @@
             <div class="row">
                 <div class="col-md-10">
                     <a class=" text-light btn btn-success" style="margin-bottom:10px"
-                       onclick="ShowPopup('@Url.Action("AddEditKarirFungsional","SimkaAdmin")')"><i class="fa fa-plus"></i> Tambah Karir Fungsional</a>
+                       onclick="gotoAddEdit(0)"><i class="fa fa-plus"></i> Tambah Data Studi Lanjut </a>
                 </div>
             </div>
+            @if (TempData["SuccessMessage"] != null && TempData["SuccessMessage"] != "")
+            {
+                <div class="alert alert-success alert-dismissible">
+
+                    <div class="form-group row">
+                        <i class="fa fa-check-circle fa-lg" style="margin-bottom:-0.5%; margin-right:1%"></i>
+                        <h4> Pemberitahuan </h4>
+
+                    </div>
+                    
+
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x </button>
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null && TempData["ErrorMessage"] != "")
+            {
+                <div class="alert alert-danger alert-dismissible">
+
+                    <h5>Pemberitahuan</h5>
+
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x </button>
+                    @TempData["ErrorMessage"]
+                </div>
+            }
             <table id="example" class="  table-hover table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
                 <thead class="bg-primary"></thead>
             </table>
@@ -75,17 +97,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"
-            asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.min.js"
-            asp-fallback-test="window.jQuery && window.jQuery.validator"
-            crossorigin="anonymous"
-            integrity="sha384-Fnqn3nxp3506LP/7Y3j/25BlWeA3PXTyT1l78LjECcPaKCV12TsZP7yyMxOe/G/k"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
-            asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
-            asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
-            crossorigin="anonymous"
-            integrity="sha384-JrXK+k53HACyavUKOsL+NkmSesD2P+73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
+   
     <!--toastr-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!--sweetalert-->
@@ -97,6 +109,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+
+
+
     <script>
         var popup, dataTable;
 
@@ -104,45 +120,34 @@
             dataTable = $('#example').DataTable({
                 "responsive": true,
                 "ajax": {
-                    "url": "/SimkaAdmin/LoadDataKarirFungsional",
-                    "type": "GET",
+                    "url": "/SimkaAdmin/LoadDataStudiLanjut",
+                    "type": "POST",
                     "datatype": "json"
                 },
                 "columns": [
                     {
-                        data: "idKarir",
+                        data: "ID_STUDI_LANJUT",
                         title: "ID",
-                        name: "idTRMutasi",
+                        name: "ID",
                         type: "readonly"
 
                     },
                     {
-                        data: "noSk",
-                        title: "noSk",
+                        data: "NAMA",
+                        title: "Nama",
                         type: "readonly"
                     },
-                    {
-                        data: "namaLengkapGelar",
-                        title: "Nama Rekanan"
-                    },
+                    { data: "JENJANG", title: "Jenjang" },
+                    { data: "NAMA_SEKOLAH", title: "Nama Sekolah" },
+                    { data: "PRODI", title: "Prodi" },
+                    { data: "STATUS_STUDI", title: "Status Studi" },
+                    { data: "DalamAtauLuarNegeri", title: "Dalam / Luar Negeri" },
+
 
                     {
-                        data: "lama",
-                        title: "jabatan Fungsional Lama"
-                    },
-                    {
-                        data: "baru",
-                        title: "jabatan Fungsional Baru"
-                    },
-                    {
-                        data: "tglBerikut",
-                        title: "Tanggal berikut"
-                    },
-
-                    {
-                        "data": "idKarir", // diganti sama id
+                        "data": "ID_STUDI_LANJUT", // diganti sama id
                         "render": function (data) {
-                            return "<a class='btn btn-default btn-sm' onclick=ShowPopup('/SimkaAdmin/AddEditKarirFungsional/" + data + "')><i class='fa fa-pencil'></i> Edit</a>";
+                            return "<a class='btn btn-default btn-sm' onclick=gotoAddEdit(" + data + ")><i class='fa fa-pencil'></i> Edit</a><a class=' text-light btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete(" + data + ")><i class='fa fa-trash'></i> Delete</a>";
                         }
                     }
                 ],
@@ -187,7 +192,7 @@
                     console.log(data);
                     $.ajax({
                         type: 'POST',
-                        url: '/SimkaAdmin/PostKarirFungsional',
+                        url: '/SimkaAdmin/PostStudiLanjut',
                         data: data,
 
                         contentType: 'application/json',
@@ -203,20 +208,47 @@
                         }
                     });
 
+                } else {
+                    console.log("form tidak valid")
                 }
             });
 
             return false;
         }
 
+        function Delete(id) {
+            swal({
+                title: "Are you sure want to Delete?",
+                text: "You will not be able to restore the file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: true
+            }, function () {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/SimkaAdmin/DeleteStudiLanjut/' + id,
+                    success: function (data) {
+                        if (data.success) {
+                            ShowMessage(data.message);
+                            dataTable.ajax.reload();
+                        }
+                    }
+                });
+            });
 
+
+        }
 
 
         function ShowMessage(msg) {
             toastr.success(msg);
         }
 
-
+        function gotoAddEdit(id) {
+            window.location.href = "AddEditStudiLanjut?id="+id ;
+        }
     </script>
 
 

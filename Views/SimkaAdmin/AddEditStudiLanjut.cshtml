@@ -1,0 +1,663 @@
+﻿@model APIConsume.Models.TblStudiLanjutForm
+
+@{
+    ViewData["Title"] = "AddEditStudiLanjut";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<head>
+    <title>Add Edit Studi Lanjut - SIMKA UAJY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <!--sweetalert-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
+
+</head>
+<body>
+
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="content-wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add or Edit Studi Lanjut</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" asp-action="AddEditStudiLanjut" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                            <input asp-for="IdStudiLanjut" type="hidden" class="form-control" />
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="IdStudiLanjut" class="control-label">ID</label>
+
+                                </div>
+
+                                <div class="col-sm-5">
+                                    <input asp-for="IdStudiLanjut" disabled class="form-control" />
+                                    
+
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="Npp" class="control-label">NPP</label>
+
+                                </div>
+
+                                <div class="col-sm-5">
+                                    <input asp-for="Npp" class="form-control" />
+                                    <span asp-validation-for="Npp" class="text-danger"></span>
+                                    <span class="text-danger">@TempData["NPPError"]</span>
+
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="IdRefJenjang" class="control-label">Jenjang</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <select asp-for="IdRefJenjang" class="form-control form-control-sm" id="inputJabAkademik">
+                                        <option value="">-All-</option>
+
+                                        @foreach (var item in Model.listJenjang)
+                                        {
+                                            <option value="@item.IdRefJenjang">@item.Deskripsi</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="NamaSekolah" class="control-label">Nama Sekolah</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="NamaSekolah" class="form-control" />
+                                    <span asp-validation-for="NamaSekolah" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="KotaSekolah" class="control-label">Kota Sekolah</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="KotaSekolah" class="form-control" />
+                                    <span asp-validation-for="KotaSekolah" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="NegaraSekolah" class="control-label">Negara Sekolah</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="NegaraSekolah" class="form-control" />
+                                    <span asp-validation-for="NegaraSekolah" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="TglMulai" class="control-label">Tanggal Mulai</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="TglMulai" type="date" class="form-control" />
+                                    <span asp-validation-for="TglMulai" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="TglLulus" class="control-label">Tanggal Lulus</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="TglLulus" type="date" class="form-control" />
+                                    <span asp-validation-for="TglLulus" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="TglPenempatanKmbli" class="control-label">Tanggal Penempatan Kembali</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="TglPenempatanKmbli" type="date" class="form-control" />
+                                    <span asp-validation-for="TglPenempatanKmbli" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="Fakultas" class="control-label">Fakultas</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="Fakultas" class="form-control" />
+                                    <span asp-validation-for="Fakultas" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="Prodi" class="control-label">Prodi</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="Prodi" class="form-control" />
+                                    <span asp-validation-for="Prodi" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="Fakultas" class="control-label">Fakultas</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="Fakultas" class="form-control" />
+                                    <span asp-validation-for="Fakultas" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="DlmNegriLuarNegri" class="control-label">Dalam / Luar Negeri</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <select asp-for="DlmNegriLuarNegri" class="form-control">
+                                        <option value="D">Dalam Negeri</option>
+                                        <option value="L">Luar Negeri</option>
+
+                                    </select>
+                                    <span asp-validation-for="DlmNegriLuarNegri" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="NoSkTugasBljr" class="control-label">No SK Tugas</label>
+
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="NoSkTugasBljr" class="form-control" />
+                                    <span asp-validation-for="NoSkTugasBljr" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="TargetLulus" class="control-label">Target Lulus</label>
+
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="number" asp-for="TargetLulus" class="form-control" />
+                                    <span asp-validation-for="TargetLulus" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="IdRefSs" class="control-label">Status Studi</label>
+
+                                </div>
+                                <div class="col-sm-5">
+                                    <select asp-for="IdRefSs" class="form-control" asp-items="@(new SelectList(Model.listStatusStudi,"IdRefSs","Deskripsi"))">
+                                    </select>
+                                    <span asp-validation-for="IdRefSs" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="SK" class="control-label">File SK</label>
+
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="SK" type="file" class="form-control" />
+                                    <div id="previewFoto">
+                                        @if (Model != null)
+                                        {
+                                            @if (Model.SKm != null)
+                                            {
+                                                <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.SKm) " width="300" height="300">
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <label asp-for="SkPenempatanKmbl" class="control-label">File SK Penempatan Kembali</label>
+
+                                </div>
+                                <div class="col-sm-5">
+                                    <input asp-for="SkPenempatanKmbl" type="file" class="form-control" />
+                                    <div id="previewFoto2">
+                                        @if (Model != null)
+                                        {
+                                            @if (Model.SkPenempatanKmblm != null)
+                                            {
+                                                <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.SkPenempatanKmblm) " width="300" height="300">
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" value="Simpan" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+            @Html.Raw(TempData["alert"])
+            @Html.Raw(TempData["href"])
+            @Html.Raw(TempData["swal"])
+
+
+        </section>
+    </div>
+
+</body>
+
+<!--<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+<!--<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Tambah Data Studi Lanjut</h1>
+                <div class="row">
+
+                </div>
+            </div>
+
+        </div>
+    </div>-->
+<!-- /.container-fluid -->
+<!--</section>-->
+@*<section class="content">*@
+
+
+<!--<div style="width:100%; margin:0" class="tab-pane">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit (this)" enctype="multipart/form-data" id="formsimka">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <input asp-for="IdStudiLanjut" type="hidden" class="form-control" />
+
+
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="Npp" class="control-label">NPP</label>
+
+                </div>
+
+                <div class="col-sm-5">
+                    <input asp-for="Npp" class="form-control" />
+                    <span asp-validation-for="Npp" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="IdRefJenjang" class="control-label">Jenjang</label>
+                </div>
+                <div class="col-sm-5">
+                    <select asp-for="IdRefJenjang" class="form-control form-control-sm" id="inputJabAkademik">
+                        <option value="">-All-</option>
+
+                        @foreach (var item in Model.listJenjang)
+                        {
+                            <option value="@item.IdRefJenjang">@item.Deskripsi</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="NamaSekolah" class="control-label">Nama Sekolah</label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="NamaSekolah" class="form-control" />
+                    <span asp-validation-for="NamaSekolah" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="KotaSekolah" class="control-label">Kota Sekolah</label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="KotaSekolah" class="form-control" />
+                    <span asp-validation-for="KotaSekolah" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="TglMulai" class="control-label">Tanggal Mulai</label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="TglMulai" type="date" class="form-control" />
+                    <span asp-validation-for="TglMulai" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="TglLulus" class="control-label">Tanggal Lulus</label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="TglLulus" type="date" class="form-control" />
+                    <span asp-validation-for="TglLulus" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="TglPenempatanKmbli" class="control-label">Tanggal Penempatan Kembali</label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="TglPenempatanKmbli" type="date" class="form-control" />
+                    <span asp-validation-for="TglPenempatanKmbli" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="Fakultas" class="control-label">Fakultas</label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Fakultas" class="form-control" />
+                    <span asp-validation-for="Fakultas" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="Prodi" class="control-label">Prodi</label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Fakultas" class="form-control" />
+                    <span asp-validation-for="Fakultas" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="Fakultas" class="control-label">Fakultas</label>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="Fakultas" class="form-control" />
+                    <span asp-validation-for="Fakultas" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="DlmNegriLuarNegri" class="control-label">Dalam / Luar Negeri</label>
+                </div>
+                <div class="col-sm-5">
+                    <select asp-for="DlmNegriLuarNegri" class="form-control">
+                        <option value="D">Dalam Negeri</option>
+                        <option value="L">Luar Negeri</option>
+
+                    </select>
+                    <span asp-validation-for="DlmNegriLuarNegri" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="NoSkTugasBljr" class="control-label">No SK Tugas</label>
+
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="NoSkTugasBljr" class="form-control" />
+                    <span asp-validation-for="NoSkTugasBljr" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="TargetLulus" class="control-label">Target Lulus</label>
+
+                </div>
+                <div class="col-sm-5">
+                    <input type="number" asp-for="TargetLulus" class="form-control" />
+                    <span asp-validation-for="TargetLulus" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="IdRefSs" class="control-label">Status Studi</label>
+
+                </div>
+                <div class="col-sm-5">
+                    <select asp-for="IdRefSs" class="form-control" asp-items="@(new SelectList(Model.listStatusStudi,"IdRefSs","Deskripsi"))">
+                    </select>
+                    <span asp-validation-for="IdRefSs" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="SK" class="control-label">File SK</label>
+
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="SK" type="file" class="form-control" />
+                    <div id="previewFoto">
+                        @if (Model != null)
+                        {
+                            @if (Model.SKm != null)
+                            {
+                                <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.SKm) " width="300" height="300">
+                            }
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="SkPenempatanKmbl" class="control-label">File SK Penempatan Kembali</label>
+
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="SkPenempatanKmbl" type="file" class="form-control" />
+                    <div id="previewFoto2">
+                        @if (Model != null)
+                        {
+                            @if (Model.SkPenempatanKmblm != null)
+                            {
+                                <img src="data:image/jpeg;base64,@System.Convert.ToBase64String(Model.SkPenempatanKmblm) " width="300" height="300">
+                            }
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Simpan" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>-->
+@*</section>*@-->
+<!-- /.content -->
+<!--</div>-->
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<!--sweetalert-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<script>
+
+    function previewFoto() {
+
+        var preview = document.querySelector('#previewFoto');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPreview);
+        }
+
+        function readAndPreview(file) {
+
+
+            // Make sure `file.name` matches our extensions criteria
+            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                document.getElementById("SK").value = "";
+                $("#previewFoto").empty();
+                return alert(file.name + " is not an image");
+            } // else...
+            if (file.size > 51200) {
+                document.getElementById("SK").value = "";
+                $("#previewFoto").empty();
+                return alert(file.name + " Lebih dari 500Kb");
+            } // else...
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+                image.height = 200;
+                image.title = file.name;
+                image.src = this.result;
+                $("#previewFoto").empty();
+                preview.append(image);
+
+            });
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.querySelector('#SK').addEventListener("change", previewFoto);
+
+    function previewFoto2() {
+
+        var preview = document.querySelector('#previewFoto2');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPreview);
+        }
+
+        function readAndPreview(file) {
+
+
+            // Make sure `file.name` matches our extensions criteria
+            if (!/\.(jpe?g)$/i.test(file.name)) {
+                document.getElementById("SkPenempatanKmbl").value = "";
+                $("#previewFoto2").empty();
+                return alert(file.name + " is not an image");
+            }
+            if (file.size > 51200) {
+                document.getElementById("SkPenempatanKmbl").value = "";
+                $("#previewFoto2").empty();
+                return alert(file.name + " Lebih dari 500Kb");
+            } // else...
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+                image.height = 200;
+                image.title = file.name;
+                image.src = this.result;
+                $("#previewFoto2").empty();
+                preview.append(image);
+
+            });
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+
+    document.querySelector('#SkPenempatanKmbl').addEventListener("change", previewFoto2);
+
+    function PostStudiLanjut(form) {
+        Swal.fire({
+            title: 'Apakah data yang Anda isi sudah benar?',
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+           
+            var data = $(form).serializeJSON();
+            data = JSON.stringify(data);
+            console.log(data);
+            $.ajax({
+                type: 'POST',
+                url: '/SimkaAdmin/PostStudiLanjut',
+                data: data,
+
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.success) {
+                        popup.dialog('close');
+                        ShowMessage(data.message);
+                        dataTable.ajax.reload();
+                    }
+                },
+                error: function (data) {
+                    alert("Telah terjadi kesalahan dengan kode : " + data.status + ", Pastikan semua isian data sudah diisi");
+                }
+            });
+
+           
+        });
+
+        return false;
+    }
+</script>
+

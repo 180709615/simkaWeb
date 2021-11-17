@@ -81,8 +81,12 @@ namespace APIConsume.Models
         public string PendidikanDiakui { get; set; }
         public string StatusSipil { get; set; }
         public string StatusKepegawaian { get; set; }
+        public string? StatusIkatanKerja { get; set; }
+        public string StatusAktifitas { get; set; }
+
         public string StatusFungsional { get; set; }
-        public string CurrentStatus { get; set; }
+
+        //public string CurrentStatus { get; set; }
         public string StatusRestitusi { get; set; }
         public string NoSertifikatPendidik { get; set; }
         public string Nik { get; set; }
@@ -103,7 +107,6 @@ namespace APIConsume.Models
         public string GelarBelakang { get; set; }
         public string NoBpjs { get; set; }
         public DateTime? TmtPurnakarya { get; set; }
-        public string StatusAktifitas { get; set; }
         public string AlamatDomisili { get; set; }
         public byte[] Password1 { get; set; }
         public byte[] FileFoto { get; set; }

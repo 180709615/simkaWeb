@@ -152,41 +152,7 @@
             }
         });
 
-        //function buildMenu(parent, items) {
-        //    $.each(items, function () {
-        //        var li = $("<li class='nav-item'><a href = '#' class='nav-link'><i class='nav-icon fas fa-circle'></i><p>"+this.menuname+"<i class='fas fa-angle-left right'></i></p></a><ul class='nav nav-treeview'>");
-        //                //menu += $"<li><a href='{submenu.LINK}'><i class='fa fa-circle-o'></i> {submenu.DESKRIPSI}</a></li>");
-                
-                
-
-        //        if (this.ListMenu && this.ListMenu.length > 0) {
-        //            $.each(this.ListMenu, function () {
-        //                var ul = $("<li class='nav-item'><a href=# class='nav-link'><i class='far fa-circle nav-icon'></i><p>"+this.menuname+"</p></a></li>");
-        //                ul.appendTo(li);
-        //            });
-                    
-                    
-        //        }
-
-        //        li += "</ul></li";
-        //        li.appendTo(parent);
-
-        //    });
-        //}
-
-        function buildMenu(parent, items) {
-            $.each(items, function () {
-                var li = "<li>" + this.menuname + "</li>";
-                
-                li.appendTo(parent);
-
-                if (this.ListMenu && this.ListMenu.length > 0) {
-                    var ul = "<ul></ul>";
-                    ul.appendTo(li);
-                    buildMenu(ul, this.ListMenu);
-                }
-            });
-        }
+        
     });
     $(function () {
         $('#sidebar-form').on('submit', function (e) {

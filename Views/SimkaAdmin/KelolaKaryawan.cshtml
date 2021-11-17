@@ -217,6 +217,8 @@
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
     <script>
@@ -336,34 +338,52 @@
 
 
         function SubmitAddEdit(form) {
-            toastr.info('Menyimpan  Data')
-            $.validator.unobtrusive.parse(form);
-            if ($(form).valid) {
-                var form = $('#formsimka')[0];
-                var data = new FormData(form);
-                var data = new FormData(document.getElementById("formsimka"));
+            Swal.fire({
+                title: 'Apakah data yang Anda isi sudah benar?',
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    //Swal.fire('Saved!', '', 'success')
+                    toastr.info('Menyimpan  Data')
+                    $.validator.unobtrusive.parse(form);
+                    if ($(form).valid) {
+                        var form = $('#formsimka')[0];
+                        var data = new FormData(form);
+                        var data = new FormData(document.getElementById("formsimka"));
 
-                console.log(data);
-                $.ajax({
-                    type: 'POST',
-                    url: '/SimkaAdmin/PostKaryawan',
-                    data: data,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        if (data.success) {
-                            popup.dialog('close');
-                            ShowMessage(data.message);
-                            dataTable.ajax.reload();
-                        }
-                    },
-                    error: function (data) {
-                        alert("Telah terjadi kesalahan dengan kode : " + data.status + ", Pastikan semua isian data sudah diisi");
+                        console.log(data);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/SimkaAdmin/PostKaryawan',
+                            data: data,
+                            enctype: 'multipart/form-data',
+                            processData: false,
+                            contentType: false,
+                            success: function (data) {
+                                if (data.success) {
+                                    popup.dialog('close');
+                                    ShowMessage(data.message);
+                                    dataTable.ajax.reload();
+                                }
+                            },
+                            error: function (data) {
+                                alert("Telah terjadi kesalahan dengan kode : " + data.status + ", Pastikan semua isian data sudah diisi");
+                            }
+                        });
+
                     }
-                });
+                    else {
+                        console.log("form tidak valid")
+                    }
+                    
+                }
+            })
 
-            }
+            
+            
             return false;
         }
         function ShowMessage(msg) {

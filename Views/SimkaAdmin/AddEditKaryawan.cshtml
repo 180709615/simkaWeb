@@ -89,7 +89,7 @@
                                                     <label asp-for="TempatLahir" class="col-sm-2 col-form-label"> Tempat Tanggal Lahir</label>
                                                     <div class="form-group col-md-5">
 
-                                                        <input type="text" asp-for="TempatLahir" class="form-control" placeholder="Tempat Lahir"  >
+                                                        <input type="text" asp-for="TempatLahir" class="form-control" placeholder="Tempat Lahir">
                                                         <span asp-validation-for="TempatLahir" c lass="text-danger"></span>
 
                                                     </div>
@@ -1178,32 +1178,52 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label asp-for="StatusAktifitas" class="col-sm-2 col-form-label">Status Aktivitas</label>
+                                                    <label asp-for="StatusAktifitas" class="col-sm-2 col-form-label">Status Aktifitas</label>
                                                     <div class="col-sm-5">
-                                                        <select asp-for="StatusAktifitas" id="StatusAktifitas" onchange="getStatusKepegawaian()">
+                                                        <select asp-for="StatusAktifitas" id="StatusAktifitas"
+                                                                asp-items="@(new SelectList(Model.statusAktifitas,"StatusAktifitas","StatusAktifitas"))"
+                                                                onchange="getStatusKepegawaian()">
                                                             <option value="">-</option>
-                                                            <option value="Aktif">Aktif</option>
-                                                            <option value="Non Aktif">Non Aktif</option>
+
 
                                                         </select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label asp-for="CurrentStatus" class="col-sm-2 col-form-label">Status Sekarang</label>
+                                                    <label asp-for="StatusKepegawaian" class="col-sm-2 col-form-label">Status Kepegawaian</label>
                                                     <div class="col-sm-5">
-                                                        <select asp-for="CurrentStatus" id="statusSekarang">
-                                                            
-                                                        </select>
+                                                        @if (Model.statusKepegawaian != null)
+                                                        {
+                                                            <select asp-for="StatusKepegawaian" id="statusSekarang"
+                                                                    asp-items="@(new SelectList(Model.statusKepegawaian,"StatusKepegawaian","StatusKepegawaian"))"
+                                                                    onchange="getStatusKepegawaian()">
+                                                                <option value="">-</option>
+
+
+                                                            </select>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <select asp-for="StatusKepegawaian" id="statusSekarang">
+                                                            </select>
+                                                        }
+
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group row">
-                                                    <label asp-for="Nidn" class="col-sm-2 col-form-label">NIDN</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" asp-for="Nidn" class="form-control" placeholder=" NIDN">
-                                                        <span asp-validation-for="Nidn" class="text-danger"></span>
+                                                    <label asp-for="StatusIkatanKerja" class="col-sm-2 col-form-label">Status Ikatan Kerja</label>
+                                                    <div class="col-sm-5">
+                                                        <select asp-for="StatusIkatanKerja" asp-items="@(new SelectList(Model.statusIkatanKerja,"STATUS_IKATAN_KRJ","STATUS_IKATAN_KRJ"))">
+                                                            <option value="">-</option>
+
+                                                        </select>
+
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group row">
                                                     <label asp-for="PendidikanTerakhir" class="col-sm-2 col-form-label">Pendidikan Terakhir</label>
                                                     <div class="col-sm-5">
@@ -1266,12 +1286,12 @@
                                                 <div class="form-group row">
                                                     <label asp-for="TmtPurnakarya" class="col-sm-2 col-form-label">Tmt Purnakarya</label>
                                                     <div class="col-sm-10">
-                                                        <input type="date" asp-for="TmtPurnakarya" class="form-control" placeholder="" disabled id="TmtPurnakarya" >
+                                                        <input type="date" asp-for="TmtPurnakarya" class="form-control" placeholder="" disabled id="TmtPurnakarya">
                                                         <span asp-validation-for="TmtPurnakarya" class="text-danger"></span>
                                                     </div>
                                                 </div>
 
-                                                
+
 
                                                 <div class="form-group row">
                                                     <label asp-for="TMT_GOLONGAN" class="col-sm-2 col-form-label">Tmt Golongan</label>
@@ -1293,9 +1313,17 @@
                                                     <label asp-for="ID_UNIT_ENTRYPASS" class="col-sm-2 col-form-label">ID Unit Entrypass</label>
                                                     <div class="col-sm-10">
                                                         <select asp-for="ID_UNIT_ENTRYPASS"
-                                                                asp-items="@(new SelectList(Model.prodi,"IdUnit","NamaUnitAkademik"))">
+                                                                asp-items="@(new SelectList(Model.listIdUnitEntrypass,"IdUnit","NamaUnit"))">
                                                             <option value="">-</option>
                                                         </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label asp-for="Nidn" class="col-sm-2 col-form-label">NIDN</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" asp-for="Nidn" class="form-control" placeholder=" NIDN">
+                                                        <span asp-validation-for="Nidn" class="text-danger"></span>
                                                     </div>
                                                 </div>
 
@@ -1316,7 +1344,7 @@
 
                                         <div class="tab-pane" id="kontak">
                                             <div class="card-body card card-primary card-outline ">
-                                                
+
                                                 <div class="form-group row">
                                                     <label asp-for="EmailInstitusi" class="col-sm-3 col-form-label"> Email Insitusi</label>
                                                     <div class="form-group col-md-5">
@@ -1344,10 +1372,20 @@
 
                                                     </div>
                                                 </div>
-                                                
-                                                
-                                                
-                                                
+
+                                                <div class="form-group row">
+                                                    <label asp-for="NoTelponRumah" class="col-sm-3 col-form-label"> Nomor Telpon Rumah</label>
+                                                    <div class="form-group col-md-5">
+
+                                                        <input type="number" asp-for="NoTelponRumah" class="form-control" placeholder="Nomor Telpon Rumah">
+                                                        <span asp-validation-for="NoTelponRumah" class="text-danger"></span>
+
+                                                    </div>
+                                                </div>
+
+
+
+
 
                                             </div>
                                         </div>
@@ -1412,19 +1450,19 @@
 
                                         <div class="tab-pane" id="karir">
                                             <div class="card-body card card-primary card-outline ">
-                                                <div class="form-group row">
-                                                    <label for="inputName" class="col-sm-2 col-form-label">Status Kepegawaian</label>
-                                                    <div class="col-sm-10">
+                                                @*<div class="form-group row">
+            <label for="inputName" class="col-sm-2 col-form-label">Status Kepegawaian</label>
+            <div class="col-sm-10">
 
-                                                        <input type="radio" asp-for="StatusKepegawaian" id="cln" value="Calon">
-                                                        <label for="male">Calon</label>
-                                                        <input type="radio" asp-for="StatusKepegawaian" id="ttp" value="Tetap">
-                                                        <label for="male">Tetap</label>
-                                                        <input type="radio" asp-for="StatusKepegawaian" id="dpk" value="DPK">
-                                                        <label for="male">DPK</label>
+                <input type="radio" asp-for="StatusKepegawaian" id="cln" value="Calon">
+                <label for="male">Calon</label>
+                <input type="radio" asp-for="StatusKepegawaian" id="ttp" value="Tetap">
+                <label for="male">Tetap</label>
+                <input type="radio" asp-for="StatusKepegawaian" id="dpk" value="DPK">
+                <label for="male">DPK</label>
 
-                                                    </div>
-                                                </div>
+            </div>
+        </div>*@
                                                 <div class="form-group row">
                                                     <label for="inputName" class="col-sm-2 col-form-label">Status Fungsional</label>
                                                     <div class="col-sm-10">
@@ -1458,7 +1496,7 @@
 
                                                 <div class="form-group ">
                                                     <label for="" class="col-sm-2 col-form-label">Sub Unit/Prodi</label>
-                                                    <select asp-for="IdUnitAkademik" id="SubUnit" >
+                                                    <select asp-for="IdUnitAkademik" id="SubUnit">
                                                         <option value="">-</option>
                                                     </select>
 
@@ -1472,9 +1510,18 @@
 
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="" class="col-sm-2 col-form-label">Prodi EPSBED	</label>
+                                                    <label for="" class="col-sm-2 col-form-label">Unit Akademik 	</label>
+                                                    <select asp-for="IdUnitAkademik"
+                                                            asp-items="@(new SelectList(Model.unitEPSBED,"IdUnit","NamaUnit"))">
+                                                        <option value="">-</option>
+                                                    </select>
+
+
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="" class="col-sm-2 col-form-label">Unit Akademik EPSBED	</label>
                                                     <select asp-for="IdUnitAkademikEpsbed"
-                                                           asp-items="@(new SelectList(Model.unitEPSBED,"IdUnit","NamaUnit"))">
+                                                            asp-items="@(new SelectList(Model.unitEPSBED,"IdUnit","NamaUnit"))">
                                                         <option value="">-</option>
                                                     </select>
 
@@ -1810,6 +1857,8 @@
 <script>
     //Insert default item "Select" in dropdownlist on load
     $(document).ready(function () {
+        getSubUnit();
+        getStatusKepegawaian();
         //bikin npp readonly saat edit
         if (document.getElementById("Npp").value != "")
             $("#Npp").prop("readonly", true);

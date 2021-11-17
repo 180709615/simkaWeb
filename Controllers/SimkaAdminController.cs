@@ -351,14 +351,25 @@ namespace APIConsume.Controllers
                 return RedirectToAction("Index", "Home");
         }
         public IActionResult KelolaKarirGolongan()
-            {
-                if (HttpContext.Session.GetString("role") == "admin")
-                    // memeriksa apakah admin yg login jika ya return view jika tidak forbidden
-                    return View();
-                else
-                    return RedirectToAction("Index", "Home");
-            }
-            public IActionResult ResetPassword()
+        {
+            if (HttpContext.Session.GetString("role") == "admin")
+                // memeriksa apakah admin yg login jika ya return view jika tidak forbidden
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult KelolaStudiLanjut()
+        {
+            if (HttpContext.Session.GetString("role") == "admin")
+                // memeriksa apakah admin yg login jika ya return view jika tidak forbidden
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+
+        public IActionResult ResetPassword()
         {
             var balikan = new karyaa()
             {
@@ -412,17 +423,21 @@ namespace APIConsume.Controllers
         }
         public IActionResult AddEditKaryawan(string npp="")
         {
-            if (npp == "")
-            {
+            string prepend = "Program Studi";
 
+             if (npp == "")
+            {
                 var balikan = new KaryawanForm()
                 {
+                   
                     struktural = _context.RefJabatanStruktural.ToList(),
 
                     fungsional = _context.RefFungsional.ToList(),
                     unit = _context.MstUnit.OrderBy(c => c.NamaUnit).ToList(),
-                    unitEPSBED = _context.MstUnit.Where(c => c.NamaUnit.Contains("Program Studi")).ToList(),
-                    prodi =_context.MstUnitAkademik.OrderBy(c=>c.NamaUnitAkademik).ToList(),
+                    unitEPSBED = _context.MstUnit.Where(c => c.NamaUnit.StartsWith(prepend)).ToList(),
+                    prodi = _context.MstUnitAkademik.OrderBy(c => c.NamaUnitAkademik).ToList(),
+                    statusAktifitas = _context.RefStatusKepegawaian.Select(p=> new RefStatusKepegawaian { StatusAktifitas = p.StatusAktifitas }).Distinct().ToList(), // current status
+                    statusIkatanKerja = _context.RefStatusIkatanKerja.ToList(),  // status ikatan kerja
                     golongan = _context.RefGolongan
                     .Select(c => new RefGolongan
                     {
@@ -432,6 +447,7 @@ namespace APIConsume.Controllers
                     .ToList(),
                     akademik = _context.RefJabatanAkademik.ToList(),
                     refkeluarga = _context.RefKeluarga.ToList(),
+                    listIdUnitEntrypass = _context.MstUnit.Where(a=> !a.NamaUnit.StartsWith(prepend)).ToList()
                 };
                 return View(balikan);
             }
@@ -446,6 +462,13 @@ namespace APIConsume.Controllers
 
                     fungsional = _context.RefFungsional.ToList(),
                     unit = _context.MstUnit.OrderBy(c => c.NamaUnit).ToList(),
+                    unitEPSBED = _context.MstUnit.Where(a => a.NamaUnit.StartsWith(prepend)).ToList(),
+                    subunit = _context.MstUnit.Where(c => c.MstIdUnit == karyawan.IdUnit).ToList(),
+                    statusKepegawaian = _context.RefStatusKepegawaian.Where(c=>c.StatusAktifitas == karyawan.StatusAktifitas).ToList(),
+                    statusAktifitas = _context.RefStatusKepegawaian.Select(p => new RefStatusKepegawaian { StatusAktifitas = p.StatusAktifitas }).Distinct().ToList(),
+                    statusIkatanKerja = _context.RefStatusIkatanKerja.ToList(),  // status ikatan kerja
+                    listIdUnitEntrypass = _context.MstUnit.Where(a => !a.NamaUnit.StartsWith(prepend)).ToList(),
+
                     prodi = _context.MstUnitAkademik.OrderBy(c => c.NamaUnitAkademik).ToList(),
                     golongan = _context.RefGolongan
                     .Select(c => new RefGolongan
@@ -460,6 +483,7 @@ namespace APIConsume.Controllers
                     Nama = karyawan.Nama,
                     NamaLengkapGelar = karyawan.NamaLengkapGelar,
                     Nickname = karyawan.Nickname,
+                    Inisial = karyawan.Inisial,
                     TempatLahir = karyawan.TempatLahir,
                     TglLahir = karyawan.TglLahir,
                     TglMasuk = karyawan.TglMasuk,
@@ -478,40 +502,46 @@ namespace APIConsume.Controllers
                     StatusSipil = karyawan.StatusSipil,
                     NoPaspor = karyawan.NoPaspor,
                     NipPns = karyawan.NipPns,
-                    Inisial = karyawan.Inisial,
                     StatusAktifitas = karyawan.StatusAktifitas,
-                    Nidn = karyawan.Nidn,
+                    StatusKepegawaian = karyawan.StatusKepegawaian,
+                    StatusIkatanKerja = karyawan.StatusIkatanKerja,
+
                     PendidikanTerakhir = karyawan.PendidikanTerakhir,
                     PendidikanDiakui = karyawan.PendidikanDiakui,
                     NoSertifikatPendidik = karyawan.NoSertifikatPendidik,
                     StatusRestitusi = karyawan.StatusRestitusi,
+                    TmtPurnakarya = karyawan.TmtPurnakarya,
+                    TMT_GOLONGAN = karyawan.TMT_GOLONGAN,
+                    MASA_KERJA_GOLONGAN = karyawan.MASA_KERJA_GOLONGAN,
+                    STATUS_YADAPEN = karyawan.STATUS_YADAPEN,
+                    ID_UNIT_ENTRYPASS = karyawan.ID_UNIT_ENTRYPASS,
+                    Nidn = karyawan.Nidn,
+                    NIDK = karyawan.NIDK,
+
                     EmailInstitusi = karyawan.EmailInstitusi,
                     Email = karyawan.Email,
                     NoTelponRumah = karyawan.NoTelponRumah,
                     NoTelponHp = karyawan.NoTelponHp,
                     FileFotom = karyawan.FileFoto,
                     FileKtpm = karyawan.FileKtp,
-                    StatusKepegawaian = karyawan.StatusKepegawaian,
+                    FileAsuransim = karyawan.FileAsuransi,
+                    FileKartuPegawaim = karyawan.FileKartuPegawai,
+                    FileNpwpm = karyawan.FileNpwp,
+
                     StatusFungsional = karyawan.StatusFungsional,
                     IdRefFungsional = karyawan.IdRefFungsional,
-                    IdUnit = karyawan.IdUnit,
-                    MstIdUnit = karyawan.MstIdUnit,
+                    IdUnitEPSBED = karyawan.IdUnitAkademikEpsbed,
+                    IdUnit = karyawan.IdUnit, // sub unit
+                    MstIdUnit = karyawan.MstIdUnit, // id unit
                     IdUnitAkademik = karyawan.IdUnitAkademik,
                     IdUnitAkademikEpsbed = karyawan.IdUnitAkademikEpsbed,
                     IdRefGolongan = karyawan.IdRefGolongan,
                     IdRefGolonganLokal = karyawan.IdRefGolonganLokal,
                     IdRefJbtnAkademik = karyawan.IdRefJbtnAkademik,
-                    FileAsuransim = karyawan.FileAsuransi,
-                    FileKartuPegawaim = karyawan.FileKartuPegawai,
-                    FileNpwpm = karyawan.FileNpwp,
+                   
                     FileSertifikasiPendidikm = karyawan.FileSertifikasiPendidik,
                     ID_DOSEN_SISTER = karyawan.ID_DOSEN_SISTER,
-                    TmtPurnakarya = karyawan.TmtPurnakarya,
-                    TMT_GOLONGAN = karyawan.TMT_GOLONGAN,
-                    MASA_KERJA_GOLONGAN = karyawan.MASA_KERJA_GOLONGAN,
-                    STATUS_YADAPEN = karyawan.STATUS_YADAPEN,
-                    ID_UNIT_ENTRYPASS = karyawan.ID_UNIT_ENTRYPASS,
-                    NIDK = karyawan.NIDK
+                    
 
 
                 };
@@ -562,11 +592,21 @@ namespace APIConsume.Controllers
                 PendidikanDiakui = karyawan.PendidikanDiakui,
                 NoSertifikatPendidik = karyawan.NoSertifikatPendidik,
                 StatusRestitusi = karyawan.StatusRestitusi,
+                TmtPurnakarya = karyawan.TmtPurnakarya,
+                TMT_GOLONGAN = karyawan.TMT_GOLONGAN,
+                MASA_KERJA_GOLONGAN = karyawan.MASA_KERJA_GOLONGAN,
+                STATUS_YADAPEN = karyawan.STATUS_YADAPEN,
+                ID_UNIT_ENTRYPASS = karyawan.ID_UNIT_ENTRYPASS,
+                NIDK = karyawan.NIDK,
+
                 EmailInstitusi = karyawan.EmailInstitusi,
                 Email = karyawan.Email,
                 NoTelponRumah = karyawan.NoTelponRumah,
                 NoTelponHp = karyawan.NoTelponHp,
+                
                 StatusKepegawaian = karyawan.StatusKepegawaian,
+                StatusIkatanKerja = karyawan.StatusIkatanKerja,
+
                 StatusFungsional = karyawan.StatusFungsional,
                 IdRefFungsional = karyawan.IdRefFungsional,
                 IdUnit = karyawan.IdUnit,
@@ -578,14 +618,8 @@ namespace APIConsume.Controllers
                 IdRefJbtnAkademik = karyawan.IdRefJbtnAkademik,
                 Username = karyawan.Npp,
                 Password = "1234567",// password default\
-                CurrentStatus = karyawan.CurrentStatus,
                 ID_DOSEN_SISTER = karyawan.ID_DOSEN_SISTER,
-                TmtPurnakarya = karyawan.TmtPurnakarya,
-                TMT_GOLONGAN = karyawan.TMT_GOLONGAN,
-                MASA_KERJA_GOLONGAN = karyawan.MASA_KERJA_GOLONGAN,
-                STATUS_YADAPEN = karyawan.STATUS_YADAPEN,
-                ID_UNIT_ENTRYPASS = karyawan.ID_UNIT_ENTRYPASS,
-                NIDK = karyawan.NIDK
+                
 
 
 
@@ -714,7 +748,14 @@ namespace APIConsume.Controllers
             return Json(data);
 
         }
-        
+
+        public JsonResult getStatusIkatanKerja(int id_unit)
+        {
+            var data = _context.MstUnit.Where(a => a.MstIdUnit == id_unit).ToList();
+            return Json(data);
+
+        }
+
 
 
 
@@ -5180,6 +5221,200 @@ namespace APIConsume.Controllers
 
             //var a = model;
             
+        }
+
+        public IActionResult LoadDataStudiLanjut()
+        {
+            try
+            {
+                DBOutput result = (new TblStudiLanjutDAO()).GetAllDataStudiLanjut();
+                
+                return Json(new {data = result.data});
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public async Task<IActionResult> AddEditStudiLanjut(int id=0)
+        {
+            if(HttpContext.Session.GetString("role") == "admin"){
+                if (id == 0)
+                {
+
+                    var balikan = new TblStudiLanjutForm()
+                    {
+                        listJenjang = _context.RefJenjang.ToList(),
+                        listStatusStudi = _context.RefStatusStudi.ToList()
+                    };
+                    return View(balikan);
+                }
+                else
+                {
+                    var studilanjut = _context.TblStudiLanjut.Where(x => x.IdStudiLanjut == id).FirstOrDefault();
+
+                    var balikan = new TblStudiLanjutForm()
+                    {
+                        IdStudiLanjut = id,
+                        listJenjang = _context.RefJenjang.ToList(),
+                        listStatusStudi = _context.RefStatusStudi.ToList(),
+                        IdRefJenjang = studilanjut.IdRefJenjang,
+                        Npp = studilanjut.Npp,
+                        NamaSekolah = studilanjut.NamaSekolah,
+                        KotaSekolah = studilanjut.KotaSekolah,
+                        NegaraSekolah = studilanjut.NegaraSekolah,
+                        TglMulai = studilanjut.TglMulai,
+                        TglLulus = studilanjut.TglLulus,
+                        TglPenempatanKmbli = studilanjut.TglPenempatanKmbli,
+                        Fakultas = studilanjut.Fakultas,
+                        Prodi = studilanjut.Prodi,
+                        DlmNegriLuarNegri = studilanjut.DlmNegriLuarNegri,
+                        NoSkTugasBljr = studilanjut.NoSkTugasBljr,
+                        TargetLulus = studilanjut.TargetLulus,
+                        IdRefSs = studilanjut.IdRefSs,
+                        SKm = studilanjut.Sk,
+                        SkPenempatanKmblm = studilanjut.SkPenempatanKmbl
+
+
+                    };
+
+                    return View(balikan);
+                }
+                
+            }
+            else
+            {
+                ViewData["Message"] = "Sesi Berakhir.";
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddEditStudiLanjut(TblStudiLanjutForm studiLanjut)
+        {
+            try
+            {
+                studiLanjut.listJenjang = _context.RefJenjang.ToList();
+                studiLanjut.listStatusStudi = _context.RefStatusStudi.ToList();
+
+                bool studiLanjutAda = _context.TblStudiLanjut.AsNoTracking().Any(a => a.IdStudiLanjut == studiLanjut.IdStudiLanjut);
+                if (!ModelState.IsValid)
+                {
+                    return View(studiLanjut);
+                }
+
+                var cekNPP = _context.MstKaryawan.AsNoTracking().Any(a => a.Npp == studiLanjut.Npp);
+                if(cekNPP == false)
+                {
+                    TempData["NPPError"] = "NPP Tidak Ditemukan";
+                    return View(studiLanjut);
+
+                }
+
+                var datadb = _context.TblStudiLanjut.AsNoTracking().FirstOrDefault(a => a.IdStudiLanjut == studiLanjut.IdStudiLanjut);
+
+                TblStudiLanjut data = new TblStudiLanjut()
+                {
+                    IdStudiLanjut = studiLanjut.IdStudiLanjut,
+                    IdRefJenjang = studiLanjut.IdRefJenjang,
+                    Npp = studiLanjut.Npp,
+                    NamaSekolah = studiLanjut.NamaSekolah,
+                    KotaSekolah = studiLanjut.KotaSekolah,
+                    NegaraSekolah = studiLanjut.NegaraSekolah,
+                    TglMulai = studiLanjut.TglMulai,
+                    TglLulus = studiLanjut.TglLulus,
+                    TglPenempatanKmbli = studiLanjut.TglPenempatanKmbli,
+                    Fakultas = studiLanjut.Fakultas,
+                    Prodi = studiLanjut.Prodi,
+                    DlmNegriLuarNegri = studiLanjut.DlmNegriLuarNegri,
+                    NoSkTugasBljr = studiLanjut.NoSkTugasBljr,
+                    TargetLulus = studiLanjut.TargetLulus,
+                    IdRefSs = studiLanjut.IdRefSs,
+
+                };
+                if (studiLanjut.SK != null && studiLanjut.SK.Length > 0)
+                {
+                    byte[] p1 = null;
+                    using (var fs1 = studiLanjut.SK.OpenReadStream())
+                    using (var ms1 = new MemoryStream())
+                    {
+                        fs1.CopyTo(ms1);
+                        p1 = ms1.ToArray();
+                    }
+                    data.Sk = p1;
+
+                }
+                else if (datadb != null)
+                    data.Sk = datadb.Sk;
+                else data.Sk = null;
+
+                if (studiLanjut.SkPenempatanKmbl != null && studiLanjut.SkPenempatanKmbl.Length > 0)
+                {
+                    byte[] p1 = null;
+                    using (var fs1 = studiLanjut.SkPenempatanKmbl.OpenReadStream())
+                    using (var ms1 = new MemoryStream())
+                    {
+                        fs1.CopyTo(ms1);
+                        p1 = ms1.ToArray();
+                    }
+                    data.SkPenempatanKmbl = p1;
+
+                }
+                else if (datadb != null)
+                    data.SkPenempatanKmbl = datadb.SkPenempatanKmbl;
+                else data.SkPenempatanKmbl = null;
+
+
+                if (data.IdStudiLanjut == 0)
+                {
+                    //  mstrekanan.IdRefPengembangan = _context.RefPengembangan.Max(p => p.IdRefPengembangan) + 1;
+                    _context.TblStudiLanjut.Add(data);
+
+                    await _context.SaveChangesAsync();
+
+                    TempData["SuccessMessage"] = "Tambah Data Studi Lanjut Berhasil";
+
+                    return RedirectToAction("KelolaStudiLanjut");
+                }
+                else
+                {
+                    _context.Update(data);
+
+                    await _context.SaveChangesAsync();
+
+                    TempData["SuccessMessage"] = "Ubah Data Studi Lanjut Berhasil";
+
+                    return RedirectToAction("KelolaStudiLanjut");
+                }
+            }
+            catch(Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.InnerException.Message;
+
+                return RedirectToAction("KelolaStudiLanjut");
+            }
+
+        }
+        public async Task<IActionResult> DeleteStudiLanjut([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var todo = await _context.TblStudiLanjut.SingleOrDefaultAsync(m => m.IdStudiLanjut == id);
+            if (todo == null)
+            {
+                return NotFound();
+            }
+
+            _context.TblStudiLanjut.Remove(todo);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = "Delete success." });
         }
 
     }

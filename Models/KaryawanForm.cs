@@ -55,6 +55,7 @@ namespace APIConsume.Models
         public string StatusSipil { get; set; }
         public string StatusKepegawaian { get; set; }
         public string StatusFungsional { get; set; }
+        public string StatusIkatanKerja { get; set; }
         public string CurrentStatus { get; set; }
         public string StatusRestitusi { get; set; }
         public string NoSertifikatPendidik { get; set; }
@@ -93,6 +94,9 @@ namespace APIConsume.Models
         public byte[] FileAsuransim { get; set; }
         public string ID_DOSEN_SISTER { get; set; }
         public int? MASA_KERJA_GOLONGAN { get; set; }
+        public int? IdUnitEPSBED { get; set; }
+
+
         public DateTime? TMT_GOLONGAN { get; set; }
         public Boolean? STATUS_YADAPEN { get; set; }
         public int? ID_UNIT_ENTRYPASS { get; set; }
@@ -104,6 +108,13 @@ namespace APIConsume.Models
         public List<RefJabatanStruktural> struktural { get; set; }
         public List<RefFungsional> fungsional { get; set; }
         public List<MstUnit> unit { get; set; }
+        public List<MstUnit> subunit { get; set; }
+        public List<RefStatusKepegawaian> statusKepegawaian { get; set; }
+        public List<RefStatusKepegawaian> statusAktifitas { get; set; }
+        public List<RefStatusIkatanKerja> statusIkatanKerja { get; set; }
+
+        public List<MstUnit> listIdUnitEntrypass { get; set; }
+
         public List<MstUnit> unitEPSBED { get; set; }
 
         public List<RefKeluarga> refkeluarga { get; set; }
