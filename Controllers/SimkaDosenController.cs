@@ -4407,6 +4407,10 @@ namespace APIConsume.Controllers
         [HttpPost]
         public async Task<IActionResult> PostDokumenPendukungPublikasi(IFormFile file_prosiding, IFormFile file_cek_similaritas, IFormFile file_PAK, IFormFile file_korespondensi, string id_publikasi)
         {
+            var test2 = User.Claims
+                                .Where(c => c.Type == "role")
+                                    .Select(c => c.Value).SingleOrDefault(); // Hanya test
+
             TrPublikasi_DATA_SISTER data = _DATA_SISTERcontext.TrPublikasi_DATA_SISTER.FirstOrDefault(a => a.id == id_publikasi);
             if(data!= null)
             {

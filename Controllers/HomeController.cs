@@ -22,6 +22,9 @@ using MimeKit.Text;
 using MailKit.Security;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace APIControllers.Controllers
 {
@@ -153,6 +156,36 @@ namespace APIControllers.Controllers
 
                             //akhir kirim email notifikasi login
                             SendWa();
+
+                            var getRole = (new LoginDAO()).GetUserRole(username);
+                            var listRole = new List<string>();
+                            foreach(var role in getRole)
+                            {
+                                listRole.Add(role.Deskripsi);
+                            }
+
+                            ClaimsIdentity identity = new ClaimsIdentity(new[] {
+                                    new Claim(ClaimTypes.Name,username),
+                                    new Claim("username",username),
+                                    new Claim("role","asasasdasdas"),
+
+                            }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                            foreach (var role in listRole)
+                            {
+                                identity.AddClaim(new Claim("Role", role));
+                            }
+                            var principal = new ClaimsPrincipal(identity);
+                            
+                            var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+
+                            var test = User.Claims
+                                .Where(c => c.Type == "username")
+                                    .Select(c => c.Value).SingleOrDefault();
+                            
+
+
                             HttpContext.Session.SetString("NPP", username);
                             HttpContext.Session.SetString("Nama", mstKaryawan.NamaLengkapGelar);
                             if (fungsional == 1 && mstKaryawan.IdRefFungsional == 1)// user merupakan dosen dan memilih sebagai dosen
