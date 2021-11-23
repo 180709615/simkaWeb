@@ -154,602 +154,602 @@
                     </div>
         </section>
    
-                                    </div>
-                                    <!-- /.content-wrapper -->
-                                    <footer class="main-footer">
-                                        <div class="float-right d-none d-sm-block">
-                                            <b>Version</b> 3.0.2
-                                        </div>
-                                        <small>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</small> All rights
-                                        reserved.
-                                    </footer>
-
-                                    <!-- Control Sidebar -->
-                                    <!-- /.control-sidebar -->
-
-
-
-
-
-                                    @section Scripts{
-
-                                        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-
-                                        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-
-                                        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-                                        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
-                                        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"
-                                                asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.min.js"
-                                                asp-fallback-test="window.jQuery && window.jQuery.validator"
-                                                crossorigin="anonymous"
-                                                integrity="sha384-Fnqn3nxp3506LP/7Y3j/25BlWeA3PXTyT1l78LjECcPaKCV12TsZP7yyMxOe/G/k">
-                                        </script>
-                                        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
-                                                asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
-                                                asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
-                                                crossorigin="anonymous"
-                                                integrity="sha384-JrXK+k53HACyavUKOsL+NkmSesD2P+73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH">
-                                        </script>
-                                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
-                                        <!--toastr-->
-                                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-                                        <!--sweetalert-->
-                                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-
-                                        <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-                                        <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
-                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-                                        <script src="https://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
-
-                                        <script>
-                                            var popup, dataTable;
-
-                                            $(document).ready(function () {
-                                                $("#tombol").click(function () {
-                                                    var tgl = $('#tahun').val();
-                                                    if (tgl == "")
-                                                        alert(" Masukkan Tanggal Dahulu")
-                                                    else {
-                                                        dataTable = $('#tabelrekap').DataTable({
-                                                            destroy: true,
-                                                            "responsive": true,
-                                                            "ajax": {
-                                                                "url": "/Administrasi/LoadRestitusi?tgl=" + tgl,
-                                                                "type": "POST",
-                                                                "destroy": true,
-                                                                "datatype": "json"
-                                                            },
-
-                                                            "columns": [
-                                                                {
-                                                                    data: "idTrRestitusi",
-                                                                    title: "ID",
-                                                                    name: "npp",
-                                                                    type: "readonly",
-                                                                    "visible": false,
-
-                                                                },
-
-                                                                {
-                                                                    data: "tglKuitansi",
-                                                                    title: "Tanggal Kuitansi",
-                                                                    render: function (data) {
-                                                                        return moment(data).format('DD-MM-YYYY');
-                                                                    }
-                                                                },
-                                                                {
-                                                                    data: "namaRekanan",
-                                                                    title: "Nama Rekanan"
-                                                                },
-                                                                {
-                                                                    data: "nominalKuitansi",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "Nominal Kuitansi"
-                                                                },
-                                                                {
-                                                                    data: "nominalHutang",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "Nominal Hutang"
-                                                                },
-                                                                {
-                                                                    data: "nominalGabungHutang",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "Gabungan Sebelumnya"
-                                                                },
-                                                                {
-                                                                    data: "jmlAngsuran",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "terbayar"
-                                                                },
-
-                                                                {
-                                                                    "data": "idTrRestitusi", // diganti sama id
-                                                                    "render": function (data) {
-                                                                        return "<a class='btn btn-default btn-sm' onclick=ShowPopup('" + data + "')><i class='fa fa-pencil'></i> Detail</a>";
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "language": {
-                                                                "emptyTable": "no data found."
-                                                            }
-                                                        });
-
-                                                        dataTable = $('#tabelobat').DataTable({
-                                                            destroy: true,
-                                                            "responsive": true,
-                                                            "ajax": {
-                                                                "url": "/Administrasi/LoadRestitusiObat?tgl=" + tgl,
-                                                                "type": "POST",
-                                                                "destroy": true,
-                                                                "datatype": "json"
-                                                            },
-
-                                                            "columns": [
-                                                                {
-                                                                    "data": null, "sortable": false,
-                                                                    render: function (data, type, row, meta) {
-                                                                        return meta.row + meta.settings._iDisplayStart + 1;
-                                                                    }
-                                                                },
-
-
-                                                                {
-                                                                    data: "keterangan",
-                                                                    title: "Rs-Nama",
-                                                                },
-
-                                                                {
-                                                                    data: "tglAmbil",
-
-                                                                    title: "Tanggal Ambil",
-                                                                },
-                                                                {
-                                                                    data: "tglKuitansi",
-                                                                    title: "Tanggal Kuitansi",
-                                                                    render: function (data) {
-                                                                        return moment(data).format('DD-MM-YYYY');
-                                                                    }
-                                                                },
-                                                                {
-                                                                    data: "nominalKuitansi",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "Nominal Kuitansi"
-                                                                },
-
-
-
-
-                                                            ],
-                                                            "language": {
-                                                                "emptyTable": "no data found."
-                                                            }
-                                                        });
-                                                        dataTable = $('#tabelrawatinap').DataTable({
-                                                            destroy: true,
-                                                            "responsive": true,
-                                                            "ajax": {
-                                                                "url": "/Administrasi/LoadRestitusiRawatInap?tgl=" + tgl,
-                                                                "type": "POST",
-                                                                "destroy": true,
-                                                                "datatype": "json"
-                                                            },
-
-                                                            "columns": [
-                                                                {
-                                                                    "data": null, "sortable": false,
-                                                                    render: function (data, type, row, meta) {
-                                                                        return meta.row + meta.settings._iDisplayStart + 1;
-                                                                    }
-                                                                },
-
-
-                                                                {
-                                                                    data: "keterangan",
-                                                                    title: "Rs-Nama",
-                                                                },
-
-                                                                {
-                                                                    data: "tglAmbil",
-
-                                                                    title: "Tanggal Ambil",
-                                                                },
-                                                                {
-                                                                    data: "tglKuitansi",
-                                                                    title: "Tanggal Kuitansi",
-                                                                    render: function (data) {
-                                                                        return moment(data).format('DD-MM-YYYY');
-                                                                    }
-                                                                },
-                                                                {
-                                                                    data: "nominalKuitansi",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "Nominal Kuitansi"
-                                                                },
-
-
-
-
-                                                            ],
-                                                            "language": {
-                                                                "emptyTable": "no data found."
-                                                            }
-                                                        });
-                                                        dataTable = $('#tabelbuku').DataTable({
-                                                            destroy: true,
-                                                            "responsive": true,
-                                                            "ajax": {
-                                                                "url": "/Administrasi/LoadRestitusiBuku?tgl=" + tgl,
-                                                                "type": "POST",
-                                                                "destroy": true,
-                                                                "datatype": "json"
-                                                            },
-
-                                                            "columns": [
-                                                                {
-                                                                    "data": null, "sortable": false,
-                                                                    render: function (data, type, row, meta) {
-                                                                        return meta.row + meta.settings._iDisplayStart + 1;
-                                                                    }
-                                                                },
-
-
-                                                                {
-                                                                    data: "keterangan",
-                                                                    title: "Rs-Nama",
-                                                                },
-
-                                                                {
-                                                                    data: "tglAmbil",
-
-                                                                    title: "Tanggal Ambil",
-                                                                },
-                                                                {
-                                                                    data: "tglKuitansi",
-                                                                    title: "Tanggal Kuitansi",
-                                                                    render: function (data) {
-                                                                        return moment(data).format('DD-MM-YYYY');
-                                                                    }
-                                                                },
-                                                                {
-                                                                    data: "nominalKuitansi",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "Nominal Kuitansi"
-                                                                },
-
-
-
-
-                                                            ],
-                                                            "language": {
-                                                                "emptyTable": "no data found."
-                                                            }
-                                                        });
-
-                                                        dataTable = $('#tabelkacamata').DataTable({
-                                                            destroy: true,
-                                                            "responsive": true,
-                                                            "ajax": {
-                                                                "url": "/Administrasi/LoadRestitusiKacamata?tgl=" + tgl,
-                                                                "type": "POST",
-                                                                "destroy": true,
-                                                                "datatype": "json"
-                                                            },
-
-                                                            "columns": [
-                                                                {
-                                                                    "data": null, "sortable": false,
-                                                                    render: function (data, type, row, meta) {
-                                                                        return meta.row + meta.settings._iDisplayStart + 1;
-                                                                    }
-                                                                },
-
-
-
-                                                                {
-                                                                    data: "tglAmbil",
-
-                                                                    title: "Tanggal Ambil",
-                                                                },
-                                                                {
-                                                                    data: "tglKuitansi",
-                                                                    title: "Tanggal Kuitansi",
-                                                                    render: function (data) {
-                                                                        return moment(data).format('DD-MM-YYYY');
-                                                                    }
-                                                                },
-                                                                {
-                                                                    data: "nominalKuitansi",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "Nominal Kuitansi"
-                                                                },
-                                                                {
-                                                                    data: "nominal",
-                                                                    render: $.fn.dataTable.render.number('.', ',', 2),
-                                                                    title: "Nominal Diganti"
-                                                                },
-
-
-
-
-                                                            ],
-                                                            "language": {
-                                                                "emptyTable": "no data found."
-                                                            }
-                                                        });
-                                                    }
-
-
-                                                });
-                                            });
-
-
-                                            function ShowPopup(data) {
-
-
-                                                dataTable = $('#tabeldetail').DataTable({
-                                                    destroy: true,
-                                                    "responsive": true,
-                                                    "ajax": {
-                                                        "url": "/Administrasi/LoadDetailRestitusi?idres=" + data,
-                                                        "type": "POST",
-                                                        "destroy": true,
-                                                        "datatype": "json"
-                                                    },
-
-                                                    "columns": [
-                                                        {
-                                                            data: "idTrRestitusi",
-                                                            title: "ID",
-                                                            name: "npp",
-                                                            type: "readonly",
-                                                            "visible": false,
-
-                                                        },
-
-                                                        {
-                                                            data: "tglKuitansi",
-                                                            title: "Tanggal Kuitansi",
-                                                            render: function (data) {
-                                                                return moment(data).format('DD-MM-YYYY');
-                                                            }
-                                                        },
-                                                        {
-                                                            data: "namaRekanan",
-                                                            title: "Nama Rekanan"
-                                                        },
-                                                        {
-                                                            data: "mulaiAngsur",
-                                                            render: $.fn.dataTable.render.number('.', ',', 2),
-                                                            title: "Nominal Kuitansi"
-                                                        },
-                                                        {
-                                                            data: "jmlAngsuran",
-                                                            render: $.fn.dataTable.render.number('.', ',', 2),
-                                                            title: "Nominal Hutang"
-                                                        },
-                                                        {
-                                                            data: "isGabung",
-                                                            render: $.fn.dataTable.render.number('.', ',', 2),
-                                                            title: "Status"
-                                                        },
-                                                        {
-                                                            "data": "idTrRestitusi", // diganti sama id
-                                                            "render": function (data) {
-                                                                return "<a class='btn btn-default btn-sm' onclick=ShowPopup('" + data + "')><i class='fa fa-pencil'></i> Detail</a>";
-                                                            }
-                                                        }
-                                                    ],
-                                                    "language": {
-                                                        "emptyTable": "no data found."
-                                                    }
-                                                });
-
-
-                                            }
-
-
-                                            function SubmitAddEdit(form) {
-                                                $.validator.unobtrusive.parse(form);
-                                                if ($(form).valid()) {
-                                                    var data = $(form).serializeJSON();
-                                                    data = JSON.stringify(data);
-                                                    console.log(data);
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: '/SimkaAdmin/PostRekanan',
-                                                        data: data,
-
-                                                        contentType: 'application/json',
-                                                        success: function (data) {
-                                                            if (data.success) {
-                                                                popup.dialog('close');
-                                                                ShowMessage(data.message);
-                                                                dataTable.ajax.reload();
-                                                            }
-                                                        }
-                                                    });
-
-                                                }
-                                                return false;
-                                            }
-
-                                            function Delete(id) {
-                                                swal({
-                                                    title: "Are you sure want to Delete?",
-                                                    text: "You will not be able to restore the file!",
-                                                    type: "warning",
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: "#DD6B55",
-                                                    confirmButtonText: "Yes, delete it!",
-                                                    closeOnConfirm: true
-                                                }, function () {
-                                                    $.ajax({
-                                                        type: 'DELETE',
-                                                        url: '/SimkaAdmin/DeleteRekanan/' + id,
-                                                        success: function (data) {
-                                                            if (data.success) {
-                                                                ShowMessage(data.message);
-                                                                dataTable.ajax.reload();
-                                                            }
-                                                        }
-                                                    });
-                                                });
-
-
-                                            }
-
-
-                                            function ShowMessage(msg) {
-                                                toastr.success(msg);
-                                            }
-
-
-                                        </script>
-
-
-
-                                        <!--
-
-
-            <script>
-
-
-                $(document).ready(function () {
-
-                    var columnDefs = [{
-                        data: "idMstRekanan",
+</div>
+<!-- /.content-wrapper -->
+<footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.0.2
+    </div>
+    <small>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</small> All rights
+    reserved.
+</footer>
+
+<!-- Control Sidebar -->
+<!-- /.control-sidebar -->
+
+
+
+
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"
+            asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.validator"
+            crossorigin="anonymous"
+            integrity="sha384-Fnqn3nxp3506LP/7Y3j/25BlWeA3PXTyT1l78LjECcPaKCV12TsZP7yyMxOe/G/k">
+    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
+            asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
+            crossorigin="anonymous"
+            integrity="sha384-JrXK+k53HACyavUKOsL+NkmSesD2P+73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH">
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
+    <!--toastr-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!--sweetalert-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
+
+    <script>
+        var popup, dataTable;
+
+        $(document).ready(function () {
+            $("#tombol").click(function () {
+                var tgl = $('#tahun').val();
+                if (tgl == "")
+                    alert(" Masukkan Tanggal Dahulu")
+                else {
+                    dataTable = $('#tabelrekap').DataTable({
+                        destroy: true,
+                        "responsive": true,
+                        "ajax": {
+                            "url": "/Administrasi/LoadRestitusi?tgl=" + tgl,
+                            "type": "POST",
+                            "destroy": true,
+                            "datatype": "json"
+                        },
+
+                        "columns": [
+                            {
+                                data: "idTrRestitusi",
+                                title: "ID",
+                                name: "npp",
+                                type: "readonly",
+                                "visible": false,
+
+                            },
+
+                            {
+                                data: "tglKuitansi",
+                                title: "Tanggal Kuitansi",
+                                render: function (data) {
+                                    return moment(data).format('DD-MM-YYYY');
+                                }
+                            },
+                            {
+                                data: "namaRekanan",
+                                title: "Nama Rekanan"
+                            },
+                            {
+                                data: "nominalKuitansi",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "Nominal Kuitansi"
+                            },
+                            {
+                                data: "nominalHutang",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "Nominal Hutang"
+                            },
+                            {
+                                data: "nominalGabungHutang",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "Gabungan Sebelumnya"
+                            },
+                            {
+                                data: "jmlAngsuran",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "terbayar"
+                            },
+
+                            {
+                                "data": "idTrRestitusi", // diganti sama id
+                                "render": function (data) {
+                                    return "<a class='btn btn-default btn-sm' onclick=ShowPopup('" + data + "')><i class='fa fa-pencil'></i> Detail</a>";
+                                }
+                            }
+                        ],
+                        "language": {
+                            "emptyTable": "no data found."
+                        }
+                    });
+
+                    dataTable = $('#tabelobat').DataTable({
+                        destroy: true,
+                        "responsive": true,
+                        "ajax": {
+                            "url": "/Administrasi/LoadRestitusiObat?tgl=" + tgl,
+                            "type": "POST",
+                            "destroy": true,
+                            "datatype": "json"
+                        },
+
+                        "columns": [
+                            {
+                                "data": null, "sortable": false,
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            },
+
+
+                            {
+                                data: "keterangan",
+                                title: "Rs-Nama",
+                            },
+
+                            {
+                                data: "tglAmbil",
+
+                                title: "Tanggal Ambil",
+                            },
+                            {
+                                data: "tglKuitansi",
+                                title: "Tanggal Kuitansi",
+                                render: function (data) {
+                                    return moment(data).format('DD-MM-YYYY');
+                                }
+                            },
+                            {
+                                data: "nominalKuitansi",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "Nominal Kuitansi"
+                            },
+
+
+
+
+                        ],
+                        "language": {
+                            "emptyTable": "no data found."
+                        }
+                    });
+                    dataTable = $('#tabelrawatinap').DataTable({
+                        destroy: true,
+                        "responsive": true,
+                        "ajax": {
+                            "url": "/Administrasi/LoadRestitusiRawatInap?tgl=" + tgl,
+                            "type": "POST",
+                            "destroy": true,
+                            "datatype": "json"
+                        },
+
+                        "columns": [
+                            {
+                                "data": null, "sortable": false,
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            },
+
+
+                            {
+                                data: "keterangan",
+                                title: "Rs-Nama",
+                            },
+
+                            {
+                                data: "tglAmbil",
+
+                                title: "Tanggal Ambil",
+                            },
+                            {
+                                data: "tglKuitansi",
+                                title: "Tanggal Kuitansi",
+                                render: function (data) {
+                                    return moment(data).format('DD-MM-YYYY');
+                                }
+                            },
+                            {
+                                data: "nominalKuitansi",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "Nominal Kuitansi"
+                            },
+
+
+
+
+                        ],
+                        "language": {
+                            "emptyTable": "no data found."
+                        }
+                    });
+                    dataTable = $('#tabelbuku').DataTable({
+                        destroy: true,
+                        "responsive": true,
+                        "ajax": {
+                            "url": "/Administrasi/LoadRestitusiBuku?tgl=" + tgl,
+                            "type": "POST",
+                            "destroy": true,
+                            "datatype": "json"
+                        },
+
+                        "columns": [
+                            {
+                                "data": null, "sortable": false,
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            },
+
+
+                            {
+                                data: "keterangan",
+                                title: "Rs-Nama",
+                            },
+
+                            {
+                                data: "tglAmbil",
+
+                                title: "Tanggal Ambil",
+                            },
+                            {
+                                data: "tglKuitansi",
+                                title: "Tanggal Kuitansi",
+                                render: function (data) {
+                                    return moment(data).format('DD-MM-YYYY');
+                                }
+                            },
+                            {
+                                data: "nominalKuitansi",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "Nominal Kuitansi"
+                            },
+
+
+
+
+                        ],
+                        "language": {
+                            "emptyTable": "no data found."
+                        }
+                    });
+
+                    dataTable = $('#tabelkacamata').DataTable({
+                        destroy: true,
+                        "responsive": true,
+                        "ajax": {
+                            "url": "/Administrasi/LoadRestitusiKacamata?tgl=" + tgl,
+                            "type": "POST",
+                            "destroy": true,
+                            "datatype": "json"
+                        },
+
+                        "columns": [
+                            {
+                                "data": null, "sortable": false,
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            },
+
+
+
+                            {
+                                data: "tglAmbil",
+
+                                title: "Tanggal Ambil",
+                            },
+                            {
+                                data: "tglKuitansi",
+                                title: "Tanggal Kuitansi",
+                                render: function (data) {
+                                    return moment(data).format('DD-MM-YYYY');
+                                }
+                            },
+                            {
+                                data: "nominalKuitansi",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "Nominal Kuitansi"
+                            },
+                            {
+                                data: "nominal",
+                                render: $.fn.dataTable.render.number('.', ',', 2),
+                                title: "Nominal Diganti"
+                            },
+
+
+
+
+                        ],
+                        "language": {
+                            "emptyTable": "no data found."
+                        }
+                    });
+                }
+
+
+            });
+        });
+
+
+        function ShowPopup(data) {
+
+
+            dataTable = $('#tabeldetail').DataTable({
+                destroy: true,
+                "responsive": true,
+                "ajax": {
+                    "url": "/Administrasi/LoadDetailRestitusi?idres=" + data,
+                    "type": "POST",
+                    "destroy": true,
+                    "datatype": "json"
+                },
+
+                "columns": [
+                    {
+                        data: "idTrRestitusi",
                         title: "ID",
-                        type: "readonly"
+                        name: "npp",
+                        type: "readonly",
+                        "visible": false,
 
                     },
+
                     {
-                        data: "jenis",
-                        title: "Jenis Rekanan"
+                        data: "tglKuitansi",
+                        title: "Tanggal Kuitansi",
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');
+                        }
                     },
                     {
                         data: "namaRekanan",
                         title: "Nama Rekanan"
                     },
                     {
-                        data: "alamat",
-                        title: "Alamat"
+                        data: "mulaiAngsur",
+                        render: $.fn.dataTable.render.number('.', ',', 2),
+                        title: "Nominal Kuitansi"
                     },
                     {
-                        data: "kota",
-                        title: "Kota"
+                        data: "jmlAngsuran",
+                        render: $.fn.dataTable.render.number('.', ',', 2),
+                        title: "Nominal Hutang"
                     },
                     {
-                        data: "kodepos",
-                        title: "Kode Pos"
+                        data: "isGabung",
+                        render: $.fn.dataTable.render.number('.', ',', 2),
+                        title: "Status"
                     },
-
-
-
-
-                    ];
-
-                    var myTable;
-
-                    // local URL's are not allowed
-
-
-                    myTable = $('#example').DataTable({
-                        "sPaginationType": "full_numbers",
-                        ajax: {
-                            "url": "/SimkaAdmin/LoadDataJ",
-                            "type": "POST",
-                            "datatype": "json",
-                            beforeSend: function (xhr) {
-                                xhr.setRequestHeader("XSRF-TOKEN",
-                                    $('input:hidden[name="__RequestVerificationToken"]').val());
-                                dataSrc: ''
-                            },
-                        },
-                        columns: columnDefs,
-                        dom: 'Bfrtip',        // Needs button container
-                        select: 'single',
-                        responsive: true,
-                        altEditor: true,
-                        buttons: {
-                            dom: {
-                                button: {
-                                    className: ''
-                                }
-                            }
-                            ,// Enable altEditor
-                            buttons: [{
-                                text: 'Add',
-                                className: 'btn btn-primary',
-                                name: 'add'        // do not change name
-                            },
-                            {
-                                extend: 'selected', // Bind to Selected row
-                                text: 'Edit',
-                                className: 'btn btn-secondary',
-                                name: 'edit'        // do not change name
-                            },
-                            {
-                                extend: 'selected', // Bind to Selected row
-                                text: 'Delete',
-                                className: 'btn btn-danger',
-                                name: 'delete'
-                                // do not change name
-                            },
-                            {
-                                text: 'Refresh',
-                                className: 'btn btn-success',
-                                name: 'refresh'      // do not change name
-                            }]
-                        },
-                        onRefresh: function(){
-                            $ajax({
-                                "url": "/SimkaAdmin/LoadDataJ",
-                                "type": "POST",
-                                "datatype": "json",
-                                beforeSend: function (xhr) {
-                                    xhr.setRequestHeader("XSRF-TOKEN",
-                                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                                    dataSrc: ''
-                                },
-                            });
-                    },
-                        onAddRow: function (datatable, rowdata, success, error) {
-                            $.ajax({
-                                // a tipycal url would be / with type='PUT'
-                                url: url_ws_mock_ok,
-                                type: 'GET',
-                                data: rowdata,
-                                success: success,
-                                error: error
-                            });
-                        },
-                        onDeleteRow: function (datatable, rowdata, success, error) {
-                            $.ajax({
-                                // a tipycal url would be /{id} with type='DELETE'
-                                url: url_ws_mock_ok,
-                                type: 'GET',
-                                data: rowdata,
-                                success: success,
-                                error: error
-                            });
-                        },
-                        onEditRow: function (datatable, rowdata, success, error) {
-                            $.ajax({
-                                // a tipycal url would be /{id} with type='POST'
-                                url: url_ws_mock_ok,
-                                type: 'GET',
-                                data: rowdata,
-                                success: success,
-                                error: error
-                            });
+                    {
+                        "data": "idTrRestitusi", // diganti sama id
+                        "render": function (data) {
+                            return "<a class='btn btn-default btn-sm' onclick=ShowPopup('" + data + "')><i class='fa fa-pencil'></i> Detail</a>";
                         }
-                    });
+                    }
+                ],
+                "language": {
+                    "emptyTable": "no data found."
+                }
+            });
 
-                    //tempat taruh fungsi baru
+
+        }
 
 
+        function SubmitAddEdit(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var data = $(form).serializeJSON();
+                data = JSON.stringify(data);
+                console.log(data);
+                $.ajax({
+                    type: 'POST',
+                    url: '/SimkaAdmin/PostRekanan',
+                    data: data,
+
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.success) {
+                            popup.dialog('close');
+                            ShowMessage(data.message);
+                            dataTable.ajax.reload();
+                        }
+                    }
                 });
-            </script>-->
-                                    }
+
+            }
+            return false;
+        }
+
+        function Delete(id) {
+            swal({
+                title: "Are you sure want to Delete?",
+                text: "You will not be able to restore the file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: true
+            }, function () {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/SimkaAdmin/DeleteRekanan/' + id,
+                    success: function (data) {
+                        if (data.success) {
+                            ShowMessage(data.message);
+                            dataTable.ajax.reload();
+                        }
+                    }
+                });
+            });
+
+
+        }
+
+
+        function ShowMessage(msg) {
+            toastr.success(msg);
+        }
+
+
+    </script>
+
+
+
+                            <!--
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var columnDefs = [{
+            data: "idMstRekanan",
+            title: "ID",
+            type: "readonly"
+
+        },
+        {
+            data: "jenis",
+            title: "Jenis Rekanan"
+        },
+        {
+            data: "namaRekanan",
+            title: "Nama Rekanan"
+        },
+        {
+            data: "alamat",
+            title: "Alamat"
+        },
+        {
+            data: "kota",
+            title: "Kota"
+        },
+        {
+            data: "kodepos",
+            title: "Kode Pos"
+        },
+
+
+
+
+        ];
+
+        var myTable;
+
+        // local URL's are not allowed
+
+
+        myTable = $('#example').DataTable({
+            "sPaginationType": "full_numbers",
+            ajax: {
+                "url": "/SimkaAdmin/LoadDataJ",
+                "type": "POST",
+                "datatype": "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                    dataSrc: ''
+                },
+            },
+            columns: columnDefs,
+            dom: 'Bfrtip',        // Needs button container
+            select: 'single',
+            responsive: true,
+            altEditor: true,
+            buttons: {
+                dom: {
+                    button: {
+                        className: ''
+                    }
+                }
+                ,// Enable altEditor
+                buttons: [{
+                    text: 'Add',
+                    className: 'btn btn-primary',
+                    name: 'add'        // do not change name
+                },
+                {
+                    extend: 'selected', // Bind to Selected row
+                    text: 'Edit',
+                    className: 'btn btn-secondary',
+                    name: 'edit'        // do not change name
+                },
+                {
+                    extend: 'selected', // Bind to Selected row
+                    text: 'Delete',
+                    className: 'btn btn-danger',
+                    name: 'delete'
+                    // do not change name
+                },
+                {
+                    text: 'Refresh',
+                    className: 'btn btn-success',
+                    name: 'refresh'      // do not change name
+                }]
+            },
+            onRefresh: function(){
+                $ajax({
+                    "url": "/SimkaAdmin/LoadDataJ",
+                    "type": "POST",
+                    "datatype": "json",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                        dataSrc: ''
+                    },
+                });
+        },
+            onAddRow: function (datatable, rowdata, success, error) {
+                $.ajax({
+                    // a tipycal url would be / with type='PUT'
+                    url: url_ws_mock_ok,
+                    type: 'GET',
+                    data: rowdata,
+                    success: success,
+                    error: error
+                });
+            },
+            onDeleteRow: function (datatable, rowdata, success, error) {
+                $.ajax({
+                    // a tipycal url would be /{id} with type='DELETE'
+                    url: url_ws_mock_ok,
+                    type: 'GET',
+                    data: rowdata,
+                    success: success,
+                    error: error
+                });
+            },
+            onEditRow: function (datatable, rowdata, success, error) {
+                $.ajax({
+                    // a tipycal url would be /{id} with type='POST'
+                    url: url_ws_mock_ok,
+                    type: 'GET',
+                    data: rowdata,
+                    success: success,
+                    error: error
+                });
+            }
+        });
+
+        //tempat taruh fungsi baru
+
+
+    });
+</script>-->
+                        }

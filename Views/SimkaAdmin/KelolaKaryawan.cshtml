@@ -408,7 +408,6 @@
                 datatype: 'json',
                 success: function (data) {
 
-                    var select = document.getElementById("inputSubUnit");
                     var options = document.getElementById("inputSubUnit").options;
 
                     for (var i = 0; i < data.length; i++) {
@@ -452,6 +451,8 @@
             $("#inputStatus").val("");
             $("#inputNPP").val("");
             $("#inputNama").val("");
+
+            getDataKaryawanByCriteria();
         }
 
     </script>

@@ -368,6 +368,7 @@ namespace APIConsume.Controllers
                 return RedirectToAction("Index", "Home");
         }
 
+        
 
         public IActionResult ResetPassword()
         {
@@ -421,6 +422,8 @@ namespace APIConsume.Controllers
             }
 
         }
+
+
         public IActionResult AddEditKaryawan(string npp="")
         {
             string prepend = "Program Studi";
@@ -429,15 +432,16 @@ namespace APIConsume.Controllers
             {
                 var balikan = new KaryawanForm()
                 {
-                   
+
                     struktural = _context.RefJabatanStruktural.ToList(),
 
                     fungsional = _context.RefFungsional.ToList(),
                     unit = _context.MstUnit.OrderBy(c => c.NamaUnit).ToList(),
                     unitEPSBED = _context.MstUnit.Where(c => c.NamaUnit.StartsWith(prepend)).ToList(),
                     prodi = _context.MstUnitAkademik.OrderBy(c => c.NamaUnitAkademik).ToList(),
-                    statusAktifitas = _context.RefStatusKepegawaian.Select(p=> new RefStatusKepegawaian { StatusAktifitas = p.StatusAktifitas }).Distinct().ToList(), // current status
+                    statusAktifitas = _context.RefStatusKepegawaian.Select(p => new RefStatusKepegawaian { StatusAktifitas = p.StatusAktifitas }).Distinct().ToList(), // current status
                     statusIkatanKerja = _context.RefStatusIkatanKerja.ToList(),  // status ikatan kerja
+                    listIdUnitEntrypass =  (new MstUnitDAO()).GetListUnitEntrypass(),
                     golongan = _context.RefGolongan
                     .Select(c => new RefGolongan
                     {
@@ -447,7 +451,6 @@ namespace APIConsume.Controllers
                     .ToList(),
                     akademik = _context.RefJabatanAkademik.ToList(),
                     refkeluarga = _context.RefKeluarga.ToList(),
-                    listIdUnitEntrypass = _context.MstUnit.Where(a=> !a.NamaUnit.StartsWith(prepend)).ToList()
                 };
                 return View(balikan);
             }
@@ -753,6 +756,72 @@ namespace APIConsume.Controllers
         {
             var data = _context.MstUnit.Where(a => a.MstIdUnit == id_unit).ToList();
             return Json(data);
+
+        }
+
+        public async Task<IActionResult> getID_Dosen_Sister(string nidn)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    Sister_Token TokenSister = new Sister_Token();
+                    TokenSister = await getTokenSister();
+                    var url = baseUrl + "/referensi/sdm?nidn=" + nidn;
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + TokenSister.token);
+                    var response = await httpClient.GetAsync(url);
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        
+                        var data = JsonConvert.DeserializeObject<List<RefSDMSister>>(apiResponse);
+                        
+                        return Json(data[0].id_sdm);
+                    }
+                    else
+                    {
+                        return BadRequest();
+
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return BadRequest();
+                }
+            }
+                
+        }
+
+        public async Task<Sister_Token> getTokenSister()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    Sister_Token TokenSister = new Sister_Token();
+                    var akun = new Sister_Akun();
+                    akun.username = "GV3lhqNadhHePiwVQ5Y3Vw";
+                    akun.password = "5QW4jKhZ8r8QDmYMHiepjHwpH/wcfTioexezIS9AS8XYPMPnNHhEHLbfpeDsP0R8";
+                    akun.id_pengguna = "bd5df696-05d3-4db1-9e32-7c6be4e5ad36";
+                    var json = JsonConvert.SerializeObject(akun);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+                    var url = baseUrl + "/authorize";
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = await httpClient.PostAsync(url, data);
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    Console.WriteLine("test");
+                    TokenSister = (Sister_Token)JsonConvert.DeserializeObject(apiResponse, typeof(Sister_Token));
+                    return TokenSister;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
 
         }
 
@@ -5248,7 +5317,8 @@ namespace APIConsume.Controllers
                     var balikan = new TblStudiLanjutForm()
                     {
                         listJenjang = _context.RefJenjang.ToList(),
-                        listStatusStudi = _context.RefStatusStudi.ToList()
+                        listStatusStudi = _context.RefStatusStudi.ToList(),
+                        listSumberBiaya = _context.RefSumberBiaya.ToList(),
                     };
                     return View(balikan);
                 }
@@ -5261,6 +5331,7 @@ namespace APIConsume.Controllers
                         IdStudiLanjut = id,
                         listJenjang = _context.RefJenjang.ToList(),
                         listStatusStudi = _context.RefStatusStudi.ToList(),
+                        listSumberBiaya = _context.RefSumberBiaya.ToList(),
                         IdRefJenjang = studilanjut.IdRefJenjang,
                         Npp = studilanjut.Npp,
                         NamaSekolah = studilanjut.NamaSekolah,
@@ -5315,7 +5386,7 @@ namespace APIConsume.Controllers
                 }
 
                 var datadb = _context.TblStudiLanjut.AsNoTracking().FirstOrDefault(a => a.IdStudiLanjut == studiLanjut.IdStudiLanjut);
-
+                var dataSumberBiayadb = _context.TblSumberBiayaSl.FirstOrDefault(a => a.IdStudiLanjut == studiLanjut.IdStudiLanjut);
                 TblStudiLanjut data = new TblStudiLanjut()
                 {
                     IdStudiLanjut = studiLanjut.IdStudiLanjut,
@@ -5335,6 +5406,8 @@ namespace APIConsume.Controllers
                     IdRefSs = studiLanjut.IdRefSs,
 
                 };
+
+                
                 if (studiLanjut.SK != null && studiLanjut.SK.Length > 0)
                 {
                     byte[] p1 = null;
@@ -5367,6 +5440,25 @@ namespace APIConsume.Controllers
                     data.SkPenempatanKmbl = datadb.SkPenempatanKmbl;
                 else data.SkPenempatanKmbl = null;
 
+                // SUMBER BIAYA STUDI LANJUT
+                if (dataSumberBiayadb != null)
+                {
+                    dataSumberBiayadb.IdSumberBiaya = studiLanjut.IdSumberBiaya1;
+                    dataSumberBiayadb.SumberBiayaKe = studiLanjut.IdSumberBiaya2;
+                }
+                else
+                {
+                    TblSumberBiayaSl dataSumberBiaya = new TblSumberBiayaSl
+                    {
+                        IdStudiLanjut = studiLanjut.IdStudiLanjut,
+                        IdSumberBiaya = studiLanjut.IdSumberBiaya1,
+                        SumberBiayaKe = studiLanjut.IdSumberBiaya2,
+                        
+
+                    };
+                    _context.TblSumberBiayaSl.Add(dataSumberBiaya);
+                }
+                
 
                 if (data.IdStudiLanjut == 0)
                 {

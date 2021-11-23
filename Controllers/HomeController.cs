@@ -152,7 +152,7 @@ namespace APIControllers.Controllers
 
 
                             //akhir kirim email notifikasi login
-                            //SendWa();
+                            SendWa();
                             HttpContext.Session.SetString("NPP", username);
                             HttpContext.Session.SetString("Nama", mstKaryawan.NamaLengkapGelar);
                             if (fungsional == 1 && mstKaryawan.IdRefFungsional == 1)// user merupakan dosen dan memilih sebagai dosen
@@ -218,7 +218,7 @@ namespace APIControllers.Controllers
                 }
             }
             //return RedirectToAction("Index","MenuDynamic");
-            
+
         }
         public IActionResult Simkadosen()
         {
@@ -924,21 +924,6 @@ namespace APIControllers.Controllers
             var menu = "";
             DBOutput data = (new SidebarMenuDAO()).getSidebarMenu("");
             List<SidebarMenu> listMenu = new List<SidebarMenu>();
-            //foreach (SidebarMenu row in data.data)
-            //{
-            //    if(row.parentid == 0)
-            //    menu += $"<li class='nav-item'><a href = '#' class='nav-link'><i class='nav-icon fas fa-circle'></i><p>{row.menuname}<i class='fas fa-angle-left right'></i></p></a><ul class='nav nav-treeview'>";
-
-
-            //    foreach (SidebarMenu submenu in data.data)
-            //    {
-            //        if(submenu.parentid == row.menuid)
-            //        menu += $"<li class='nav-item'><a href='{submenu.menulocation}' class='nav-link'><i class='far fa-circle nav-icon'></i><p>{submenu.menuname}</p></a></li>";
-            //        //menu += $"<li><a href='{submenu.LINK}'><i class='fa fa-circle-o'></i> {submenu.DESKRIPSI}</a></li>";
-            //    }
-
-            //    menu += "</ul></li> ";
-            //}
 
             List<SidebarMenu> menuTree = GetMenuTree(data.data, 0);
             var append = "";
@@ -946,13 +931,13 @@ namespace APIControllers.Controllers
             {
                 if(menus.parentid == 0)
                 {
-                    append += "<li class='nav-item'><a href = '#' class='nav-link'><i class='nav-icon fas fa-circle'></i><p>" + menus.menuname + "<i class='fas fa-angle-left right'></i></p></a><ul class='nav nav-treeview'>";
+                    append += "<li class='nav-item'><a href = '#' class='nav-link' style='padding-left:-2%;'><i  class='nav-icon fas fa-circle left' style='font-size: 15px; '></i><p>" + menus.menuname + "<i class='fas fa-angle-left right'></i></p></a><ul class='nav nav-treeview'>";
 
                      if(menus.ListMenu != null && menus.ListMenu.Count > 0)
                     {
                         foreach(var submenu in menus.ListMenu)
                         {
-                            append += "<li class='nav-item'><a href=# class='nav-link'><i class='far fa-circle nav-icon'></i><p>" + submenu.menuname + "</p></a></li>";
+                            append += "<li class='nav-item'><a href=# class='nav-link' style='padding-left:-2%;' ><i class='far fa-circle nav-icon left'  style='font-size: 15px; '></i><p>" + submenu.menuname + "</p></a></li>";
                         }
                     }
                     append += "</ul></li>";

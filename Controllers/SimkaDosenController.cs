@@ -3948,8 +3948,10 @@ namespace APIConsume.Controllers
                 }
             }
                     
-        }   
-        
+        }
+
+       
+
         public async Task<DBOutput> SinkronPenulisSister(Penulis[] listPenulis, string id_publikasi)
         {
             DBOutput output = new DBOutput();
@@ -4368,7 +4370,148 @@ namespace APIConsume.Controllers
 
         }
 
+        public async Task<IActionResult> GetArtikelPublikasi(string id)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    Sister_Token TokenSister = await getTokenSister();
 
+                    var url = baseUrl + "/dokumen/"+id+"/download";
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
+                    httpClient.DefaultRequestHeaders.Add("Cookie", "PHPSESSID=q8qheb9po8tek5ok72mi7e6b37");
+                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + TokenSister.token);
+
+                    var dokumen = _DATA_SISTERcontext.TblDokumen_DATA_SISTER.FirstOrDefault(a => a.id_dokumen == id);
+
+                    var response = await httpClient.GetAsync(url);
+                    var apiResponseMessage = await response.Content.ReadAsByteArrayAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return File(apiResponseMessage, "application/pdf",dokumen.nama_file);
+                    }
+
+                    //dynamic result = JsonConvert.DeserializeObject<object>(apiResponse);
+                    return Json(apiResponseMessage);
+                }
+                catch (Exception ex)
+                {
+                    return Json(ex.Message);
+                }
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostDokumenPendukungPublikasi(IFormFile file_prosiding, IFormFile file_cek_similaritas, IFormFile file_PAK, IFormFile file_korespondensi, string id_publikasi)
+        {
+            TrPublikasi_DATA_SISTER data = _DATA_SISTERcontext.TrPublikasi_DATA_SISTER.FirstOrDefault(a => a.id == id_publikasi);
+            if(data!= null)
+            {
+                try
+                {
+                    if (file_prosiding != null)
+                    {
+                        byte[] p1 = null;
+                        using (var fs1 = file_prosiding.OpenReadStream())
+                        using (var ms1 = new MemoryStream())
+                        {
+                            fs1.CopyTo(ms1);
+                            p1 = ms1.ToArray();
+                        }
+                        data.FILE_PROSIDING_ARTIKEL = p1;
+                    }
+
+                    if (file_cek_similaritas != null)
+                    {
+                        byte[] p1 = null;
+                        using (var fs1 = file_cek_similaritas.OpenReadStream())
+                        using (var ms1 = new MemoryStream())
+                        {
+                            fs1.CopyTo(ms1);
+                            p1 = ms1.ToArray();
+                        }
+                        data.FILE_CEK_SIMILARITAS = p1;
+                    }
+
+                    if (file_PAK != null)
+                    {
+                        byte[] p1 = null;
+                        using (var fs1 = file_PAK.OpenReadStream())
+                        using (var ms1 = new MemoryStream())
+                        {
+                            fs1.CopyTo(ms1);
+                            p1 = ms1.ToArray();
+                        }
+                        data.FILE_PEER_REVIEW_PAK = p1;
+                    }
+
+                    if (file_korespondensi != null)
+                    {
+                        byte[] p1 = null;
+                        using (var fs1 = file_korespondensi.OpenReadStream())
+                        using (var ms1 = new MemoryStream())
+                        {
+                            fs1.CopyTo(ms1);
+                            p1 = ms1.ToArray();
+                        }
+                        data.FILE_PEER_KORESPONDENSI_REVIEWER = p1;
+                    }
+
+                    await _DATA_SISTERcontext.SaveChangesAsync();
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Dokumen Berhasil Ditambahkan."
+                    });
+                }
+                catch(Exception ex)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Terjadi Kesalahan."
+                    });
+                }
+            }
+            else
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Data Publikasi Tidak Ditemukan."
+                });
+            }
+            
+
+        }
+
+        [HttpGet]
+        public IActionResult GetDokumenPendukungPublikasi(string id_publikasi)
+        {
+            //TrPublikasi_DATA_SISTER data = _DATA_SISTERcontext.TrPublikasi_DATA_SISTER.FirstOrDefault(a => a.id == "3f901337-6ee3-4052-9943-0ce679ccd536");
+
+            TrPublikasi_DATA_SISTER data = _DATA_SISTERcontext.TrPublikasi_DATA_SISTER.FirstOrDefault(a => a.id == id_publikasi);
+
+            return Json(new
+            {
+                file_prosiding = data.FILE_PROSIDING_ARTIKEL != null? Convert.ToBase64String(data.FILE_PROSIDING_ARTIKEL) : null ,
+                file_cek_similaritas = data.FILE_CEK_SIMILARITAS != null ? Convert.ToBase64String(data.FILE_CEK_SIMILARITAS) : null,
+                file_peer_review_pak = data.FILE_PEER_REVIEW_PAK != null ? Convert.ToBase64String(data.FILE_PEER_REVIEW_PAK) : null ,
+                file_peer_korespondensi = data.FILE_PEER_KORESPONDENSI_REVIEWER != null ? Convert.ToBase64String(data.FILE_PEER_KORESPONDENSI_REVIEWER) : null,
+
+            });
+            
+        }
+
+        //public HttpResponseMessage displayDocument(string id)
+        //{
+        //    HttpResponseMessage response = 
+        //}
+
+       
 
     }
 }

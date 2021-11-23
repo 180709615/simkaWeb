@@ -219,7 +219,6 @@ namespace SimkaUAJY.Controllers
         {
             Console.WriteLine("test");
             Console.WriteLine(tgl);
-            DateTime value = new DateTime(2017, 1, 18);
             var Npp = HttpContext.Session.GetString("NPP");
             var restitusi = _context.TrRestitusi
 

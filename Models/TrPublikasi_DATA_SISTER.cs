@@ -41,10 +41,14 @@ namespace APIConsume.Models
         public int seminar { get; set; }
         public int prosiding { get; set; }
         public string? asal_data { get; set; }
-        
+        public byte[]? FILE_PROSIDING_ARTIKEL { get; set; }
+        public byte[]? FILE_CEK_SIMILARITAS { get; set; }
+        public byte[]? FILE_PEER_REVIEW_PAK { get; set; }
+        public byte[]? FILE_PEER_KORESPONDENSI_REVIEWER { get; set; }
 
+            
         // PENULIS
-     
+        
 
 
 

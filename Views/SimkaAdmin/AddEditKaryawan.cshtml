@@ -52,11 +52,21 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">ID dosen sister (bila ada)</label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" asp-for="ID_DOSEN_SISTER" class="form-control" placeholder="Nama">
+                                                    <input type="text" asp-for="ID_DOSEN_SISTER" id="ID_DOSEN_SISTER" class="form-control" placeholder="ID Dosen Sister" readonly >
                                                     <span asp-validation-for="ID_DOSEN_SISTER" class="text-danger"></span>
 
                                                 </div>
+                                                <div class="col-sm-2">
+                                                    <button id="textIdDosenSister" type="button" class="btn btn-success" onclick="getIDSister()">
+                                                        Cari ID Sister
+
+                                                    </button>
+                                                </div>
+                                                
+
                                             </div>
+                                            
+                                            
                                         </div>
                                         <div class="active tab-pane" id="pribadi">
                                             <div class="card-body card card-primary card-outline ">
@@ -1286,7 +1296,7 @@
                                                 <div class="form-group row">
                                                     <label asp-for="TmtPurnakarya" class="col-sm-2 col-form-label">Tmt Purnakarya</label>
                                                     <div class="col-sm-10">
-                                                        <input type="date" asp-for="TmtPurnakarya" class="form-control" placeholder="" disabled id="TmtPurnakarya">
+                                                        <input type="date" asp-for="TmtPurnakarya" class="form-control" placeholder="" readonly id="TmtPurnakarya">
                                                         <span asp-validation-for="TmtPurnakarya" class="text-danger"></span>
                                                     </div>
                                                 </div>
@@ -1858,6 +1868,7 @@
     //Insert default item "Select" in dropdownlist on load
     $(document).ready(function () {
         getSubUnit();
+        changeTmtPurnakarya();
         getStatusKepegawaian();
         //bikin npp readonly saat edit
         if (document.getElementById("Npp").value != "")
@@ -1886,7 +1897,7 @@
         });
         $("#TmtPurnakarya").val(date);
 
-        alert(tglLahir + "-" + date);
+        /*alert(tglLahir + "-" + date);*/
     }
 
     //Bind dropdownlist
@@ -1962,6 +1973,49 @@
             }
         });
     }
+
+    function getIDSister() {
+        
+        var nidn = document.getElementById('Nidn').value
+        if (nidn != null && nidn != undefined && nidn != "") {
+            var btn = document.getElementById('textIdDosenSister');
+            btn.innerHTML = "Loading";
+
+            $.ajax({
+                dataType: "json",
+                type: "get",
+                url: "getID_Dosen_Sister?nidn=" + nidn,
+                success: function (data) {
+                    btn.innerHTML = 'Berhasil';
+                    $("#ID_DOSEN_SISTER").val(data);
+                    console.log(data)
+                    setTimeout(function () {
+                        btn.innerHTML = 'Cari ID Sister';
+
+                    }, 2000);
+                },
+                error: function (data) {
+                    btn.innerHTML = 'Gagal';
+                    btn.classList.remove("btn-success")
+                    btn.classList.add("btn-danger")
+
+
+                    setTimeout(function () {
+                        btn.classList.remove("btn-danger")
+                        btn.classList.add("btn-success")
+                        btn.innerHTML = 'Cari ID Sister';
+
+                    }, 2000);
+                }
+            });
+        }
+        else {
+            alert("Harap isi NIDN terlebih dahulu")
+        }
+
+
+        }
+
         var Tridharma = $("#fungsional").val(); // mengambil opsi terpilih saat ini
         $.ajax({
             datatype: "text",

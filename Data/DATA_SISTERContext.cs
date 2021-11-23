@@ -482,8 +482,15 @@ namespace APIConsume.Models
                 .HasColumnName("asal_data")
                 .HasMaxLength(500);
 
+                entity.Property(e => e.FILE_PROSIDING_ARTIKEL).HasColumnName("FILE_PROSIDING_ARTIKEL");
+                entity.Property(e => e.FILE_CEK_SIMILARITAS).HasColumnName("FILE_CEK_SIMILARITAS");
+                entity.Property(e => e.FILE_PEER_REVIEW_PAK).HasColumnName("FILE_PEER_REVIEW_PAK");
+                entity.Property(e => e.FILE_PEER_KORESPONDENSI_REVIEWER).HasColumnName("FILE_PEER_KORESPONDENSI_REVIEWER");
 
-                
+
+
+
+
 
             });
 

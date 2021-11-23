@@ -188,10 +188,18 @@
                                     </div>
 
                                     <div class="tab-pane" id="pengajaran">
-
-                                        <b> Pengajaran dari SISTER </b>
-                                        <a class=" text-light btn btn-success" style="margin-bottom:10px"
-                                           onclick="SinkronPengajaranSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                        <div class="row justify-content-between">
+                                            <b> Pengajaran dari SISTER </b>
+                                            <div class="col-2 align-self-end">
+                                                <div class="row justify-content-end" style="margin-right:1%">
+                                                    <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                                                       onclick="SinkronPengajaranSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        
                                         <p>
                                             <label>Semester</label>
                                             <select onchange="changeSelect()" class="form-select form-select-md selectSemester" style="margin-left:20px;">
@@ -289,9 +297,18 @@
                                             </table>
                                         </div>
                                         <br />
-                                        <b>Penelitian dari Sister</b>
-                                        <a class=" text-light btn btn-success" style="margin-bottom:10px"
-                                           onclick="SinkronPenelitianSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                        <div class="row justify-content-between">
+                                            <b>Penelitian dari Sister</b>
+                                            <div class="col-2">
+                                                <div class="row justify-content-end" style="margin-right:1%">
+                                                    <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                                                       onclick="SinkronPenelitianSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        
                                         <table id="penelitiansister" style="width: 100% !important; " class="table table-md table-striped table-bordered m-2">
                                             <thead>
                                                 <tr>
@@ -316,13 +333,23 @@
                                     <!-- /.card-header -->
                                     <!---  Publikasi-->
                                     <div class="tab-pane" id="publikasi">
-                                        <b>Publikasi dari SISTER</b>
-                                        <a class=" text-light btn btn-success" style="margin-bottom:10px"
-                                           onclick="SinkronPublikasiSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
-                                        <a class=" text-light btn btn-primary" style="margin-bottom:10px"
-                                           onclick="clickexport()"><i class="fa fa-refresh"></i> Export Excel </a>
+                                        <div class="row justify-content-between">
+                                            <b>Publikasi dari SISTER</b>
+                                            <div class="col-4">
+                                                <div class="row justify-content-between" style="margin-right:1%">
+                                                    <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                                                       onclick="SinkronPublikasiSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                                    <a class=" text-light btn btn-danger" style="margin-bottom:10px"
+                                                       onclick="clickexport()"><i class="fa fa-print"></i> Export Excel </a>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        
                                         <div style="overflow-x:auto;">
-                                            <table id="tabelpublikasi"  style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
+                                            <table id="tabelpublikasi" style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
+
+
                                                 <thead>
                                                     <tr>
 
@@ -332,6 +359,12 @@
                                                         <th> Tanggal </th>
                                                         <th> Peran </th>
                                                         <th> Urutan </th>
+                                                        <th> Nama Artikel </th>
+                                                        <th> Download Artikel </th>
+                                                        <th> Dokumen Pendukung </th>
+
+
+
 
 
                                                     </tr>
@@ -340,7 +373,8 @@
                                                 </tbody>
                                             </table>
                                         </div>
-
+                                        <!-- Button trigger modal -->
+                                        
                                         <!--- / Publikasi-->
                                     </div>
 
@@ -397,9 +431,20 @@
                                             </tbody>
                                         </table>
                                         <br />
-                                        <b>Pengabdian dari Sister</b>
-                                        <a class=" text-light btn btn-success" style="margin-bottom:10px"
-                                           onclick="SinkronPengabdianSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                        <div class="row justify-content-between">
+                                            <b>Pengabdian dari Sister</b>
+                                            <div class="col-2">
+                                                <div class="row justify-content-end" style="margin-right:1%">
+                                                    <a class=" text-light btn btn-success" style="margin-bottom:10px"
+                                                       onclick="SinkronPengabdianSISTER()"><i class="fa fa-refresh"></i> Sinkronisasi </a>
+                                                </div>
+                                                
+                                            </div>
+                                            
+
+                                        </div>
+
+                                        
                                         <table id="tabelpengabdian" style="width: 100% !important; " class="table table-sm table-striped table-bordered m-2">
                                             <thead>
                                                 <tr>
@@ -457,22 +502,95 @@
 
 
 </body>
-<div class="modal" id="myModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg mw-100 w-75" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Dokumen Pendukung</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+            <form action="@Url.Action("PostDokumenPendukungPublikasi","SimkaDosen")" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        @*<label>ID Publikasi</label>*@
+                        <input type="hidden" class="form-control" id="id_publikasi" name="id_publikasi" readonly>
+
+                        <div class="row justify-content-between" style="margin-top:1%;">
+                            <div class="col-md-4" style="margin-right:1%" ;>
+                                <label>Dokumen Prosiding Artikel</label>
+                                <div class=" custom-file mb-3">
+                                    <input type="file" accept=".pdf" class="custom-file-input" id="file_prosiding" name="file_prosiding" onchange="getFileNameWithExt(event,'labelProsiding')">
+                                    <label class="custom-file-label" id="labelProsiding" for="file_prosiding">Choose file...</label>
+                                    @*pakai <object> kaya di situs kkn bisa*@
+                                </div>
+                                
+                                <label>Dokumen Cek Similaritas</label>
+                                <div class="custom-file mb-3">
+                                    <input type="file" accept=".pdf" class="custom-file-input" id="file_cek_similaritas" name="file_cek_similaritas" onchange="getFileNameWithExt(event,'labelSimilaritas')">
+                                    <label class="custom-file-label" id="labelSimilaritas" for="file_cek_similaritas">Choose file...</label>
+                                    @*pakai <object> kaya di situs kkn bisa*@
+                                </div>
+                                
+                                <label>Dokumen Peer Review PAK</label>
+                                <div class="custom-file mb-3">
+                                    <input type="file" accept=".pdf" class="custom-file-input" id="file_PAK" name="file_PAK" onchange="getFileNameWithExt(event,'labelPAK')">
+                                    <label class="custom-file-label" id="labelPAK" for="file_PAK">Choose file...</label>
+                                    @*pakai <object> kaya di situs kkn bisa*@
+                                </div>
+                                
+                                <label>Dokumen Peer Review Korespondensi</label>
+                                <div class="custom-file mb-3">
+                                    <input type="file" accept=".pdf" class="custom-file-input" id="file_korespondensi" name="file_korespondensi" onchange="getFileNameWithExt(event,'labelKorespondensi')">
+                                    <label class="custom-file-label" id="labelKorespondensi" for="file_korespondensi">Choose file...</label>
+                                    @*pakai <object> kaya di situs kkn bisa*@
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-7 " style="margin-left:1%";>
+                                <div class="card shadow ">
+                                    <div class="card-header">
+                                        <ul class="nav nav-pills">
+                                            <li class="nav-item"><a class="nav-link active" href="#previewProsiding" data-toggle="tab">Prosiding Artikel</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#previewCekSimilaritas" data-toggle="tab">Cek Similaritas</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#previewPAK" data-toggle="tab">Review PAK</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#previewKorespondensi" data-toggle="tab">Korespondensi</a></li>
+                                        </ul>
+                                    </div><!-- /.card-header -->
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div class="active tab-pane" id="previewProsiding">
+                                                Loading...
+                                            </div>
+                                            <div class=" tab-pane" id="previewCekSimilaritas">
+                                                Loading...
+                                            </div>
+                                            <div class=" tab-pane" id="previewPAK">
+                                                Loading...
+                                            </div>
+                                            <div class=" tab-pane" id="previewKorespondensi">
+                                                Loading...
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                               
+
+                            </div>
+
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="PostDokumenPendukung()" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+            
         </div>
     </div>
 </div>
@@ -574,11 +692,37 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { "data": "judul", "name": "nama_mata_kuliah", "autoWidth": true },
-                    { "data": "kategori_kegiatan", "name": "nama_jenis_evaluasi", "autoWidth": true },
-                    { "data": "tanggal", "name": "nama_kelas_kuliah", "autoWidth": true },
-                    { "data": "peran", "name": "nama_jenis_evaluasi", "autoWidth": true },
-                    { "data": "urutan", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "judul", "autoWidth": true },
+                    { "data": "kategori_kegiatan", "autoWidth": true },
+                    { "data": "tanggal", "autoWidth": true },
+                    { "data": "peran", "autoWidth": true },
+                    { "data": "urutan", "autoWidth": true },
+                    { "data": "nama_dokumen", "autoWidth": true },
+                    {
+                        "data": "id_dokumen",
+                        width: "250px",
+                        render: function (data) {
+                            if (data != null) {
+                                return "<button class='btn btn-default btn-sm'  onclick=GetArtikelPublikasi('" + data +"')>Unduh Artikel</button> "
+                               // return "<a href='/SimkaDosen/unduhDokumen/"+data+"' target='_blank'>View Document </a>"
+                            } else {
+                                return "<button class='btn btn-default btn-sm' disabled onclick=GetArtikelPublikasi('" + data + "')></i>Unduh Artikel</button> "
+                            }
+                                
+
+                        },
+
+                    },
+                    {
+                        "data": "id_publikasi",
+                        width: "250px",
+                        render: function (data) {
+                            return "<button class='btn btn-primary btn-sm' onclick=GetDokumenPendukungPublikasi('"+data+"') data-toggle='modal' data-target='#myModal'> Dokumen Pendukung </button> "
+                           
+
+                        },
+
+                    }
 
 
                     //
@@ -618,12 +762,13 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { "data": "judul_penelitian_pengabdian", "name": "nama_mata_kuliah", "autoWidth": true },
+                    { "data": "judul_penelitian_pengabdian", title: "Judul Penelitian", "name": "nama_mata_kuliah", "autoWidth": true },
 
-                    { "data": "durasi_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
-                    { "data": "jenis_skim", "name": "nama_kelas_kuliah", "autoWidth": true },
-                    { "data": "tahun_kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
-                    { "data": "peran", "name": "nama_kelas_kuliah", "autowidth": true },
+                    { "data": "durasi_kegiatan", title: "Durasi Kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "jenis_skim", title: "Jenis Skim", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "tahun_kegiatan", title: "Tahun Kegiatan", "name": "nama_kelas_kuliah", "autoWidth": true },
+                    { "data": "peran", title: "Peran", "name": "nama_kelas_kuliah", "autowidth": true },
+
 
                 ]
 
@@ -786,7 +931,7 @@
                     } else {
                         swal.fire({
                             icon: 'warning',
-                            title: '<h5>Sinkronisasi gagal</h5>',
+                            title: 'Sinkronisasi gagal',
                             text: data.message
                         });
                     }
@@ -837,7 +982,7 @@
                     } else {
                         swal.fire({
                             icon: 'warning',
-                            title: '<h5>Sinkronisasi gagal</h5>',
+                            title: 'Sinkronisasi gagal',
                             text: data.message
                         });
                     }
@@ -900,7 +1045,7 @@
                     } else {
                         swal.fire({
                             icon: 'warning',
-                            title: '<h5>Sinkronisasi gagal</h5>',
+                            title: 'Sinkronisasi gagal',
                             text: data.message
                         });
 
@@ -949,7 +1094,7 @@
                     } else{
                         swal.fire({
                             icon: 'warning',
-                            title: '<h5>Sinkronisasi gagal</h5>',
+                            title: 'Sinkronisasi gagal',
                             text: data.message
                         });
                         console.log(data.message)
@@ -999,6 +1144,214 @@
             });
         }
 
+        function GetArtikelPublikasi(id_dokumen) {
+            //window.open('/SimkaAdmin/unduhDokumen/' + id_dokumen, "_blank");
+            //window.location.href = "/SimkaDosen/unduhDokumen/" + id_dokumen
+            $.ajax({
+                type: 'get',
+                url: '/SimkaDosen/GetArtikelPublikasi/' + id_dokumen,
+                contentType: "application/pdf",
+                xhrFields: { responseType: "arraybuffer"},
+                success: function (data) {
+
+                    var file = new Blob([data], { type: 'application/pdf' });
+                    var fileURL = URL.createObjectURL(file);
+                    window.open(fileURL);
+                },
+                error: function (data) {
+                    console.log(data)
+
+                }
+            });
+        }
+
+        function GetDokumenPendukungPublikasi(id_publikasi)
+        {
+            $('#id_publikasi').val(id_publikasi);
+            console.log("ini get dokumen Pendukung")
+            $.ajax({
+                type: "GET",
+                url: "/SimkaDosen/GetDokumenPendukungPublikasi?id_publikasi=" + id_publikasi,
+                dataType: "json",
+                success: function (data) {
+                    if (data.file_prosiding != null) {
+                       
+                        var fileUrl = "data:application/pdf ;base64," + data.file_prosiding;
+                        fetch(fileUrl)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                var blobUrl = URL.createObjectURL(blob);
+
+                                $('#previewProsiding').html(
+                                    "<iframe src='" + blobUrl + "' style='width:100%; height:400px;'></iframe>"
+                                );
+                            });
+                    } else {
+                        $('#previewProsiding').html("<span>File belum diupload</span>");
+                    }
+
+                    if (data.file_cek_similaritas != null) {
+                        
+                        var fileUrl = "data:application/pdf ;base64," + data.file_cek_similaritas;
+                        fetch(fileUrl)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                var blobUrl = URL.createObjectURL(blob);
+
+                                $('#previewCekSimilaritas').html(
+                                    "<iframe src='" + blobUrl + "' style='width:100%; height:400px;'></iframe>"
+                                );
+                            });
+                    } else {
+                        $('#previewCekSimilaritas').html("<span>File belum diupload</span>");
+                    }
+
+                    if (data.file_peer_review_pak != null) {
+                        
+                        var fileUrl = "data:application/pdf ;base64," + data.file_peer_review_pak;
+                        fetch(fileUrl)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                var blobUrl = URL.createObjectURL(blob);
+
+                                $('#previewPAK').html(
+                                    "<iframe src='" + blobUrl + "' style='width:100%; height:400px;'></iframe>"
+                                );
+                            });
+                    } else {
+                        $('#previewPAK').html("<span>File belum diupload</span>");
+                    }
+
+                    if (data.file_peer_korespondensi != null) {
+                       
+                        var fileUrl = "data:application/pdf ;base64," + data.file_peer_korespondensi;
+                        fetch(fileUrl)
+                            .then(response => response.blob())
+                            .then(blob => {
+                                var blobUrl = URL.createObjectURL(blob);
+
+                                $('#previewKorespondensi').html(
+                                    "<iframe src='" + blobUrl + "' style='width:100%; height:400px;'></iframe>"
+                                );
+                            });
+                    } else {
+                        $('#previewKorespondensi').html("<span>File belum diupload</span>");
+                    }
+
+                   
+
+                    console.log(data);
+                },
+                error: function (data) {
+                    console.log("get dokumen pendukung error")
+                }
+            });
+        }
+
+        function PostDokumenPendukung() {
+            console.log("post dokumen Pendukung")
+            var data = new FormData();
+            jQuery.each(jQuery('#file_prosiding')[0].files, function (i, file) {
+                data.append('file_prosiding', file);
+            });
+            jQuery.each(jQuery('#file_cek_similaritas')[0].files, function (i, file) {
+                data.append('file_cek_similaritas', file);
+            });
+            jQuery.each(jQuery('#file_PAK')[0].files, function (i, file) {
+                data.append('file_PAK', file);
+            });
+            jQuery.each(jQuery('#file_korespondensi')[0].files, function (i, file) {
+                data.append('file_korespondensi', file);
+            });
+
+            data.append("id_publikasi", $('#id_publikasi').val());
+            swal.fire({
+                icon: 'info',
+                html: '<h5>Loading...</h5>',
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: false
+
+            });
+
+            $.ajax({
+                processData: false,
+                contentType: false,
+                cache: false,
+                type: "POST",
+                url: "/SimkaDosen/PostDokumenPendukungPublikasi",
+                dataType: "json",
+                data: data,
+                enctype: "multipart/form-data",
+                success: function (data) {
+                    if (data.success) {
+                       swal.fire({
+                            icon: 'success',
+                            //title: 'Upload Dokumen Berhasil',
+                            text: data.message
+                        });
+                         
+                    } else {
+                        console.log(data.message)
+                        swal.fire({
+                            icon: 'warning',
+                            //title: 'Upload Dokumen Berhasil',
+                            text: data.message
+                        });
+
+                    }
+                    
+                    $('#myModal').modal('hide');
+
+                },
+                error: function (data) {
+                    console.log("post dokumen pendukung error")
+                    swal.fire({
+                        icon: 'warning',
+                        //title: 'Upload Dokumen Berhasil',
+                        text: data.message
+                    });
+                    $('#myModal').modal('hide');
+
+
+                },
+                finished: function (data) {
+                    $('#myModal').modal('hide');
+
+                  
+                    
+                }
+            });
+
+        }
+        function getFileNameWithExt(event,id) {
+
+            if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+                return;
+            }
+
+            const name = event.target.files[0].name;
+            const lastDot = name.lastIndexOf('.');
+
+            const fileName = name.substring(0, lastDot);
+            const ext = name.substring(lastDot + 1);
+
+            $("#" + id).text(fileName+"."+ext)
+
+        }
+        $("#myModal").on('show.bs.modal', function () {
+            $('#previewProsiding').html("<span>Loading...</span>");
+            $('#previewCekSimilaritas').html("<span>Loading...</span>");
+            $('#previewPAK').html("<span>Loading...</span>");
+            $('#previewKorespondensi').html("<span>Loading...</span>");
+            $('#labelProsiding').text("Choose File...");
+            $('#labelSimilaritas').text("Choose File...");
+            $('#labelPAK').text("Choose File...");
+            $('#labelKorespondensi').text("Choose File...");
+
+
+            
+        });
     </script>
 
     <style>

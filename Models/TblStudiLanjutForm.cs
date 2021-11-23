@@ -43,7 +43,17 @@ namespace APIConsume.Models
         [Required]
 
         public int? IdRefSs { get; set; }
-       
+
+        [Required]
+
+        public int? IdSumberBiaya1 { get; set; }
+
+        [Required]
+
+        public int? IdSumberBiaya2 { get; set; }
+
+
+
 
         public IFormFile SK { get; set; }
         public byte[] SKm { get; set; }
@@ -51,6 +61,9 @@ namespace APIConsume.Models
         public byte[] SkPenempatanKmblm { get; set; }
 
         public List<RefJenjang> listJenjang { get; set; }
+
+        public List<RefSumberBiaya> listSumberBiaya { get; set; }
+
         public List<RefStatusStudi> listStatusStudi { get; set; }
 
 
